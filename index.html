@@ -31,10 +31,29 @@
 
             button {
                 border-radius: 5px;
+                margin-top: 10px;
             }
             
             dd {
                 margin-left: 0;
+            }
+
+            dt {
+                text-align: left;
+            }
+            
+            #container {
+                border: solid 1px black;
+                width: max-content;
+                padding: 20px;
+                border-radius: 5px;
+                margin: auto;
+            }
+
+            .header {
+                border-bottom: solid 1px black;
+                text-align: left;
+                margin-bottom: 20px;
             }
             
         </style>
@@ -45,7 +64,7 @@
                 <h1>O-(nlogn) Hotel Management System</h1>
             </div>
             <div id="container" style="margin-bottom: 50px;">
-                <div>
+                <div class="header">
                     <strong>로그인</strong>
                 </div>
                 <div>
@@ -55,13 +74,11 @@
                         <dt><label for="pw" class="style1">비밀번호</label></dt>
                         <dd><input type="password" class="text" id="pw"></dd>
                     </dl>
-                    <div>
-                        <p><button type="submit" class="btn_submit">로그인</button></p>
-                    </div>		
+                    <button type="submit" class="btn_submit">로그인</button>
                 </div>
             </div>
-            <div>
-                footer sample
+            <div id="footer">
+                <h6>031-123-4567</h6>
             </div>
         </div>
     </body>
