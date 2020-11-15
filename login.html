@@ -68,13 +68,16 @@
                     <strong>로그인</strong>
                 </div>
                 <div>
-                    <dl>
-                        <dt><label for="id" class="style1">아이디 (사번)</label></dt>
-                        <dd><input type="text" class="text" id="id"></dd>
-                        <dt><label for="pw" class="style1">비밀번호</label></dt>
-                        <dd><input type="password" class="text" id="pw"></dd>
-                    </dl>
-                    <button type="submit" class="btn_submit" onclick="location.href='main.html'">로그인</button>
+                    <!-- 로그인 데이터 서버에 요청. 파일 수정 필요(임시) -->>
+                    <form action="login_page.php">
+                        <dl>
+                            <dt><label for="id" class="style1">아이디 (사번)</label></dt>
+                            <dd><input type="text" class="text" id="id"></dd>
+                            <dt><label for="pw" class="style1">비밀번호</label></dt>
+                            <dd><input type="password" class="text" id="pw"></dd>
+                            <button type="submit" class="btn_submit" onclick="location.href='main.html'">로그인</button>
+                        </dl>
+                    </form>
                 </div>
             </div>
             <div id="footer">
