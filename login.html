@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HMS</title>
+        <style>
+            legend {
+                position: absolute;
+                width: 0;
+                height: 0;
+                font-size: 0;
+            }
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            .style1 {
+                font-size: 11px;
+                color: darkgrey;
+                text-align: left;
+            }
+
+            #box {
+                text-align: center;
+            }
+            .btn_submit {
+                background-color: powderblue;
+                padding: 10px 40px;
+                border: 1px solid powderblue;
+                color: #fff;
+            }
+
+            button {
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+            
+            dd {
+                margin-left: 0;
+            }
+
+            dt {
+                text-align: left;
+            }
+            
+            #container {
+                border: solid 1px black;
+                width: max-content;
+                padding: 20px;
+                border-radius: 5px;
+                margin: auto;
+            }
+
+            .header {
+                border-bottom: solid 1px black;
+                text-align: left;
+                margin-bottom: 20px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="box">
+            <div id="header" style="margin-bottom: 50px;">
+                <h1>O-(nlogn) Hotel Management System</h1>
+            </div>
+            <div id="container" style="margin-bottom: 50px;">
+                <div class="header">
+                    <strong>로그인</strong>
+                </div>
+                <div>
+                    <dl>
+                        <dt><label for="id" class="style1">아이디 (사번)</label></dt>
+                        <dd><input type="text" class="text" id="id"></dd>
+                        <dt><label for="pw" class="style1">비밀번호</label></dt>
+                        <dd><input type="password" class="text" id="pw"></dd>
+                    </dl>
+                    <button type="submit" class="btn_submit" onclick="location.href='main.html'">로그인</button>
+                </div>
+            </div>
+            <div id="footer">
+                <h6>031-123-4567</h6>
+            </div>
+        </div>
+    </body>
+</html>
