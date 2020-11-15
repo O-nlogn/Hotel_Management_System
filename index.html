@@ -9,31 +9,60 @@
                 height: 0;
                 font-size: 0;
             }
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            .style1 {
+                font-size: 11px;
+                color: darkgrey;
+                text-align: left;
+            }
+
+            #box {
+                text-align: center;
+            }
+            .btn_submit {
+                background-color: powderblue;
+                padding: 10px 40px;
+                border: 1px solid powderblue;
+                color: #fff;
+            }
+
+            button {
+                border-radius: 5px;
+            }
+            
+            dd {
+                margin-left: 0;
+            }
+            
         </style>
     </head>
     <body>
-        <div id="box" style="text-align: center;">
+        <div id="box">
             <div id="header" style="margin-bottom: 50px;">
                 <h1>O-(nlogn) Hotel Management System</h1>
             </div>
             <div id="container" style="margin-bottom: 50px;">
-                <div style="display: inline-block;">
-                    <div>
-                        <input type="text" placeholder="아이디">
-                    </div>
-                    <div>
-                        <input type="text" placeholder="비밀번호">
-                    </div>
+                <div>
+                    <strong>로그인</strong>
                 </div>
-                <div style="display: inline-block;">
-                    <input type="submit" value="로그인" style="background-color: powderblue; border-radius: 5px; border: solid 1px rgba(0, 0, 0, .1)">
+                <div>
+                    <dl>
+                        <dt><label for="id" class="style1">아이디 (사번)</label></dt>
+                        <dd><input type="text" class="text" id="id"></dd>
+                        <dt><label for="pw" class="style1">비밀번호</label></dt>
+                        <dd><input type="password" class="text" id="pw"></dd>
+                    </dl>
+                    <div>
+                        <p><button type="submit" class="btn_submit">로그인</button></p>
+                    </div>		
                 </div>
             </div>
             <div>
                 footer sample
             </div>
         </div>
-        
-        
     </body>
 </html>
