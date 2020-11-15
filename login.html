@@ -70,14 +70,14 @@
                 </div>
                 <div>
                     <!-- 로그인 데이터 서버에 요청. 파일 수정 필요(임시) -->>
-                    <form action="login_page.php">
+                    <form action="/login_data" method="post">
                         <dl>
                             <dt><label for="id" class="style1">아이디 (사번)</label></dt>
                             <dd><input type="text" class="text" id="id"></dd>
                             <dt><label for="pw" class="style1">비밀번호</label></dt>
                             <dd><input type="password" class="text" id="pw"></dd>
-                            <button type="submit" class="btn_submit" onclick="location.href='main.html'">로그인</button>
                         </dl>
+                        <button type="submit" class="btn_submit" onclick="location.href='main.html'">로그인</button>
                     </form>
                 </div>
             </div>
