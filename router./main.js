@@ -1,4 +1,5 @@
 var qs = require('querystring');
+var dbconfig = require('../db');
 
 module.exports = function(app){
     app.get('/', function(req,res){
@@ -20,10 +21,25 @@ module.exports = function(app){
             var post = qs.parse(body);
             var id = post.id;
             var pw = post.pw;
+            
+            dbconfig.connect();
+            var sql = 'SELECT * FROM users WHERE id=? and password=?';
+            var params = [id,pw];
+            dbconfig.query(sql,params,function(err,rows,fields){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    if(rows.length == 0){
+                        console.log('아이디나 비밀번호가 틀렸습니다.'); 
+                    }
+
+                    else console.log('로그인 성공');
+                }
+            });
 
             res.writeHead(200);
             res.end();
         });
     });
-    
 }
