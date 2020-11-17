@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/O-nlogn/Hotel_Management_System#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",

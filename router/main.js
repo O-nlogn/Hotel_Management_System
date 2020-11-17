@@ -1,15 +1,37 @@
 var qs = require('querystring');
+var cp = require('cookie-parser');
 var dbconfig = require('../db');
 
 module.exports = function (app) {
+
+    app.use(cp());
+
     app.get('/', function (req, res) {
-        res.render('login.html');
+        if (req.cookies.is_logged_in === undefined) {
+            res.redirect('/login');
+        } 
+        else if (req.cookies.is_logged_in === 'false') {
+            res.redirect('/login');
+        }
+        else {
+            res.redirect('/main');
+        }
     });
+
     app.get('/login', function (req, res) {
         res.render('login.html');
     });
+
     app.get('/main', function (req, res) {
-        res.render('main.html');
+        if (req.cookies.is_logged_in === undefined) {
+            res.redirect('/login');
+        } 
+        else if (req.cookies.is_logged_in === 'false') {
+            res.redirect('/login');
+        }
+        else {
+            res.render('main.html');
+        }
     });
 
 
@@ -38,15 +60,15 @@ module.exports = function (app) {
                 else {
                     if (rows.length == 0) {
                         console.log('아이디나 비밀번호가 틀렸습니다.');
-                        res.writeHead(200);
-                        res.end();
+                        res.cookie('is_logged_in', false);
                     }
-
                     else {
-                        res.render('main.html'); // 로그인 성공 시 main페이지 연결
                         console.log('로그인 성공');
+                        res.cookie('is_logged_in', true);
                     }
                 }
+
+                res.redirect('/');
             });
         });
     });
