@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>
+            O-(nlogn) 호텔 관리 정보 시스템
+        </title>
+        <meta charset='UTF-8'>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            #menu {
+                height: 30px; /* HEIGHT */
+                width: 900px; /* (NROW*WEIGHT) */
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            #menu ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            #menu ul li {
+                line-height: 30px; /* HEIGHT */
+                vertical-align: middle;
+                text-align: center;
+                /* display: inline-block; */
+                float: left;
+                position: relative;
+            }
+            .menuItem, .submenuItem {
+                text-decoration: none;
+                display: inline-block;
+                width: 150px; /* 기본 넓이를 150px로 설정 */
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .menuItem {
+                color: black;
+            }
+            .menuItem:hover .menuItem {
+                color: powderblue;
+                border-bottom: solid 3px powderblue;
+            }
+            .submenuItem {
+                color: black;
+                margin-top: -1px;
+            }
+            .submenu {
+                position: absolute;
+                height: 0;
+                overflow: hidden; /* 부모보다 커지면 숨어 */
+                /* transition: height 0s; */
+            }
+            .menuItem:hover .submenu {
+                height: 120px; /* (MAX_CONTENT_NUM)*HEIGHT */
+            }
+            .submenuItem:hover {
+                color: powderblue;
+            }
+
+            .profile {
+                display: flex;
+                margin: 150px 0px 100px 400px;
+                width: max-content;
+            }
+            
+            a {
+                text-decoration: none;
+                color: black;
+            }
+
+            a:hover {
+                font-weight: bold;
+            }
+
+            .prfimg {
+                width: 120px;
+                border-radius: 50px;
+            }
+
+            .profile .content {
+                vertical-align: middle;
+            }
+
+            .table {
+                overflow-y: scroll;
+                display: grid;
+                grid-template-columns: repeat(4, 150px);
+                grid-template-rows: repeat(20, 150px);
+                width: max-content;
+                height: 600px;
+                margin: 150px 0 0 600px;
+                border: solid 1px black;
+            }
+
+            .table div {
+                border: solid 1px black;
+            }
+
+            .body {
+                display: flex;
+            }
+
+            #request .list {
+                /* margin: 100px 0 0 100px; */
+                width: max-content;
+                overflow-y: scroll;
+                height: 600px;
+            }
+
+            #requestItem {
+                width: 200px;
+                border-bottom: dotted 2px black;
+            }
+
+            #requestItem .title {
+                font-weight: bold;
+            }
+
+            #request {
+                margin: 100px 0 0 100px;
+            }
+            
+
+            #button {
+                border: solid 3px rgb(66, 110, 0);
+                border-radius: 10px;
+                width: 180px;
+                margin-left: 5px;
+                margin-top: 10px;
+                background-color: green;
+            }
+
+            #button div {
+                padding: 20px;
+                height: 30px;
+            }
+
+            #request button {
+                border-radius: 100px;
+                border: 1px solid powderblue;
+                background-color: powderblue;
+                color: #fff;
+                margin: 10px 8px;
+                padding: 15px 80px;
+                font-size: 20px;
+            }
+
+            #request button:hover {
+                background-color: rgb(61, 141, 151);
+
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="menu">
+            <ul>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">공지사항</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">객실관리</a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="submenuItem" href="#">사용중인 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem" href="#">가용 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem" href="#">고장 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem"href="#">직원별 담당 객실</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">예약관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">비품관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">매출관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">직원관리</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="body">
+            <div class="table">
+                <div>301</div>
+                <div>302</div>
+                <div>303</div>
+                <div>304</div>
+                
+                <div>305</div>
+                <div>306</div>
+                <div>307</div>
+                <div>308</div>
+                
+                <div>309</div>
+                <div>310</div>
+                <div>311</div>
+                <div>312</div>
+                
+
+                <div>401</div>
+                <div>402</div>
+                <div>403</div>
+                <div>404</div>
+                
+                <div>405</div>
+                <div>406</div>
+                <div>407</div>
+                <div>408</div>
+                
+                <div>409</div>
+                <div>410</div>
+                <div>411</div>
+                <div>412</div>
+            </div>
+            <div id="request">
+                <div class="list">
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목1
+                        </p>
+                        <p class="content">
+                            내용1
+                        </p>
+                    </div>
+                    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목2
+                        </p>
+                        <p class="content">
+                            내용2
+                        </p>
+                    </div>
+                    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목3
+                        </p>
+                        <p class="content">
+                            내용3
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목4
+                        </p>
+                        <p class="content">
+                            내용4
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목5
+                        </p>
+                        <p class="content">
+                            내용5
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목6
+                        </p>
+                        <p class="content">
+                            내용6
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목7
+                        </p>
+                        <p class="content">
+                            내용7
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목8
+                        </p>
+                        <p class="content">
+                            내용8
+                        </p>
+                    </div>
+    
+                    <div id="requestItem">
+                        <p class='title'>
+                            제목9
+                        </p>
+                        <p class="content">
+                            내용9
+                        </p>
+                    </div>
+                </div>
+                <button>+</button>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
