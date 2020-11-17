@@ -5,6 +5,7 @@ var dbconfig = require('../db');
 module.exports = function (app) {
 
     app.use(cp());
+    dbconfig.connect();
 
     app.get('/', function (req, res) {
         if (req.cookies.is_logged_in === undefined) {
@@ -47,7 +48,6 @@ module.exports = function (app) {
             var pw = post.pw;
 
             /* db에서 id, pw가 일치하는 직원이 있는지 검색 */
-            dbconfig.connect();
             var sql = 'SELECT * FROM users WHERE id=? and password=?';
             var params = [id, pw];
 
