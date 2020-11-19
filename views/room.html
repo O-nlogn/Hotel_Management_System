@@ -1,317 +1,242 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <meta charset='UTF-8'>
-        <title>
-            O-(nlogn) 호텔 관리 정보 시스템
-        </title>
-        <meta charset='UTF-8'>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-            *{
-                font-family: 'Nanum Gothic', sans-serif;
-            }
-            #menu {
-                height: 30px; /* HEIGHT */
-                width: 900px; /* (NROW*WEIGHT) */
-                margin: auto;
-                margin-bottom: 30px;
-            }
-            #menu ul {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-            }
-            #menu ul li {
-                line-height: 30px; /* HEIGHT */
-                vertical-align: middle;
-                text-align: center;
-                /* display: inline-block; */
-                float: left;
-                position: relative;
-            }
-            .menuItem, .submenuItem {
-                text-decoration: none;
-                display: inline-block;
-                width: 150px; /* 기본 넓이를 150px로 설정 */
-                font-size: 15px;
-                font-weight: bold;
-            }
-            .menuItem {
-                color: black;
-            }
-            .menuItem:hover .menuItem {
-                color: powderblue;
-                border-bottom: solid 3px powderblue;
-            }
-            .submenuItem {
-                color: black;
-                margin-top: -1px;
-            }
-            .submenu {
-                position: absolute;
-                height: 0;
-                overflow: hidden; /* 부모보다 커지면 숨어 */
-                /* transition: height 0s; */
-            }
-            .menuItem:hover .submenu {
-                height: 120px; /* (MAX_CONTENT_NUM)*HEIGHT */
-            }
-            .submenuItem:hover {
-                color: powderblue;
-            }
+<head>
+    <meta charset="utf-8">
+    <title>객실관리</title>
+    <link rel="stylesheet" type="text/css" href="room.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $(".open").on('click',function(){
+                $(".popup").show();
+                $(".dim").show();
+            });
+            $(".popup .close").on('click',function(){
+                $(this).parent().parent().hide();
+                $(".dim").hide();
+            });
+        });
+    </script>
+</head>
+<body>
+	<nav id="menu">
+		<ul>
+			<li class="menuItem">
+				<a class="menuItem" href="#">공지사항</a>
+			</li>
+			<li class="menuItem">
+				<a class="menuItem" href="#">객실관리</a>
+				<ul class="submenu">
+					<li>
+						<a class="submenuItem" href="#">사용중인 객실</a>
+					</li>
+					<li>
+						<a class="submenuItem" href="#">가용 객실</a>
+					</li>
+					<li>
+						<a class="submenuItem" href="#">고장 객실</a>
+					</li>
+					<li>
+						<a class="submenuItem"href="#">직원별 담당 객실</a>
+					</li>
+				</ul>
+			</li>
+			<li class="menuItem">
+				<a class="menuItem" href="#">예약관리</a>
+			</li>
+			<li class="menuItem">
+				<a class="menuItem" href="#">비품관리</a>
+			</li>
+			<li class="menuItem">
+				<a class="menuItem" href="#">매출관리</a>
+			</li>
+			<li class="menuItem">
+				<a class="menuItem" href="#">직원관리</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="body">
+		<div class="table">
+			<div>
+				<a href="#a" class="open">301</a>
+			</div>
+			<div>302</div>
+			<div>303</div>
+			<div>304</div>
+			
+			<div>305</div>
+			<div>306</div>
+			<div>307</div>
+			<div>308</div>
+			
+			<div>309</div>
+			<div>310</div>
+			<div>311</div>
+			<div>312</div>
+			
 
-            .profile {
-                display: flex;
-                margin: 150px 0px 100px 400px;
-                width: max-content;
-            }
-            
-            a {
-                text-decoration: none;
-                color: black;
-            }
+			<div>401</div>
+			<div>402</div>
+			<div>403</div>
+			<div>404</div>
+			
+			<div>405</div>
+			<div>406</div>
+			<div>407</div>
+			<div>408</div>
+			
+			<div>409</div>
+			<div>410</div>
+			<div>411</div>
+			<div>412</div>
+		</div>
+		<div id="request">
+			<div class="list">
+				<div id="requestItem">
+					<p class='title'>
+						제목1
+					</p>
+					<p class="content">
+						내용1
+					</p>
+				</div>
+				
+				<div id="requestItem">
+					<p class='title'>
+						제목2
+					</p>
+					<p class="content">
+						내용2
+					</p>
+				</div>
+				
+				<div id="requestItem">
+					<p class='title'>
+						제목3
+					</p>
+					<p class="content">
+						내용3
+					</p>
+				</div>
 
-            a:hover {
-                font-weight: bold;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목4
+					</p>
+					<p class="content">
+						내용4
+					</p>
+				</div>
 
-            .prfimg {
-                width: 120px;
-                border-radius: 50px;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목5
+					</p>
+					<p class="content">
+						내용5
+					</p>
+				</div>
 
-            .profile .content {
-                vertical-align: middle;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목6
+					</p>
+					<p class="content">
+						내용6
+					</p>
+				</div>
 
-            .table {
-                overflow-y: scroll;
-                display: grid;
-                grid-template-columns: repeat(4, 150px);
-                grid-template-rows: repeat(20, 150px);
-                width: max-content;
-                height: 600px;
-                margin: 150px 0 0 600px;
-                border: solid 1px black;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목7
+					</p>
+					<p class="content">
+						내용7
+					</p>
+				</div>
 
-            .table div {
-                border: solid 1px black;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목8
+					</p>
+					<p class="content">
+						내용8
+					</p>
+				</div>
 
-            .body {
-                display: flex;
-            }
+				<div id="requestItem">
+					<p class='title'>
+						제목9
+					</p>
+					<p class="content">
+						내용9
+					</p>
+				</div>
+			</div>
+			<button>+</button>
+		</div>
+	</div>
+	
 
-            #request .list {
-                /* margin: 100px 0 0 100px; */
-                width: max-content;
-                overflow-y: scroll;
-                height: 600px;
-            }
+	<div class="popup">
+        <!-- 호실 이름도 서버에서 받아온 데이터로 출력하기-->
+        <div style="text-align: right;">
+        <a href="#a" class="close">닫기</a>
 
-            #requestItem {
-                width: 200px;
-                border-bottom: dotted 2px black;
-            }
-
-            #requestItem .title {
-                font-weight: bold;
-            }
-
-            #request {
-                margin: 100px 0 0 100px;
-            }
-            
-
-            #button {
-                border: solid 3px rgb(66, 110, 0);
-                border-radius: 10px;
-                width: 180px;
-                margin-left: 5px;
-                margin-top: 10px;
-                background-color: green;
-            }
-
-            #button div {
-                padding: 20px;
-                height: 30px;
-            }
-
-            #request button {
-                border-radius: 100px;
-                border: 1px solid powderblue;
-                background-color: powderblue;
-                color: #fff;
-                margin: 10px 8px;
-                padding: 15px 80px;
-                font-size: 20px;
-            }
-
-            #request button:hover {
-                background-color: rgb(61, 141, 151);
-
-            }
-        </style>
-    </head>
-    <body>
-        <nav id="menu">
-            <ul>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">공지사항</a>
-                </li>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">객실관리</a>
-                    <ul class="submenu">
-                        <li>
-                            <a class="submenuItem" href="#">사용중인 객실</a>
-                        </li>
-                        <li>
-                            <a class="submenuItem" href="#">가용 객실</a>
-                        </li>
-                        <li>
-                            <a class="submenuItem" href="#">고장 객실</a>
-                        </li>
-                        <li>
-                            <a class="submenuItem"href="#">직원별 담당 객실</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">예약관리</a>
-                </li>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">비품관리</a>
-                </li>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">매출관리</a>
-                </li>
-                <li class="menuItem">
-                    <a class="menuItem" href="#">직원관리</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="body">
-            <div class="table">
-                <div>301</div>
-                <div>302</div>
-                <div>303</div>
-                <div>304</div>
-                
-                <div>305</div>
-                <div>306</div>
-                <div>307</div>
-                <div>308</div>
-                
-                <div>309</div>
-                <div>310</div>
-                <div>311</div>
-                <div>312</div>
-                
-
-                <div>401</div>
-                <div>402</div>
-                <div>403</div>
-                <div>404</div>
-                
-                <div>405</div>
-                <div>406</div>
-                <div>407</div>
-                <div>408</div>
-                
-                <div>409</div>
-                <div>410</div>
-                <div>411</div>
-                <div>412</div>
-            </div>
-            <div id="request">
-                <div class="list">
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목1
-                        </p>
-                        <p class="content">
-                            내용1
-                        </p>
-                    </div>
-                    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목2
-                        </p>
-                        <p class="content">
-                            내용2
-                        </p>
-                    </div>
-                    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목3
-                        </p>
-                        <p class="content">
-                            내용3
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목4
-                        </p>
-                        <p class="content">
-                            내용4
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목5
-                        </p>
-                        <p class="content">
-                            내용5
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목6
-                        </p>
-                        <p class="content">
-                            내용6
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목7
-                        </p>
-                        <p class="content">
-                            내용7
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목8
-                        </p>
-                        <p class="content">
-                            내용8
-                        </p>
-                    </div>
-    
-                    <div id="requestItem">
-                        <p class='title'>
-                            제목9
-                        </p>
-                        <p class="content">
-                            내용9
-                        </p>
-                    </div>
-                </div>
-                <button>+</button>
-            </div>
-            
         </div>
-        
-    </body>
+        <h2>301호</h2>
+        <div class="con">
+            <table class="type1">
+                <caption>
+                    <!-- <details class="hide">
+                        <summary>호실 별 세부사항</summary>
+                        <div>미결제 금액, 담당 직원, 입실 시간, 퇴실 예정 시간, 특이사항, 투숙 인원</div>
+                    </details> -->
+                </caption>
+                <colgroup>
+                <col style="width: 111px">
+                <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>미결제 금액</th>
+                        <td>200,000 원</td>
+                        <!-- %=data[temp].name% -->
+                    </tr>
+                    <tr>
+                        <th>담당 직원</th>
+                        <td>홍길동</td>
+                    </tr>
+                    <tr>
+                        <th>입실 시간</th>
+                        <td>2020. 11. 17. 13:08</td>
+                    </tr>
+                    <tr>
+                        <th>퇴실 예정 시간</th>
+                        <td>2020. 11. 21. 11:00</td>
+                    </tr>
+                    <tr>
+                        <th>비고</th>
+                        <td>
+                            <ul style="padding: 20px; text-align: left;">
+                                <li>어린이가 많은 방이므로 주의할 것</li>
+                                <li>청소는 원래 청소 시간 대신 15시에 할 것</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>투숙 인원</th>
+                        <td>5</td>
+                    </tr>            
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: right; margin-top: 50px;">
+            <a href="#a">방이동</a>
+            <a href="#a">체크아웃</a>
+        </div>
+    </div>
+    <div class="dim"></div>
+</body>
 </html>
