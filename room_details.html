@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객실별 세부사항</title>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $(".open").on('click',function(){
+                $(".popup").show();
+                $(".dim").show();
+            });
+            $(".popup .close").on('click',function(){
+                $(this).parant().hide();
+                $(".dim").hide();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <a href="#a" class="open">팝업열기</a>
+    <div class="popup">
+        <!-- 호실 이름도 서버에서 받아온 데이터로 출력하기-->>
+        <h2>917호</h2>
+        <div class="con">
+            <table class="type1">
+                <caption>
+                    <details>
+                        <summary> 호실 별 세부사항</summary>
+                        <div> 미결제 금액, 담당 직원, 입실 시간, 퇴실 예정 시간, 특이사항, 투숙 인원</div>
+                    </details>
+                </caption>
+                <colgroup>
+                <col style="width: 111px">
+                <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="txt1">미결제 금액</label></th>
+                        <td><%=data[temp].name%></td>
+                    </tr>
+                    <tr>
+                        <th><label for="txt2">담당 직원</label></th>
+                        <td><%=data[temp].name%></td>
+                    </tr>
+                    <tr>
+                        <th><label for="txt3">입실 시간</label></th>
+                        <td><%=data[temp].name%></td>
+                    </tr>
+                    <tr>
+                        <th><label for="txt4">퇴실 예정 시간</label></th>
+                        <td><%=data[temp].name%></td>
+                    </tr>
+                    <tr>
+                        <th><label for="txt5">특이 사항</label></th>
+                        <td><textarea name="" id="txt5" cols="30" rows="10"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th><label for="txt6">투숙 인원</label></th>
+                        <td><%=data[temp].name%></td>
+                    </tr>            
+                </tbody>
+            </table>
+        </div>
+            <div class = "txt_center">
+                <a href="#a" class="btn_type1">방이동</a>
+                <a href="#a" class="btn_type2">체크아웃</a>
+            </div>
+        <a href="#a" class="close">닫기</a>
+    </div>
+    <div class="dim"></div>
+</body>
+</html>  
