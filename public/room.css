@@ -1,0 +1,224 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+*{
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.btn {
+    margin: 5px;
+}
+body {
+    padding: 50px;
+    box-sizing: border-box;
+}
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 100;
+    padding: 52px 60px 60px;
+    width: 600px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    background: #fff;
+}
+.dim {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+.type1 {
+    border: solid 1px black;
+    border-radius: 5px;
+}
+
+
+.type1 td{
+    border: solid 1px black;
+    border-radius: 3px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.type1 th {
+    border: solid 1px black;
+    border-radius: 3px;
+    background-color: powderblue;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+
+#menu {
+    height: 30px; /* HEIGHT */
+    width: 900px; /* (NROW*WEIGHT) */
+    margin: auto;
+    margin-bottom: 30px;
+}
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#menu ul li {
+    line-height: 30px; /* HEIGHT */
+    vertical-align: middle;
+    text-align: center;
+    /* display: inline-block; */
+    float: left;
+    position: relative;
+}
+.menuItem, .submenuItem {
+    text-decoration: none;
+    display: inline-block;
+    width: 150px; /* 기본 넓이를 150px로 설정 */
+    font-size: 15px;
+    font-weight: bold;
+}
+.menuItem {
+    color: black;
+}
+.menuItem:hover .menuItem {
+    color: powderblue;
+    border-bottom: solid 3px powderblue;
+}
+.submenuItem {
+    color: black;
+    margin-top: -1px;
+}
+.submenu {
+    position: absolute;
+    height: 0;
+    overflow: hidden; /* 부모보다 커지면 숨어 */
+    /* transition: height 0s; */
+}
+.menuItem:hover .submenu {
+    height: 120px; /* (MAX_CONTENT_NUM)*HEIGHT */
+}
+.submenuItem:hover {
+    color: powderblue;
+}
+
+.profile {
+    display: flex;
+    margin: 150px 0px 100px 400px;
+    width: max-content;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+.prfimg {
+    width: 120px;
+    border-radius: 50px;
+}
+
+.profile .content {
+    vertical-align: middle;
+}
+
+.table {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    grid-template-rows: repeat(20, 150px);
+    width: max-content;
+    height: 600px;
+    margin: 100px 0 0 500px;
+    border: solid 1px black;
+}
+
+.table div {
+    border: solid 1px black;
+}
+
+.body {
+    display: flex;
+}
+
+#request .list {
+    /* margin: 100px 0 0 100px; */
+    width: max-content;
+    overflow-y: scroll;
+    height: 600px;
+}
+
+#requestItem {
+    width: 200px;
+    border-bottom: dotted 2px black;
+}
+
+#requestItem .title {
+    font-weight: bold;
+}
+
+#request {
+    margin: 100px 0 0 100px;
+}
+
+
+#request button {
+    border-radius: 100px;
+    border: 1px solid powderblue;
+    background-color: powderblue;
+    color: #fff;
+    margin: 10px 8px;
+    padding: 15px 80px;
+    font-size: 20px;
+}
+
+#request button:hover {
+    background-color: rgb(61, 141, 151);
+
+}
+
+.icon_plus {
+    margin-left: 33px;
+    fill: rgb(207, 207, 207);
+}
+
+.hoverfill{
+    fill: rgb(207, 207, 207);
+}
+
+
+.icon_plus:hover {
+    fill: rgb(61, 141, 151);
+    cursor: pointer;
+    fill: black;
+}
+
+.icon_trashcan:hover {
+    fill: rgb(95, 95, 95);
+}
+
+.icon_key:hover {
+    fill: rgb(221, 188, 0);
+}
+
+.icon_docs:hover {
+    fill: brown;
+}
+
+.table div {
+    padding: 2px;
+}
+
+.icon_checkout:hover {
+    fill: black;
+}
