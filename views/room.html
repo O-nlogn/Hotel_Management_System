@@ -18,7 +18,26 @@
             });
         });
     </script>
+
+    <!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->>
+    <script>
+        window.onload=function() {
+            document.getElementById("save").onclick=processText;
+        }
+        function processText() {                
+            var txtBox = document.getElementById("inputbox");
+            var lines = txtBox.value.split("\n");
+            var resultString  = "<p>";
+            for (var i = 0; i < lines.length; i++) {
+            resultString += lines[i] + "<br />";
+            }
+            resultString += "</p>";
+            var   blk   = document.getElementById("result");
+            blk.innerHTML  =  resultString; 
+        }   
+    </script>
 </head>
+
 <body>
 	<nav id="menu">
 		<ul>
@@ -237,10 +256,9 @@
                     <tr>
                         <th>특이 사항</th>
                         <td>
-                            <ul style="padding: 20px; text-align: left;">
-                                <li>어린이가 많은 방이므로 주의할 것</li>
-                                <li>청소는 원래 청소 시간 대신 15시에 할 것</li>
-                            </ul>
+                            <textarea id="inputbox" cols="40" rows="3"></textarea>
+                            <div><button id="save">추가</button></div>
+                            <div id="result"></div>
                         </td>
                     </tr>
                     <tr>
