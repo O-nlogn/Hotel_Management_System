@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>
+            O-(nlogn) 호텔 관리 정보 시스템
+        </title>
+        <meta charset='UTF-8'>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            #menu {
+                height: 30px; /* HEIGHT */
+                width: 900px; /* (NROW*WEIGHT) */
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            #menu ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            #menu ul li {
+                line-height: 30px; /* HEIGHT */
+                vertical-align: middle;
+                text-align: center;
+                /* display: inline-block; */
+                float: left;
+                position: relative;
+            }
+            .menuItem, .submenuItem {
+                text-decoration: none;
+                display: inline-block;
+                width: 150px; /* 기본 넓이를 150px로 설정 */
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .menuItem {
+                color: black;
+            }
+            .menuItem:hover .menuItem {
+                color: powderblue;
+                border-bottom: solid 3px powderblue;
+            }
+            .submenuItem {
+                color: black;
+                margin-top: -1px;
+            }
+            .submenu {
+                position: absolute;
+                height: 0;
+                overflow: hidden; /* 부모보다 커지면 숨어 */
+                /* transition: height 0s; */
+            }
+            .menuItem:hover .submenu {
+                height: 120px; /* (MAX_CONTENT_NUM)*HEIGHT */
+            }
+            .submenuItem:hover {
+                color: powderblue;
+            }
+
+            .profile {
+                display: flex;
+                margin: 200px 0px 100px 600px;
+                width: max-content;
+            }
+            
+            a {
+                text-decoration: none;
+                color: black;
+            }
+
+            a:hover {
+                font-weight: bold;
+            }
+
+            .prfimg {
+                width: 120px;
+                border-radius: 50px;
+            }
+
+            .content {
+                vertical-align: middle;
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="menu">
+            <ul>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">공지사항</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="./room">객실관리</a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="submenuItem" href="#">사용중인 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem" href="#">가용 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem" href="#">고장 객실</a>
+                        </li>
+                        <li>
+                            <a class="submenuItem"href="#">직원별 담당 객실</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">예약관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">비품관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">매출관리</a>
+                </li>
+                <li class="menuItem">
+                    <a class="menuItem" href="#">직원관리</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="profile" style="padding: 10px; border: dotted 3px black; border-radius: 20px;">
+            <img class="prfimg" src="https://post-phinf.pstatic.net/MjAxNzA2MjlfOTAg/MDAxNDk4NzM5NzUxMDEz.AaHgW4nN3_oyFlvxr-6l3UpJ3C_qSbxCWugcmw0_OI4g.EcUsgmdE_oNTw0dWcxLWexeY8Jd3bGQIA0S08MPmACsg.PNG/1_%281%29.png?type=w1200" alt="profile">
+            <div class="content">
+                <div style="margin: 60px 10px 0 10px">
+                    <p>
+                        <a href='#'>내 정보 관리</a>
+                    </p>
+                    <p>
+                        <a href='#'>담당 객실 관리</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
