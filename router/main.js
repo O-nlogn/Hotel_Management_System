@@ -51,7 +51,6 @@ module.exports = function (app) {
             /* db에서 id, pw가 일치하는 직원이 있는지 검색 */
             var sql = 'SELECT * FROM users WHERE id=? and password=?';
             var params = [id, crypto.createHash('sha512').update(pw).digest('hex')];
-            console.log(crypto.createHash('sha512').update(pw).digest('hex'));
 
             dbconfig.query(sql, params, function (err, rows, fields) {
                 if (err) {
