@@ -19,7 +19,7 @@ body {
     z-index: 100;
     padding: 52px 60px 60px;
     width: 600px;
-    height: 500px;
+    height: 550px;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
     background: #fff;
@@ -37,6 +37,7 @@ body {
 .type1 {
     border: solid 1px black;
     border-radius: 5px;
+    width: 450px;
 }
 
 
@@ -221,4 +222,17 @@ a:hover {
 
 .icon_checkout:hover {
     fill: black;
+}
+
+.commit, #inputbox{
+    display: none;
+}
+
+.resultString {
+    text-align: left;
+    padding-left: 20px;
+}
+
+#modify {
+    display: none;
 }

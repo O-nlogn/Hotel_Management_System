@@ -16,10 +16,22 @@
                 $(this).parent().parent().hide();
                 $(".dim").hide();
             });
+			$('.commit').on('click', function() {
+				$(this).hide();
+				$('#inputbox').hide();
+				$('.modify').show();
+				$('#result').show();
+			});
+			$('.modify').on('click', function() {
+				$(this).hide();
+				$('#result').hide();
+				$('#inputbox').show();
+				$('.commit').show();
+			})
         });
     </script>
 
-    <!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->>
+    <!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->
     <script>
         window.onload=function() {
             document.getElementById("save").onclick=processText;
@@ -27,13 +39,13 @@
         function processText() {                
             var txtBox = document.getElementById("inputbox");
             var lines = txtBox.value.split("\n");
-            var resultString  = "<p>";
+            var resultString  = `<ul class="resultString">`;
             for (var i = 0; i < lines.length; i++) {
-            resultString += lines[i] + "<br />";
+            	resultString += '<li>'+lines[i]+'</li>';
             }
-            resultString += "</p>";
-            var   blk   = document.getElementById("result");
-            blk.innerHTML  =  resultString; 
+            resultString += '</ul>';
+            var blk = document.getElementById("result");
+            blk.innerHTML = resultString; 
         }   
     </script>
 </head>
@@ -254,11 +266,12 @@
                         <td>2020. 11. 21. 11:00</td>
                     </tr>
                     <tr>
-                        <th>특이 사항</th>
+                        <th style="height: 150px;">특이 사항</th>
                         <td>
-                            <textarea id="inputbox" cols="40" rows="3"></textarea>
-                            <div><button id="save">추가</button></div>
-                            <div id="result"></div>
+							<textarea id="inputbox" cols="43" rows="6"></textarea>
+                            <div><button id="save" class="commit">저장</button></div>
+							<div id="result"></div>
+							<div><button class="modify">수정</button></div>
                         </td>
                     </tr>
                     <tr>
