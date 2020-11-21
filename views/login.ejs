@@ -76,8 +76,13 @@
                             <dd><input type="text" class="text" name="id"></dd>
                             <dt><label for="pw" class="style1">비밀번호</label></dt>
                             <dd><input type="password" class="text" name="pw"></dd>
+                            
+                            <!-- 로그인 실패 여부에 따라 로그인 박스 ui다르게-->
+                            <%if(login === 'false'){%>
+                                <p class="style1">아이디 또는 비밀번호가 틀렸습니다.</p>
+                            <% } %>
                         </dl>
-                        <button type="submit" class="btn_submit" onclick="location.href='main.html';">로그인</button>
+                        <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button>
                     </form>
                 </div>
             </div>
