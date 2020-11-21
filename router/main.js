@@ -1,5 +1,6 @@
 var cp = require('cookie-parser');
 var dbconfig = require('../db');
+var ejs = require('ejs');
 
 module.exports = function (app) {
 
@@ -20,11 +21,11 @@ module.exports = function (app) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login.html');
+        res.render('login',{login:req.cookies.is_logged_in});
     });
 
     app.get('/room', function (req, res) {
-        res.render('room.html');
+        res.render('room');
     });
 
     app.get('/main', function (req, res) {
@@ -35,7 +36,7 @@ module.exports = function (app) {
             res.redirect('/login');
         }
         else {
-            res.render('main.html');
+            res.render('main');
         }
     });
 }
