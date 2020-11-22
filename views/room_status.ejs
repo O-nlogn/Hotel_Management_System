@@ -12,18 +12,18 @@
     <% if(locals.data){ %>
             <!-- 반복문 돌려서 각 객실에 대한 box 만들도록 함 -->
             <!-- 서버에서 각 객실별로 room_number,check_in,country,trash,key,request 등의 정보를 줘야함 -->
-            <% for(let dat in data){ %>
+            <% for(var i=0; i< data.length; i++){ %>
               <div class="rooms">
                 <div class="inner_box">
                   <!-- 체크인 여부 : 체크인 했으면 사람 나오도록-->
-                  <%if (dat.check_in){ %>
+                  <%if (data[i].check_in){ %>
                     <img src="person.png" alt="사람 이미지" width="40">
                   <% }%>
                   <!-- 국기 --><!-- 돌아갈지 잘 모르겟음..-->
                  <img id="country_flag" src=""  alt="국기 이미지" width="20">
                  <script>
-                    var flag = <%= dat.country %>
-                    flag +=".png"
+                    var flag = <%- JSON.stringify(data[i].country) %>;
+                    flag +=".png";
                     //flag="South Korea"+".png"
                     document.getElementById('country_flag').src=flag
                  </script>
@@ -31,19 +31,19 @@
 
                 <!-- 밑에 애들은 if 에서는 불들어오고 else에서는 불안들어온 아이콘 출력-->
                 <!-- 쓰레기통.-->
-                <%if (dat.trash){ %>
+                <%if (data[i].trash){ %>
                   <i class="fas fa-circle fa-1x pr-1" style="color:#ffbf00"></i>
                 <% }else {%>
                   <i class="fas fa-circle fa-1x pr-1" ></i>
                 <% }%>
                 <!-- 외출여부: 키가 꼽혀있으면 불-->
-                <%if (dat.key){ %>
+                <%if (data[i].key){ %>
                   <i class="fas fa-circle fa-1x pr-1" style='color:blue'></i>
                 <% }else {%>
                   <i class="fas fa-circle fa-1x pr-1"></i>
                 <% }%>
                 <!-- 요청사항 유무 -->
-                <%if (dat.request){ %>
+                <%if (data[i].request){ %>
                   <i class="fas fa-circle fa-1x pr-1" style="color:#ff0040"></i>
                 <% }else {%>
                   <i class="fas fa-circle fa-1x pr-1"></i>
