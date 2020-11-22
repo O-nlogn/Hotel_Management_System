@@ -4,23 +4,10 @@
     <meta charset="utf-8">
      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-  <style>
-
-  </style>
   </head>
 
   <body>
-
-    <!--Navigation bar-->
-    <div id="nav-placeholder">
-
-    </div>
-    <script>
-    $(function(){
-      $("#nav-placeholder").load("nav.ejs");
-    });
-    </script>
-    <!-- end of Navigation bar -->
+    <%- include('./nav'); %>
 
     <% if(locals.data){ %>
             <!-- 반복문 돌려서 각 객실에 대한 box 만들도록 함 -->

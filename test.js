@@ -17,11 +17,15 @@ app.get('/room', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-    res.render('login', {login: 'true'});
+    res.render('login', {login: false});
 });
 
-app.get('/', function (req, res) {
-    res.render('main');
+app.get('/room_status', function (req, res) {
+    res.render('room_status');
+});
+
+app.get('/nav', function (req, res) {
+    res.render('nav');
 });
 
 /* 이미지, css 등 정적파일에 접근하기 위해 public 폴더 추가*/
