@@ -140,29 +140,27 @@ a:hover {
 
 .icon_plus {
     margin-left: 33px;
+    fill: rgb(175, 175, 175);
+}
+
+.status_icon{
     fill: rgb(207, 207, 207);
 }
 
-.hoverfill{
-    fill: rgb(207, 207, 207);
-}
-
-
-.icon_plus:hover {
-    fill: rgb(61, 141, 151);
+.using .icon_plus:hover {
     cursor: pointer;
     fill: black;
 }
 
-.icon_trashcan:hover {
+#trashcan.fill {
     fill: rgb(95, 95, 95);
 }
 
-.icon_key:hover {
+#key.fill {
     fill: rgb(221, 188, 0);
 }
 
-.icon_docs:hover {
+#docs.fill {
     fill: brown;
 }
 
@@ -170,8 +168,14 @@ a:hover {
     padding: 2px;
 }
 
-.icon_checkout:hover {
+.icon_checkout {
+    fill: rgb(175, 175, 175);
+    cursor: default;
+}
+
+.using .icon_checkout:hover {
     fill: black;
+    cursor: pointer;
 }
 
 .commit, #inputbox{
