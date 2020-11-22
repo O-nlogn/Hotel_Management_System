@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <style>
+
+  </style>
+  </head>
+
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder">
+
+    </div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("nav.ejs");
+    });
+    </script>
+    <!-- end of Navigation bar -->
+
+    <% if(locals.data){ %>
+            <!-- 반복문 돌려서 각 객실에 대한 box 만들도록 함 -->
+            <!-- 서버에서 각 객실별로 room_number,check_in,country,trash,key,request 등의 정보를 줘야함 -->
+            <% for(let dat in data){ %>
+              <div class="rooms">
+                <div class="inner_box">
+                  <!-- 체크인 여부 : 체크인 했으면 사람 나오도록-->
+                  <%if (dat.check_in){ %>
+                    <img src="person.png" alt="사람 이미지" width="40">
+                  <% }%>
+                  <!-- 국기 --><!-- 돌아갈지 잘 모르겟음..-->
+                 <img id="country_flag" src=""  alt="국기 이미지" width="20">
+                 <script>
+                    var flag = <%= dat.country %>
+                    flag +=".png"
+                    //flag="South Korea"+".png"
+                    document.getElementById('country_flag').src=flag
+                 </script>
+                </div>
+
+                <!-- 밑에 애들은 if 에서는 불들어오고 else에서는 불안들어온 아이콘 출력-->
+                <!-- 쓰레기통.-->
+                <%if (dat.trash){ %>
+                  <i class="fas fa-circle fa-1x pr-1" style="color:#ffbf00"></i>
+                <% }else {%>
+                  <i class="fas fa-circle fa-1x pr-1" ></i>
+                <% }%>
+                <!-- 외출여부: 키가 꼽혀있으면 불-->
+                <%if (dat.key){ %>
+                  <i class="fas fa-circle fa-1x pr-1" style='color:blue'></i>
+                <% }else {%>
+                  <i class="fas fa-circle fa-1x pr-1"></i>
+                <% }%>
+                <!-- 요청사항 유무 -->
+                <%if (dat.request){ %>
+                  <i class="fas fa-circle fa-1x pr-1" style="color:#ff0040"></i>
+                <% }else {%>
+                  <i class="fas fa-circle fa-1x pr-1"></i>
+                <% }%>
+                <!-- 상세보기 :클릭했을때 연결되는 동작 넣어줘야 함-->
+                <button type="button" onclick=""><i class="fas fa-plus fa-1x pr-1"></i></button>
+
+              </div>
+
+            <% } %>
+        <% } %>
+
+   </body>
+</html>
