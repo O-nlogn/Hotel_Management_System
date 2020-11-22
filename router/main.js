@@ -25,7 +25,40 @@ module.exports = function (app) {
     });
 
     app.get('/room', function (req, res) {
-        res.render('room');
+        if (req.cookies.is_logged_in === undefined) {
+            res.redirect('/login');
+        }
+        else if (req.cookies.is_logged_in === 'false') {
+            res.redirect('/login');
+        }
+        else{
+            var sql = 'SELECT * FROM stay NATURAL JOIN(SELECT * FROM reservation NATURAL JOIN customers)newstay';
+            var stay_room;
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else {
+                    console.log(rows);
+                    stay_room = rows;
+                }
+            });
+
+            var sql = 'SELECT * FROM room';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else {
+                    res.render('room',{rooms:rows, stayrooms: stay_room});
+                }
+            });
+        }
     });
 
     app.get('/main', function (req, res) {
