@@ -13,28 +13,22 @@ app.get('/', function (req, res) {
 });
 
 app.get('/room', function (req, res) {
-    res.render('room', {rooms:
+    res.render('room', {
+        rooms:
         [
-            {number: '301', empty: 'false', nation: 'kr', status: {trash: 'true', key: 'true', request: 'true'}},
-            {number: '302', empty: 'true', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '303', empty: 'true', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '304', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'false'}},
-            {number: '305', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'true'}},
-            {number: '306', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'false'}},
-            {number: '307', empty: 'true', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '308', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'true'}},
-            {number: '309', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'true'}},
-            {number: '310', empty: 'true', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '311', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'false'}},
-            {number: '312', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'true'}},
-            {number: '401', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'false'}},
-            {number: '402', empty: 'false', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '403', empty: 'false', nation: '', status: {trash: 'false', key: 'true', request: 'false'}},
-            {number: '404', empty: 'false', nation: '', status: {trash: 'true', key: 'true', request: 'false'}},
-            {number: '405', empty: 'false', nation: '', status: {trash: 'true', key: 'false', request: 'false'}},
-            {number: '406', empty: 'false', nation: '', status: {trash: 'false', key: 'false', request: 'false'}},
-            {number: '407', empty: 'false', nation: '', status: {trash: 'true', key: 'true', request: 'true'}},
-            {number: '408', empty: 'false', nation: '', status: {trash: 'true', key: 'true', request: 'true'}}
+            {number: '301', type: 'standard'},
+            { number: '302', type: 'standard' },
+            { number: '303', type: 'standard' }
+        ],
+            
+        stayrooms: 
+        [
+            {email: 'testmail@hanyang.ac.kr', reservation_time: '2020-11-20 01:50:02', number: '301', cardkey: 0, request: '청소 깨끗이 해주세요', cleaning: 0,
+            checkin: '2020-11-21 14:00:00', checkout: '2020-11-25 11:00:00', password: 'dkfj3pfj3lks92k4rn1', room_type: 'standard', personnel: 2, breakfast: 0, name: 'smk', birth: '2019-11-25', nationality: 'SouthKorea'},
+                {
+                    email: 'test2mail@hanyang.ac.kr', reservation_time: '2020-11-19 02:50:02', number: '303', cardkey: 1, request: '영어 가능한 직원 불러주세요', cleaning: 1,
+                    checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00', password: 'e2ad2j3lks92k4rn1', room_type: 'standard', personnel: 1, breakfast: 1, name: 'smk2', birth: '2019-11-25', nationality: 'USA'
+                }
         ]
     });
 });
