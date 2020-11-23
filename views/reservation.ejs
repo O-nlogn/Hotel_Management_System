@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>
+            O-(nlogn) 호텔 관리 정보 시스템
+        </title>
+        <meta charset='UTF-8'>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            table, th, td {
+                border: 1px solid #bcbcbc;
+                border-radius: 5px;
+                border-collapse: collapse;
+                text-align: center;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <%- include('./nav'); %>
+        <div style="margin: 120px 0 0 550px; width: max-content;">
+            <div>
+                <input style="width: 154px;"type="text" placeholder="예약자명으로 검색">
+                <button>검색</button>
+            </div>
+            <table style="font-size: 15.5px;">
+    <!-- <caption>직원 목록</caption> -->
+                <thead>
+                    <tr>
+                        <th>예약자명</th>
+                        <th>예정 입실 시각</th>
+                        <th>룸 타입</th>
+                        <th>자세히</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>박준성</td>
+                        <td>2033-8-5 14:00</td>
+                        <td>Superior</td>
+                        <td>+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
