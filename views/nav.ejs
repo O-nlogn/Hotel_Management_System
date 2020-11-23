@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="nav.css">
-  </head>
-  <body>
-    <nav id="menu">
-      <ul>
-          <li class="menuItem">
-              <a class="menuItem" href="#">공지사항</a>
-          </li>
-          <li class="menuItem">
-              <a class="menuItem" href="../room">객실관리</a>
-              <ul class="submenu">
-                  <li>
-                      <a class="submenuItem" href="#">사용중인 객실</a>
-                  </li>
-                  <li>
-                      <a class="submenuItem" href="#">가용 객실</a>
-                  </li>
-                  <li>
-                      <a class="submenuItem" href="#">고장 객실</a>
-                  </li>
-                  <li>
-                      <a class="submenuItem"href="#">직원별 담당 객실</a>
-                  </li>
-              </ul>
-          </li>
-          <li class="menuItem">
-              <a class="menuItem" href="#">예약관리</a>
-          </li>
-          <li class="menuItem">
-              <a class="menuItem" href="#">비품관리</a>
-          </li>
-          <li class="menuItem">
-              <a class="menuItem" href="#">매출관리</a>
-          </li>
-          <li class="menuItem">
-              <a class="menuItem" href="#">직원관리</a>
-          </li>
-      </ul>
-    </nav>
-  </body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="nav.css">
+    </head>
+    <body>
+        <div style="display: flex;">
+            <nav id="menu">
+                <ul>
+                    <li class="menuItem">
+                        <a class="menuItem" href="#">공지사항</a>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuItem" href="../room">객실관리</a>
+                        <ul class="submenu">
+                            <li>
+                                <a class="submenuItem" href="#">사용중인 객실</a>
+                            </li>
+                            <li>
+                                <a class="submenuItem" href="#">가용 객실</a>
+                            </li>
+                            <li>
+                                <a class="submenuItem" href="#">고장 객실</a>
+                            </li>
+                            <li>
+                                <a class="submenuItem"href="#">직원별 담당 객실</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuItem" href="../reservation">예약관리</a>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuItem" href="#">비품관리</a>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuItem" href="#">매출관리</a>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuItem" href="../staff">직원관리</a>
+                    </li>
+                </ul>
+                </nav>
+                <a id="logout">로그아웃</a>
+        </div>
+    </body>
 </html>

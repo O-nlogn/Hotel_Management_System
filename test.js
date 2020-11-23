@@ -36,15 +36,24 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/room_status', function (req, res) {
-    res.render('room_status', {data:
-        [{room_number: '301', check_in: 'true', country: "South Korea", trash: 'true', key: 'true', request: 'true'},
-         {room_number: '302', check_in: 'true', country: "South Korea", trash: 'true', key: 'false', request: 'true'}]
+    res.render('room_status', {
+        data:
+            [
+                {room_number: '301', check_in: 'true', country: "South Korea", trash: 'true', key: 'true', request: 'true'},
+                {room_number: '302', check_in: 'true', country: "South Korea", trash: 'true', key: 'false', request: 'true'}
+            ]
     });
 });
 
-app.get('/nav', function (req, res) {
-    res.render('nav');
+app.get('/staff', function (req, res) {
+    res.render('staff');
 });
+
+app.get('/reservation', function (req, res) {
+    res.render('reservation');
+});
+
+
 
 /* 이미지, css 등 정적파일에 접근하기 위해 public 폴더 추가*/
 app.use(express.static('public'));
