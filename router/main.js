@@ -32,10 +32,12 @@ module.exports = function (app) {
             res.redirect('/login');
         }
         else{
-            var sql = 'SELECT * FROM(SELECT name as staff_name, room FROM users NATURAL JOIN responsibility)a NATURAL JOIN(';
-            sql += 'SELECT room,nationality,personnel,should_paid,cardkey,request,cleaning,checkin,checkout FROM(';
-            sql += 'SELECT * FROM stay NATURAL JOIN(SELECT sum(price) as should_paid FROM receipt_service NATURAL JOIN room_service where paid = 0 group by room)d)e NATURAL JOIN(';
-            sql += 'SELECT * FROM reservation NATURAL JOIN customers)b)c';
+            var sql = 'SELECT stay.room, users.name as staff_name, nationality, personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, request, cleaning, checkin, checkout from stay'
+            sql += ' JOIN responsibility ON stay.room = responsibility.room';
+            sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
+            sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
+            sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
+            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
             var stay_room;
 
             dbconfig.query(sql, function (err, rows, fields) {
