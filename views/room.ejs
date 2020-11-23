@@ -57,7 +57,7 @@
 		<div class="table">
 			<% for (var i = 0, j=0; i < rooms.length; i++) { %>
 				<%var empty = 1; %>
-			<% if (j < stayrooms.length && rooms[i].number === stayrooms[j].number) { %> <% empty = 0;} %>
+			<% if (j < stayrooms.length && rooms[i].number === stayrooms[j].room) { %> <% empty = 0;} %>
 
 			<div class= <% if (!empty){ %>
 					"using" 
