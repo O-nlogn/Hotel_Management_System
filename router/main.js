@@ -32,7 +32,10 @@ module.exports = function (app) {
             res.redirect('/login');
         }
         else{
-            var sql = 'SELECT * FROM stay NATURAL JOIN(SELECT * FROM reservation NATURAL JOIN customers)newstay';
+            var sql = 'SELECT * FROM(SELECT name as staff_name, room FROM users NATURAL JOIN responsibility)a NATURAL JOIN(';
+            sql += 'SELECT room,nationality,personnel,should_paid,cardkey,request,cleaning,checkin,checkout FROM(';
+            sql += 'SELECT * FROM stay NATURAL JOIN(SELECT sum(price) as should_paid FROM receipt_service NATURAL JOIN room_service where paid = 0 group by room)d)e NATURAL JOIN(';
+            sql += 'SELECT * FROM reservation NATURAL JOIN customers)b)c';
             var stay_room;
 
             dbconfig.query(sql, function (err, rows, fields) {
