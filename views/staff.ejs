@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>
+            O-(nlogn) 호텔 관리 정보 시스템
+        </title>
+        <meta charset='UTF-8'>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+            *{
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+            table, th, td {
+                border: 1px solid #bcbcbc;
+                border-radius: 5px;
+                border-collapse: collapse;
+                text-align: center;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <%- include('./nav'); %>
+        /* 임시 */
+        <div style="margin: 120px 0 0 550px; width: max-content;">
+            <div>
+                <input style="width: 154px;"type="text" placeholder="사번, 이름, 부서, 출근 여부">
+                <button>검색</button>
+            </div>
+            <table style="font-size: 15.5px;">
+    <!-- <caption>직원 목록</caption> -->
+                <thead>
+                    <tr>
+                        <th>사번</th>
+                        <th>이름</th>
+                        <th>부서</th>
+                        <th>출근 여부</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2019036844</td>
+                        <td>하현우</td>
+                        <td>소프트웨어학부</td>
+                        <td>X</td>
+                        <td>+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
