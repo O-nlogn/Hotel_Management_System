@@ -35,6 +35,11 @@ app.get('/login', function (req, res) {
     res.render('login', {login: false});
 });
 
+app.get('/logout', function (req, res) {
+    res.cookie('is_logged_in', undefined);
+    res.redirect('/login');
+});
+
 app.get('/room_status', function (req, res) {
     res.render('room_status', {
         data:
