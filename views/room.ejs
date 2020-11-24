@@ -49,22 +49,102 @@
 			blk.innerHTML = resultString;
 		}   
 	</script>
+	<!-- 층별보기 -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#floor3').click(function(){
+                var offset = $('#301').offset(); //선택한 태그의 위치를 반환
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor4').click(function(){
+                var offset = $('#401').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor5').click(function(){
+                var offset = $('#501').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor6').click(function(){
+                var offset = $('#601').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor7').click(function(){
+                var offset = $('#701').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor8').click(function(){
+                var offset = $('#801').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor9').click(function(){
+                var offset = $('#901').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor10').click(function(){
+                var offset = $('#1001').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor11').click(function(){
+                var offset = $('#1101').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+			$('#floor12').click(function(){
+                var offset = $('#1201').offset();
+                $('.table').animate({scrollTop : offset.top}, 400);
+            });
+        });
+    </script>
 </head>
 
 <body>
 	<%- include('./nav'); %>
 	<div class="body">
+		<!-- 층별보기 -->
+        <div class = "floor">
+            <button id="floor3">3층</button>
+            <div id=""></div>
+            <button id="floor4">4층</button>
+            <div id=""></div>
+            <button id="floor5">5층</button>
+            <div id=""></div>
+            <button id="floor6">6층</button>
+			<div id=""></div>
+			<button id="floor7">7층</button>
+            <div id=""></div>
+            <button id="floor8">8층</button>
+            <div id=""></div>
+            <button id="floor9">9층</button>
+            <div id=""></div>
+            <button id="floor10">10층</button>
+			<div id=""></div>
+			<button id="floor11">11층</button>
+            <div id=""></div>
+            <button id="floor12">12층</button>
+            <div id=""></div>
+        </div>
+
 		<div class="table">
 			<% for (var i = 0, j=0; i < rooms.length; i++) { %>
 				<%var empty = 1; %>
 			<% if (j < stayrooms.length && rooms[i].number === stayrooms[j].room) { %> <% empty = 0;} %>
-
 			<div class= <% if (!empty){ %>
 					"using" 
 				<% } %>>
+
 				<p style="margin: 0; font-weight: bold; margin-left: 2px;"><%- rooms[i].number %></p>
 				<% if (!empty) { %>
 				<div style="border: none; margin-top: 10px; display: flex;">
+					<% if (rooms[i].number === 301) { %> <span id="301"> </span> <% } %>
+					<% if (rooms[i].number === 401) { %> <span id="401"> </span> <% } %>
+					<% if (rooms[i].number === 501) { %> <span id="501"> </span> <% } %>
+					<% if (rooms[i].number === 601) { %> <span id="601"> </span> <% } %>
+					<% if (rooms[i].number === 701) { %> <span id="701"> </span> <% } %>
+					<% if (rooms[i].number === 801) { %> <span id="801"> </span> <% } %>
+					<% if (rooms[i].number === 901) { %> <span id="901"> </span> <% } %>
+					<% if (rooms[i].number === 1001) { %> <span id="1001"> </span> <% } %>
+					<% if (rooms[i].number === 1101) { %> <span id="1101"> </span> <% } %>
+					<% if (rooms[i].number === 1201) { %> <span id="1201"> </span> <% } %>
 					<div style="border: none;">
 						<a href="#a"><svg class="icon_checkout" width="22" height="22" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
 								<path d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
