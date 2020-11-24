@@ -77,20 +77,4 @@ module.exports = function (app) {
             res.render('main');
         }
     });
-
-    // 자동 새로고침 기능 확인을 위한 웹페이지, 추후 삭제 예정
-    app.get('/reload', function (req, res) {
-        var sql = 'SELECT * FROM users';
-        dbconfig.query(sql, function (err, rows, fields) {
-            if (err) {
-                console.log(err);
-                res.writeHead(200);
-                res.end();
-            }
-            else {
-                console.log(rows[0])
-                res.render('reload', {row:rows[0].password});
-            }
-        });
-    });
 }
