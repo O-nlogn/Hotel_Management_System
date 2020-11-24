@@ -24,6 +24,11 @@ module.exports = function (app) {
         res.render('login',{login:req.cookies.is_logged_in});
     });
 
+    app.get('/logout', function (req, res) {
+        res.cookie('is_logged_in', undefined);
+        res.redirect('/login');
+    });
+
     app.get('/room', function (req, res) {
         if (req.cookies.is_logged_in === undefined) {
             res.redirect('/login');
@@ -32,7 +37,7 @@ module.exports = function (app) {
             res.redirect('/login');
         }
         else{
-            var sql = 'SELECT stay.room, users.name as staff_name, nationality, personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, request, cleaning, checkin, checkout from stay'
+            var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, request, cleaning, checkin, checkout from stay'
             sql += ' JOIN responsibility ON stay.room = responsibility.room';
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
             sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
@@ -52,7 +57,7 @@ module.exports = function (app) {
                 }
             });
 
-            var sql = 'SELECT * FROM room';
+            sql = 'SELECT * FROM room';
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
