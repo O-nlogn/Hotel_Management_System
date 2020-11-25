@@ -90,7 +90,7 @@ a:hover {
     grid-template-rows: repeat(20, 150px);
     width: max-content;
     height: 600px;
-    margin: 100px 0 0 500px;
+    margin: 100px 0 0 10px;
     border: solid 1px black;
 }
 
@@ -189,4 +189,12 @@ a:hover {
 
 #modify {
     display: none;
+}
+
+.floor {
+    margin: 100px 0 0 520px;
+}
+
+.floor .button {
+    width: 30px;
 }
