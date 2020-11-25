@@ -58,6 +58,14 @@ app.get('/reservation', function (req, res) {
     res.render('reservation');
 });
 
+app.get('/mypage', function (req, res) {
+    res.render('mypage');
+});
+
+
+app.get('/notice', function (req, res) {
+    res.render('notice');
+});
 
 
 /* 이미지, css 등 정적파일에 접근하기 위해 public 폴더 추가*/
