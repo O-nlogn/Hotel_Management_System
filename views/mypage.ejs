@@ -5,24 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="style.css"> -->
     <!-- <script src="frontend.js" defer></script> -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+    <style>
+        .inf-content{
+            border:1px solid #DDDDDD;
+            -webkit-border-radius:10px;
+            -moz-border-radius:10px;
+            border-radius:10px;
+            box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+        }			                                                      
+    </style>
     <title>내 정보</title>
 </head>
 <body>
     <%- include('./nav'); %>
-    <div style="width: max-content; margin: 100px 0 0 500px;">
-        <section id="mypage">
-            <img src="Spain.png" width=60 alt="profile photo" class="staff_profile">
-            <div class="name">name</div>
-            <div class="idnum"></div>
-            <div class="department"></div>
-            <div class="position"></div>
-            <div class="language"></div>
-            <div class="phonenum"></div>
-            <div class="email"></div>
-            <div class="address"></div>
-            <div class="accountnum">계좌번호</div>
-        </section>
-    </div>
-    
+    <div class="container bootstrap snippets bootdey">
+        <div class="panel-body inf-content">
+            <div class="row">
+                <!-- 프로필 사진 -->
+                <!-- 사진 중앙정렬 필요..? -->
+                <div class="row-md-4">
+                    <img alt="" style="width:300px;" title="" class="img-circle img-thumbnail isTooltip" src="profile.png" data-original-title="Usuario"> 
+                </div>
+                <!-- 개인정보 -->
+                <div class="row-md-6">
+                    <strong>Information</strong><br>
+                    <div class="table-responsive">
+                    <table class="table table-user-information">
+                        <!-- 테이블에서 실제정보를 나타내는 부분(왼쪽부분)이 좀더 좌측으로 땡겨지면 좋을 것 같아요 -->
+                        <!-- 변경버튼  라인 가장 오른쪽으로 정렬하면 좋을 것 같아요-->
+                        <tbody>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <!-- 아이콘 뒤죽박죽임 - 디자인 시 참고해주세요 -->
+                                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                        이름                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <!-- 현재 로그인 data 받아와야 함 : 구현 필요 -->
+                                    권유리 
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        사번                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    1234567890     
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                        부서                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    -- 
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        직급                                               
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    팀장
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                        외국어/언어                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    영어
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                        연락처                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    010-1234-5678 <button>변경</button>
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        주소                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    --- <button>변경</button>
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        계좌번호                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    ---- <button>변경</button>
+                                </td>
+                            </tr>                                    
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <button>비밀번호 변경</button>
+        <button>저장</button>                                         
 </body>
 </html>
+
