@@ -35,6 +35,11 @@ app.get('/login', function (req, res) {
     res.render('login', {login: false});
 });
 
+app.get('/logout', function (req, res) {
+    res.cookie('is_logged_in', undefined);
+    res.redirect('/login');
+});
+
 app.get('/room_status', function (req, res) {
     res.render('room_status', {
         data:
@@ -53,7 +58,22 @@ app.get('/reservation', function (req, res) {
     res.render('reservation');
 });
 
+app.get('/mypage', function (req, res) {
+    res.render('mypage');
+});
 
+
+app.get('/notice', function (req, res) {
+    res.render('notice');
+});
+
+app.get('/changepw', function (req, res) {
+    res.render('changepw');
+});
+
+// app.get('/request', function (req, res) {
+//     res.render('request');
+// });
 
 /* 이미지, css 등 정적파일에 접근하기 위해 public 폴더 추가*/
 app.use(express.static('public'));
