@@ -102,41 +102,6 @@ a:hover {
     display: flex;
 }
 
-#request .list {
-    /* margin: 100px 0 0 100px; */
-    width: max-content;
-    overflow-y: scroll;
-    height: 600px;
-}
-
-#requestItem {
-    width: 200px;
-    border-bottom: dotted 2px black;
-}
-
-#requestItem .title {
-    font-weight: bold;
-}
-
-#request {
-    margin: 100px 0 0 100px;
-}
-
-
-#request button {
-    border-radius: 100px;
-    border: 1px solid powderblue;
-    background-color: powderblue;
-    color: #fff;
-    margin: 10px 8px;
-    padding: 15px 80px;
-    font-size: 20px;
-}
-
-#request button:hover {
-    background-color: rgb(61, 141, 151);
-
-}
 
 .icon_plus {
     margin-left: 33px;

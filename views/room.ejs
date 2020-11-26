@@ -37,11 +37,11 @@
 	</script>
 
 	<!-- 자동 새로고침을 위한 코드 -->
-	<script>
+	<!-- <script>
 		setTimeout(function(){
 			location.reload();
 		},3000); // 3000 ms == 3 s
-	</script>
+	</script> -->
 
 	<!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->
 	<script>
@@ -221,91 +221,7 @@
 			<% } %>
 		</div>
 		<!-- request도 분리하는 게 좋을 지도 ? -->
-		<div id="request">
-			<div class="list">
-				<div id="requestItem">
-					<p class='title'>
-						제목1
-					</p>
-					<p class="content">
-						내용1
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목2
-					</p>
-					<p class="content">
-						내용2
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목3
-					</p>
-					<p class="content">
-						내용3
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목4
-					</p>
-					<p class="content">
-						내용4
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목5
-					</p>
-					<p class="content">
-						내용5
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목6
-					</p>
-					<p class="content">
-						내용6
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목7
-					</p>
-					<p class="content">
-						내용7
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목8
-					</p>
-					<p class="content">
-						내용8
-					</p>
-				</div>
-
-				<div id="requestItem">
-					<p class='title'>
-						제목9
-					</p>
-					<p class="content">
-						내용9
-					</p>
-				</div>
-			</div>
-			<button>+</button>
-		</div>
+		<%- include('./request'); %>
 	</div>
 
 
