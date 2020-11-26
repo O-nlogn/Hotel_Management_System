@@ -45,7 +45,32 @@ module.exports = function (app) {
     });
 
     app.get('/room', function (req, res) {
-        if (req.cookies.is_logged_in === 'true'){
+        if (req.cookies.is_logged_in === 'true') {
+            var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, request, cleaning, checkin, checkout from stay'
+            sql += ' JOIN responsibility ON stay.room = responsibility.room';
+            sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
+            sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
+            sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
+            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else {
+                    console.log(rows);
+                    res.render('room', {stayrooms: rows});
+                }
+            });
+        }
+        else res.redirect('/');
+    });
+
+
+    app.get('/reload_table', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
             var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, request, cleaning, checkin, checkout from stay'
             sql += ' JOIN responsibility ON stay.room = responsibility.room';
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
@@ -74,7 +99,7 @@ module.exports = function (app) {
                     res.end();
                 }
                 else {
-                    res.render('room',{rooms:rows, stayrooms: stay_room});
+                    res.render('reload_table', { rooms: rows, stayrooms: stay_room });
                 }
             });
         }
@@ -116,21 +141,15 @@ module.exports = function (app) {
     
     /* 테스트 관련*/
     app.get('/test', function (req, res) {
-        var sql = 'SELECT * FROM TEXT'
+        var sql = 'SELECT * FROM TEST'
         dbconfig.query(sql, (err, rows) => {
             console.log(new Date() + ' | testing : ' + rows.length);
             if (err) {
                 throw err;
             }
-
-            var i = 0;
-            
             res.render('reload-test',{data:rows});
         });
     });
 
-    app.get('/reload', function (req, res) {
-        console.log('reloading');
-        res.render('reload');
-    });
+    
 }
