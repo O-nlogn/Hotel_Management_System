@@ -22,30 +22,39 @@
     </head>
     <body>
         <%- include('./nav'); %>
-        /* 임시 */
-        <div style="margin: 120px 0 0 550px; width: max-content;">
+        <div style="margin: 120px 0 0 400px; width: max-content;">
             <div>
                 <input style="width: 154px;"type="text" placeholder="사번, 이름, 부서, 출근 여부">
                 <button>검색</button>
             </div>
-            <table style="font-size: 15.5px;">
-    <!-- <caption>직원 목록</caption> -->
-                <thead>
-                    <tr>
-                        <th>사번</th>
-                        <th>이름</th>
-                        <th>부서</th>
-                        <th>출근 여부</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2019036844</td>
-                        <td>하현우</td>
-                        <td>소프트웨어학부</td>
-                        <td>X</td>
-                        <td>+</td>
+            <table>
+            <tbody>
+                <tr>
+                    <td width="150px">
+                        <img src="profile.png" height="117px">
+                    </td>
+                        <td>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>이름</th>
+                                        <td>하현우</td>
+                                    </tr>
+                                    <tr>
+                                        <th>부서</th>
+                                        <td>소프트웨어학부</td>
+                                    </tr>
+                                    <tr>
+                                        <th>전화번호</th>
+                                        <td>010-1234-5678</td>
+                                    </tr>
+                                    <tr>
+                                        <th>이메일</th>
+                                        <td>high092@naver.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 </tbody>
             </table>
