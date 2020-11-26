@@ -67,6 +67,11 @@ app.get('/notice', function (req, res) {
     res.render('notice');
 });
 
+app.get('/changepw', function (req, res) {
+    res.render('changepw');
+});
+
+
 
 /* 이미지, css 등 정적파일에 접근하기 위해 public 폴더 추가*/
 app.use(express.static('public'));
