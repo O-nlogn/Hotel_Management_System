@@ -82,4 +82,23 @@ module.exports = function (app) {
             res.render('main');
         }
     });
+
+    app.get('/test', function (req, res) {
+        sql = 'SELECT * FROM TEXT'
+        dbconfig.query(sql, (err, rows) => {
+            console.log(new Date() + ' | testing : ' + rows.length);
+            if (err) {
+                throw err;
+            }
+
+            var i = 0;
+            
+            res.render('reload-test',{data:rows});
+        });
+    });
+
+    app.get('/reload', function (req, res) {
+        console.log('reloading');
+        res.render('reload');
+    });
 }

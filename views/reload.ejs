@@ -1,0 +1,35 @@
+<html>  
+    <head>    
+        <meta charset="utf-8">   
+    </head>  
+    <body>    
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script> 
+        <script>
+            function div_reload() {
+                setTimeout($('hi').load(location.href+'hi'));
+            }
+        </script>
+        <div id = 'hi'>
+            <p class = 'ok'>
+
+            </p>
+            <p>
+                hello world
+            </p>
+        </div>
+
+        <script>
+            function get_test_data() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/test',
+                    success : (data) => {
+                        $('.ok').html(data);
+                        setTimeout('get_test_data()',1000);
+                    }
+                });
+            }
+            get_test_data();
+        </script> 
+    </body>
+</html>
