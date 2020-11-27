@@ -8,35 +8,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-	<!--팝업창 클릭 제어-->
-	<script>
-		$(document).ready(function (){
-			$(".using.room301 .open").on('click', function () {
-				$(".popup.room301").show();
-				$(".dim").show();
-			});
-			$(".using.room303 .open").on('click', function () {
-				$(".popup.room303").show();
-				$(".dim").show();
-			});
-			$(".popup .close").on('click', function () {
-				$(this).parent().parent().hide();
-				$(".dim").hide();
-			});
-			$('.commit').on('click', function () {
-				$(this).hide();
-				$('#inputbox').hide();
-				$('.modify').show();
-				$('#result').show();
-			});
-			$('.modify').on('click', function () {
-				$(this).hide();
-				$('#result').hide();
-				$('#inputbox').show();
-				$('.commit').show();
-			})
-		});
-	</script>
 	
 	<!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->
 	<script>
