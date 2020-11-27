@@ -110,7 +110,30 @@ module.exports = function (app) {
 
     app.get('/staff', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('staff');
+            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work FROM users';
+            var users;
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else users = rows;
+            });
+
+            sql = 'SELECT name, id, language FROM multilingual NATURAL JOIN users';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else{
+                    console.log({users:users, multilingual:rows});
+                    res.render('staff', { staff: users, multilingual: rows});
+                }
+            });
         }
         else res.redirect('/login');
     });

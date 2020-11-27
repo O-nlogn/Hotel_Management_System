@@ -51,7 +51,17 @@ app.get('/room_status', function (req, res) {
 });
 
 app.get('/staff', function (req, res) {
-    res.render('staff');
+    res.render('staff', {
+        staff:
+            [
+                {name: '짱구', id: '2222222222', department: '프론트', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
+                {name: '장금이', id:'1111111111', department: '식음료부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1}
+            ],
+        multilingual:
+            [
+                {name: '짱구', id:'2222222222', language: '일본어'}
+            ]
+    });
 });
 
 app.get('/reservation', function (req, res) {
