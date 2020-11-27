@@ -25,7 +25,7 @@
 }
 
 
-#request button {
+#request .btn-lg {
     border-radius: 100px;
     border: 1px solid powderblue;
     background-color: powderblue;
@@ -35,7 +35,15 @@
     font-size: 20px;
 }
 
-#request button:hover {
+#request .btn-lg:hover {
     background-color: rgb(61, 141, 151);
 
+}
+/* realtime request 추가부분  */
+.request_box {
+  float:left;
+}
+#sort {
+   border:2px solid #000;
+   float:right;
 }
