@@ -39,7 +39,18 @@ module.exports = function (app) {
 
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('reservation');
+            var sql = ' SELECT *, breakfast_price+rate+extra as total_price from(select name, reservation_time, checkin, checkout, room_type, reservation.personnel,';
+            sql += 'CASE WHEN breakfast=0 THEN 0 ELSE 7000 END AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
+            sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a';
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else res.render('reservation', { reservation: rows });
+            });
         }
         else res.redirect('/login');
     });
@@ -59,15 +70,11 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    console.log(rows);
-                    res.render('room', {stayrooms: rows});
-                }
+                else res.render('room', {stayrooms: rows});
             });
         }
         else res.redirect('/');
     });
-
 
     app.get('/reload_table', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
@@ -85,10 +92,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    console.log(rows);
-                    stay_room = rows;
-                }
+                else stay_room = rows;
             });
 
             sql = 'SELECT * FROM room';
@@ -98,9 +102,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    res.render('reload_table', { rooms: rows, stayrooms: stay_room });
-                }
+                else res.render('reload_table', { rooms: rows, stayrooms: stay_room });
             });
         }
         else res.redirect('/');

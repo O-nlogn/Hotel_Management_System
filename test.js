@@ -55,7 +55,15 @@ app.get('/staff', function (req, res) {
 });
 
 app.get('/reservation', function (req, res) {
-    res.render('reservation');
+    res.render('reservation', {
+        reservation: 
+        [
+                {name: '스핑크스', reservation_time: '2021-11-23T03:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout:'2021-01-12T02:00:00.000Z',
+                room_type: 'Twin', personnel: 3, breakfast_price: 0, rate: 50000, extra: 12000, total_price: 67000},
+                {name: '가으앙시', reservation_time: ' 2021-11-09T12:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout: '2021-01-12T02:00:00.000Z',
+                room_type: 'single', personnel: 1, breakfast_price: 7000, rate: 50000, extra: 0, total_price: 57000}
+        ]
+    });
 });
 
 app.get('/mypage', function (req, res) {
