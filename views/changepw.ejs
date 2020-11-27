@@ -39,24 +39,34 @@
                 <h2 class="h3 mb-4 page-title">비밀번호 변경</h2>
                 <div class="my-4">
                     
-                    <form>
+                    <form action="/password" method="post">
                         <hr class="my-4" />
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                <form action="" method="post">
-                                    <div class="form-group">
-                                        <label for="inputPassword4">현재 비밀번호</label>
-                                        <input type="password" class="form-control" name="inputPassword4" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPassword5">새 비밀번호</label>
-                                        <input type="password" class="form-control" name="inputPassword5" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPassword6">비밀번호 확인</label>
-                                        <input type="password" class="form-control" name="inputPassword6" />
-                                    </div>
-                                </form>
+                                <div class="form-group">
+                                    <label for="inputPassword4">현재 비밀번호</label>
+                                    
+                                    <!---비밀번호가 틀릴 때-->
+                                    <%if(status === 'curpw_not_match'){%>
+                                        <p class="style1" style="font-weight: bold; color: rgba(201, 0, 0, 0.7)">비밀번호가 일치하지 않습니다.</p>
+                                    <%} %>
+
+                                    <input type="password" class="form-control" name="curpw" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword5">새 비밀번호</label>
+                                    <input type="password" class="form-control" name="newpw" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword6">비밀번호 확인</label>
+                                    
+                                    <!---새 비밀번호와 비밀번호 확인의 문자열이 다를 때-->
+                                    <%if(status === 'newpw_not_match'){%>
+                                        <p class="style1" style="font-weight: bold; color: rgba(201, 0, 0, 0.7)">비밀번호가 일치하지 않습니다.</p>
+                                    <%} %>
+
+                                    <input type="password" class="form-control" name="checkpw" />
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-2">안전한 비밀번호 만드는 법</p>

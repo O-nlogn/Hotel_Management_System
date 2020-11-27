@@ -157,7 +157,7 @@ module.exports = function (app) {
 
     app.get('/changepw', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('changepw');
+            res.render('changepw', {status: undefined});
         }
         else res.redirect('/login');
     });
