@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비품관리</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            margin-top: 20px;
+            background: #f8f8f8
+        }
+
+        .avatar--md .avatar__content img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+
+<body>
+    <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <!-- 검색창 -->
+                <div class="input-group">
+                    <input placeholder="검색" type="text" class="form-control">
+                    <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                </div>
+                <!-- 필터링 선택 부분 -->
+                <div class="col-md-6 col-lg-3 my-3">
+                    <div class="select-container">
+                        <select class="custom-select">
+                            <option selected="">전제 비품</option>
+                            <option value="1">주문 필요 비품</option>
+                            <option value="2">주문 중인 비품</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 Card_custom-card--border_5wJKy card">
+                    <div class="table-responsive-xl">
+                        <table class="mb-0 table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle bt-0">비품명</th>
+                                    <th class="align-middle bt-0">사진</th>
+                                    <th class="align-middle bt-0">잔여량</th>
+                                    <th class="align-middle bt-0">주문여부</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle">
+                                        <div>휴지</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div class="avatar avatar--md avatar-image__image">
+                                                <div class="avatar__content"><img
+                                                        src="profile.png"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div>394개</div>
+                                    </td>
+                                    <td class="align-middle">
+                                            <div><button>주문하기</button></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">
+                                        <div>드라이기</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div class="avatar avatar--md avatar-image__image">
+                                                <div class="avatar__content"><img
+                                                        src="profile.png"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div>94개</span></div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div><button>주문하기</button></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center pb-0 card-footer">
+                        <nav class="" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a href="#" class="page-link" aria-label="Previous"><span
+                                            aria-hidden="true"><i class="fa fa-fw fa-angle-left"></i></span><span
+                                            class="sr-only">Previous</span></a></li>
+                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link" aria-label="Next"><span
+                                            aria-hidden="true"><i class="fa fa-fw fa-angle-right"></i></span><span
+                                            class="sr-only">Next</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
