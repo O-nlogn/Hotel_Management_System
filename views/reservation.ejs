@@ -1,51 +1,216 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='UTF-8'>
-        <title>
-            예약관리
-        </title>
-        <meta charset='UTF-8'>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-            *{
-                font-family: 'Nanum Gothic', sans-serif;
-            }
-            table, th, td {
-                border: 1px solid #bcbcbc;
-                border-radius: 5px;
-                border-collapse: collapse;
-                text-align: center;
-                padding: 5px;
-            }
-        </style>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>
+        예약관리
+    </title>
+    <meta charset='UTF-8'>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        table,
+        th,
+        td {
+            border: 1px solid #bcbcbc;
+            border-radius: 5px;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 5px;
+        }
+        /* nav바는 흰색, 밑 배경은 다른 색으로 까는것도 좋을 것 같음.. */
+        body{
+            margin-top:20px;
+            background:#f8f8f8
+        }
+        .avatar--md .avatar__content img{
+            width:40px;
+            height:40px;
+        }
+    </style>
     </head>
-    <body>
-        <%- include('./nav'); %>
-        <div style="margin: 120px 0 0 550px; width: max-content;">
-            <div>
-                <input style="width: 154px;"type="text" placeholder="예약자명으로 검색">
-                <button>검색</button>
+
+<body>
+    <%- include('./nav'); %>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="mb-4">
+                    <div class="small mb-3">Search</div>
+                    <div class="input-group">
+                        <input placeholder="예약자명으로 검색" type="text" class="form-control">
+                        <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="small mb-3">월별 예약 현황</div>
+                    <ul class="nav flex-column nav-pills">
+                        <li class="nav-item"><a href="#" class="nav-link"><i
+                                    class="fa fa-fw fa-calendar-o mr-2"></i>Calendar</a></li>
+                                    <!-- 달력기능 : 개인적으로 꼭 넣고 싶음..^^ -->
+                    </ul>
+                </div>
+                <div class="mb-4">
+                    <div class="small mb-3">예약보기</div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio5" name="customRadio"
+                            class="custom-control-input">
+                        <label class="custom-control-label ml-1 text-muted f-15"
+                            for="customRadio5">취소 예약 보기</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio5" name="customRadio"
+                            class="custom-control-input">
+                        <label class="custom-control-label ml-1 text-muted f-15"
+                            for="customRadio5">입실 예정 예약보기</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <!-- 직원 배정을 위해 현재 출근 상태인 직원 나타내주면 좋을 듯 -->
+                    <div class="small mb-3">출근 중 직원</div>
+                    <ul class="nav flex-column nav-pills">
+                        <li class="nav-item">
+                            <a href="#" class="d-flex nav-link">
+                                <div class="media">
+                                    <div class="mr-3 align-self-center media-left media-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div class="avatar avatar--md avatar-image__image">
+                                                <div class="avatar__content"><img
+                                                        src="profile.png"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mt-0">권유리1</div><span class="small">프론트 부서</span>
+                                        <div class="mt-0"></div><span class="small">영어, 일본어</span>
+                                    </div>
+                                </div><i class="fa fa-fw fa-circle text-success ml-auto align-self-center ml-2"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="d-flex nav-link">
+                                <div class="media">
+                                    <div class="mr-3 align-self-center media-left media-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div class="avatar avatar--md avatar-image__image">
+                                                <div class="avatar__content"><img
+                                                        src="profile.png"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mt-0">권유리2</div><span class="small">프론트 부서</span>
+                                        <div class="mt-0"></div><span class="small">영어, 일본어</span>
+                                    </div>
+                                </div><i class="fa fa-fw fa-circle text-warning ml-auto align-self-center ml-2"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="d-flex nav-link">
+                                <div class="media">
+                                    <div class="mr-3 align-self-center media-left media-middle">
+                                        <div class="avatar-image avatar-image--loaded">
+                                            <div class="avatar avatar--md avatar-image__image">
+                                                <div class="avatar__content"><img
+                                                        src="profile.png"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mt-0">권유리3</div><span class="small">프론트 부서</span>
+                                        <div class="mt-0"></div><span class="small">영어, 일본어</span>
+                                    </div>
+                                </div><i class="fa fa-fw fa-circle text-danger ml-auto align-self-center ml-2"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <table style="font-size: 15.5px;">
-    <!-- <caption>직원 목록</caption> -->
-                <thead>
-                    <tr>
-                        <th>예약자명</th>
-                        <th>예정 입실 시각</th>
-                        <th>룸 타입</th>
-                        <th>자세히</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>박준성</td>
-                        <td>2033-8-5 14:00</td>
-                        <td>Superior</td>
-                        <td>+</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col-lg-9">
+                <div class="mb-3 Card_custom-card--border_5wJKy card">
+                    <div class="table-responsive-xl">
+                        <table class="mb-0 table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle bt-0">예약자명</th>
+                                    <th class="align-middle bt-0">예약상태</th>
+                                    <th class="align-middle bt-0">입실시간</th>
+                                    <th class="align-middle bt-0">방타입</th>
+                                    <th class="align-middle bt-0">상세보기</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle">
+                                        <div>권유리</div>
+                                    </td>
+                                    <!-- 뱃지 색상 적용 필요 -->
+                                    <td class="align-middle"><span class="badge badge-success badge-pill">취소</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        
+                                        <div>2020-09-20 16:00</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div>스위트룸</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div role="group" class="btn-group">
+                                            <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
+                                                    class="fa-fw fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">
+                                        <div>권유리</div>
+                                    </td>
+                                    <td class="align-middle"><span class="badge badge-primary badge-pill">입실대기</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        
+                                        <div>2020-09-20 16:00</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div>스위트룸</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div role="group" class="btn-group">
+                                            <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
+                                                    class="fa-fw fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center pb-0 card-footer">
+                        <nav class="" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a href="#" class="page-link" aria-label="Previous"><span
+                                            aria-hidden="true"><i class="fa fa-fw fa-angle-left"></i></span><span
+                                            class="sr-only">Previous</span></a></li>
+                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link" aria-label="Next"><span
+                                            aria-hidden="true"><i class="fa fa-fw fa-angle-right"></i></span><span
+                                            class="sr-only">Next</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
