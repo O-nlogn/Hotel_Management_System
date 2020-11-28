@@ -43,7 +43,6 @@
     color: black;
     margin-top: -1px;
     background-color: white;
-    z-index: 6;
 }
 
 .submenuItem:hover {
@@ -55,6 +54,7 @@
     height: 0;
     overflow: hidden;
     border-radius: 10px;
+    z-index: 1;
     /* 부모보다 커지면 숨어 */
     /* transition: height 0s; */
 }
