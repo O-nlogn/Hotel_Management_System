@@ -42,11 +42,18 @@
 .submenuItem {
     color: black;
     margin-top: -1px;
+    background-color: white;
 }
+
+.submenuItem:hover {
+    text-decoration: none;
+}
+
 .submenu {
     position: absolute;
     height: 0;
     overflow: hidden;
+    border-radius: 10px;
     /* 부모보다 커지면 숨어 */
     /* transition: height 0s; */
 }
