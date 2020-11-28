@@ -70,13 +70,16 @@ app.get('/mypage', function (req, res) {
     res.render('mypage');
 });
 
-
 app.get('/notice', function (req, res) {
     res.render('notice');
 });
 
 app.get('/changepw', function (req, res) {
     res.render('changepw');
+});
+
+app.get('/equipment', function (req, res) {
+    res.render('equipment');
 });
 
 // app.get('/request', function (req, res) {
