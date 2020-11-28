@@ -37,6 +37,13 @@ module.exports = function (app) {
         else res.redirect('/login');
     });
 
+    app.get('/equipment', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+            res.render('equipment');
+        }
+        else res.redirect('/login');
+    });
+
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
             var sql = ' SELECT *, breakfast_price+rate+extra as total_price from(select name, reservation_time, checkin, checkout, room_type, reservation.personnel,';
@@ -62,7 +69,7 @@ module.exports = function (app) {
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
             sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
             sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
+            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room ORDER BY stay.room';
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -95,7 +102,7 @@ module.exports = function (app) {
                 else stay_room = rows;
             });
 
-            sql = 'SELECT * FROM room';
+            sql = 'SELECT * FROM room ORDER BY number';
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
