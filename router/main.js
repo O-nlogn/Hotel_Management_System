@@ -137,6 +137,11 @@ module.exports = function (app) {
         else res.redirect('/login');
     });
 
+    
+    app.get('/equipment', function (req, res) {
+        res.render('equipment');
+    });
+
 
     
     /* 테스트 관련*/
