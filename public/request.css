@@ -11,9 +11,27 @@
     height: 600px;
 }
 
+#request .list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#request .list::-webkit-scrollbar-track {
+    background-color: rgb(230, 230, 230);
+    width: 10px;
+    border-radius: 5px;
+}
+
+#request .list::-webkit-scrollbar-thumb {
+    background-color: rgba(176, 224, 230, 0.7);
+    border-radius: 5px;
+}
+
+
+
 #requestItem {
     width: 200px;
     border-bottom: dotted 2px black;
+    margin: 5px;
 }
 
 #requestItem .title {
@@ -21,8 +39,12 @@
 }
 
 #request {
-    margin: 100px 0 0 100px;
+    margin: 50px 0 0 100px;
+    border: dotted 2px gray;
+    padding: 20px;
+    border-radius: 30px;
 }
+
 
 
 #request .btn-lg {
@@ -30,7 +52,7 @@
     border: 1px solid powderblue;
     background-color: powderblue;
     color: #fff;
-    margin: 10px 8px;
+    margin: 10px 15px;
     padding: 15px 80px;
     font-size: 20px;
 }
@@ -44,6 +66,11 @@
   float:left;
 }
 #sort {
-   border:2px solid #000;
-   float:right;
+    
+    border: dotted 3px rgba(176, 224, 230, 0.1);
+    background-color: rgba(176, 224, 230, 0.3);
+    border-radius: 10px;
+    padding: 4px;
+    margin-left: 5px;
+    float:right;
 }
