@@ -24,19 +24,19 @@
     <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div style="background-color: #f8f8f8; height: 800px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
+        <div class="container" style="padding-top: 70px;">
+            <div class="row" style="width: 1000px; margin: 0;">
+                <div class="col-lg-9" style="margin: 0; width: 1100px;">
                     <!-- 검색창 -->
-                    <div class="input-group">
-                        <input placeholder="검색" type="text" class="form-control">
+                    <div class="input-group" style="display: flex;">
+                        <input placeholder="비품명으로 검색" type="text" class="form-control" style="width: 300px;">
                         <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
                     </div>
                     <!-- 필터링 선택 부분 -->
-                    <div class="col-md-6 col-lg-3 my-3">
+                    <div class="col-md-6 col-lg-3 my-3" style="padding: 0;">
                         <div class="select-container">
                             <select class="custom-select">
-                                <option selected="">전제 비품</option>
+                                <option selected="">전체 비품</option>
                                 <option value="1">주문 필요 비품</option>
                                 <option value="2">주문 중인 비품</option>
                             </select>
@@ -97,7 +97,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-flex justify-content-center pb-0 card-footer">
+                        <div class="d-flex justify-content-center pb-0 card-footer" style="text-align: center;">
                             <nav class="" aria-label="Page navigation example">
                                 <ul class="pagination">
                                     <li class="page-item"><a href="#" class="page-link" aria-label="Previous"><span
