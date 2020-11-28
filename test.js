@@ -59,7 +59,14 @@ app.get('/room_status', function (req, res) {
 });
 
 app.get('/staff', function (req, res) {
-    res.render('staff');
+    res.render('staff',{
+      employee:
+      [     //id는 사번이어야함 사번.jpg로 이미지 저장해둠
+          {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'},
+          {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'},
+            {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'}
+      ]
+    });
 });
 
 app.get('/reservation', function (req, res) {
