@@ -37,9 +37,27 @@ module.exports = function (app) {
         else res.redirect('/login');
     });
 
+    app.get('/equipment', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+            res.render('equipment');
+        }
+        else res.redirect('/login');
+    });
+
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('reservation');
+            var sql = ' SELECT *, breakfast_price+rate+extra as total_price from(select name, reservation_time, checkin, checkout, room_type, reservation.personnel,';
+            sql += 'CASE WHEN breakfast=0 THEN 0 ELSE 7000 END AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
+            sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a';
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else res.render('reservation', { reservation: rows });
+            });
         }
         else res.redirect('/login');
     });
@@ -51,7 +69,7 @@ module.exports = function (app) {
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
             sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
             sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
+            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room ORDER BY stay.room';
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -59,15 +77,11 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    console.log(rows);
-                    res.render('room', {stayrooms: rows});
-                }
+                else res.render('room', {stayrooms: rows});
             });
         }
         else res.redirect('/');
     });
-
 
     app.get('/reload_table', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
@@ -85,22 +99,17 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    console.log(rows);
-                    stay_room = rows;
-                }
+                else stay_room = rows;
             });
 
-            sql = 'SELECT * FROM room';
+            sql = 'SELECT * FROM room ORDER BY number';
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
                     res.writeHead(200);
                     res.end();
                 }
-                else {
-                    res.render('reload_table', { rooms: rows, stayrooms: stay_room });
-                }
+                else res.render('reload_table', { rooms: rows, stayrooms: stay_room });
             });
         }
         else res.redirect('/');
@@ -108,7 +117,30 @@ module.exports = function (app) {
 
     app.get('/staff', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('staff');
+            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work FROM users';
+            var users;
+
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else users = rows;
+            });
+
+            sql = 'SELECT name, id, language FROM multilingual NATURAL JOIN users';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else{
+                    console.log({users:users, multilingual:rows});
+                    res.render('staff', { staff: users, multilingual: rows});
+                }
+            });
         }
         else res.redirect('/login');
     });
@@ -132,7 +164,7 @@ module.exports = function (app) {
 
     app.get('/changepw', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('changepw');
+            res.render('changepw', {status: undefined});
         }
         else res.redirect('/login');
     });

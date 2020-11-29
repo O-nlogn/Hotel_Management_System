@@ -412,7 +412,7 @@
                     </form>
                 </div>
 
-                <!-- form으로 checkbox를 통해 받은 정보를 통해 백에서 employee 정보를 보내주면 아래에서 출력 -->
+                <!-- form으로 checkbox를 통해 받은 정보를 통해 백에서 staff 정보를 보내주면 아래에서 출력 -->
 
                 <div class="col-lg-9">
                     <!-- 직원 검색창 -->
@@ -507,29 +507,29 @@
                         </div>
                                 <div class="row">
                                     <div style="display: grid; grid-template-columns: 400px 400px;">
-                                        <% for (var i=0; i < employee.length; i++) { %>
+                                        <% for (var i=0; i < staff.length; i++) { %>
                                         <!-- 검색기능을 위해 div에 id 부여 -->
                                         <div id="staff_table" style="display: flex;">
-                                            <img src=<%=employee[i].id+".png" %> height="117px">
+                                            <img src=<%=staff[i].id+".png" %> alt="직원 사진"height="117px">
                                             <div style="display: inline-block; margin: 20px;">
                                                 <!-- 검색기능을 위해 table 에 id 부여 -->
                                                 <table id="staff_table2">
                                                     <tbody>
                                                         <tr>
                                                             <th>이름</th>
-                                                            <td><%= employee[i].name%></td>
+                                                            <td><%= staff[i].name%></td>
                                                         </tr>
                                                         <tr>
                                                             <th>부서</th>
-                                                            <td><%= employee[i].department %></td>
+                                                            <td><%= staff[i].department %></td>
                                                         </tr>
                                                         <tr>
                                                             <th>전화번호</th>
-                                                            <td><%= employee[i].phone_number %></td>
+                                                            <td><%= staff[i].phone_number %></td>
                                                         </tr>
                                                         <tr>
                                                             <th>이메일</th>
-                                                            <td><%= employee[i].email %></td>
+                                                            <td><%= staff[i].email %></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

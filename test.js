@@ -74,18 +74,29 @@ app.get('/room_status', function (req, res) {
 });
 
 app.get('/staff', function (req, res) {
-    res.render('staff',{
-      employee:
-      [     //id는 사번이어야함 사번.jpg로 이미지 저장해둠
-          {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'},
-          {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'},
-            {name:'권유리', id:'profile', department:'소프트웨어학부', phone_number:'010-1234-5678', email:'jiyusu99@naver.com'}
-      ]
+    res.render('staff', {
+        staff:
+            [
+                {name: '짱구', id: '2222222222', department: '프론트', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
+                {name: '장금이', id:'1111111111', department: '식음료부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1}
+            ],
+        multilingual:
+            [
+                {name: '짱구', id:'2222222222', language: '일본어'}
+            ]
     });
 });
 
 app.get('/reservation', function (req, res) {
-    res.render('reservation');
+    res.render('reservation', {
+        reservation: 
+        [
+                {name: '스핑크스', reservation_time: '2021-11-23T03:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout:'2021-01-12T02:00:00.000Z',
+                room_type: 'Twin', personnel: 3, breakfast_price: 0, rate: 50000, extra: 12000, total_price: 67000},
+                {name: '가으앙시', reservation_time: ' 2021-11-09T12:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout: '2021-01-12T02:00:00.000Z',
+                room_type: 'single', personnel: 1, breakfast_price: 7000, rate: 50000, extra: 0, total_price: 57000}
+        ]
+    });
 });
 
 app.get('/mypage', function (req, res) {
