@@ -69,6 +69,18 @@
             });
         }); 
     </script>
+    <!-- 예약검색기능 -->
+    <script>
+        $(document).ready(function() {
+            $("#keyword").keyup(function() {
+                var k = $(this).val();
+                $("#reservation_table > tbody > tr").hide();
+                var temp = $("#reservation_table > tbody > tr > td:nth-child(5n+1):contains('" + k + "')");
+
+                $(temp).parent().show();
+            })
+        })
+    </script>
     </head>
 
 <body>
@@ -158,7 +170,7 @@
                     <div class="mb-4">
                         <div class="small mb-3">검색</div>
                         <div class="input-group" style="display: flex;">
-                            <input placeholder="예약자명으로 검색" type="text" class="form-control"">
+                            <input placeholder="예약자명으로 검색" type="text" class="form-control" id="keyword">
                             <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
@@ -249,7 +261,8 @@
                 <div class="col-lg-9">
                     <div class="mb-3 Card_custom-card--border_5wJKy card">
                         <div class="table-responsive-xl">
-                            <table class="mb-0 table table-hover">
+                            <!-- 테이블 아이디 바꾸지 말아주세요 -->
+                            <table id = "reservation_table"class="mb-0 table table-hover">
                                 <thead>
                                     <tr>
                                         <th class="align-middle bt-0">예약자명</th>
@@ -284,6 +297,27 @@
                                     <tr>
                                         <td class="align-middle">
                                             <div>권유리</div>
+                                        </td>
+                                        <td class="align-middle"><span class="badge badge-primary badge-pill">입실대기</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            
+                                            <div>2020-09-20 16:00</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div>스위트룸</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div role="group" class="btn-group">
+                                                <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
+                                                        class="fa-fw fa fa-plus"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- 검색기능 테스트용 코드 -->
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div>가나다</div>
                                         </td>
                                         <td class="align-middle"><span class="badge badge-primary badge-pill">입실대기</span>
                                         </td>
