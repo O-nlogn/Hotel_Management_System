@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Linux (x86_64)
 --
 -- Host: localhost    Database: hotel_system
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	8.0.22-0ubuntu0.20.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES UTF8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `bank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bank` (
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -46,10 +46,10 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `birth` date NOT NULL,
-  `nationality` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nationality` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`email`),
   KEY `nationality` (`nationality`),
   CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`nationality`) REFERENCES `nation` (`name`) ON UPDATE CASCADE
@@ -74,7 +74,7 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `department` (
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `language`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `language` (
-  `language` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,8 +120,8 @@ DROP TABLE IF EXISTS `multilingual`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `multilingual` (
-  `id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `language` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`,`language`),
   KEY `language` (`language`),
   CONSTRAINT `multilingual_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -147,8 +147,8 @@ DROP TABLE IF EXISTS `nation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nation` (
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `language` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`),
   KEY `language` (`language`),
   CONSTRAINT `nation_ibfk_1` FOREIGN KEY (`language`) REFERENCES `language` (`language`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -173,7 +173,7 @@ DROP TABLE IF EXISTS `positions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `positions` (
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -197,7 +197,7 @@ DROP TABLE IF EXISTS `receipt_service`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receipt_service` (
   `room` int NOT NULL,
-  `service` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `service` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `order_time` datetime NOT NULL,
   `paid` tinyint(1) NOT NULL,
   `done` tinyint(1) NOT NULL,
@@ -228,7 +228,7 @@ DROP TABLE IF EXISTS `request`;
 CREATE TABLE `request` (
   `room` int NOT NULL,
   `request_time` datetime NOT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`room`,`request_time`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`room`) REFERENCES `stay` (`room`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -252,12 +252,12 @@ DROP TABLE IF EXISTS `reservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservation` (
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `reservation_time` datetime NOT NULL,
   `checkin` datetime NOT NULL,
   `checkout` datetime NOT NULL,
-  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `room_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `personnel` int NOT NULL,
   `breakfast` int NOT NULL,
   PRIMARY KEY (`email`,`reservation_time`),
@@ -285,7 +285,7 @@ DROP TABLE IF EXISTS `responsibility`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `responsibility` (
-  `id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `room` int NOT NULL,
   PRIMARY KEY (`id`,`room`),
   KEY `room` (`room`),
@@ -313,7 +313,7 @@ DROP TABLE IF EXISTS `room`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
   `number` int NOT NULL,
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
   KEY `type` (`type`),
   CONSTRAINT `room_ibfk_1` FOREIGN KEY (`type`) REFERENCES `room_type` (`type`) ON UPDATE CASCADE
@@ -338,7 +338,7 @@ DROP TABLE IF EXISTS `room_service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_service` (
-  `service` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `service` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int NOT NULL,
   PRIMARY KEY (`service`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -362,8 +362,8 @@ DROP TABLE IF EXISTS `room_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_type` (
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `info` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` int NOT NULL,
   `rate` int NOT NULL,
   `extra` int NOT NULL,
@@ -391,7 +391,7 @@ DROP TABLE IF EXISTS `stay`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stay` (
   `room` int NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `reservation_time` datetime NOT NULL,
   `cardkey` tinyint(1) NOT NULL,
   `cleaning` tinyint(1) NOT NULL,
@@ -413,28 +413,6 @@ INSERT INTO `stay` VALUES (301,'alsrud606@hanyang.ac.kr','2020-11-22 22:48:12',1
 UNLOCK TABLES;
 
 --
--- Table structure for table `test`
---
-
-DROP TABLE IF EXISTS `test`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `test` (
-  `TXT` text COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `test`
---
-
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` VALUES ('왜안돼');
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
@@ -442,19 +420,21 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `department` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `department` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `birth` date NOT NULL,
-  `job_title` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `on_work` tinyint(1) NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bank` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `account` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `salary` int NOT NULL,
+  `addressRoad` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressDetail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `department` (`department`),
   KEY `job_title` (`job_title`),
@@ -471,7 +451,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('1111111111','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','장금이','female','010-3333-4444','식음료부','1900-01-22','부장',1,'staff1@naver.com','우리','1002753230205',10000000),('1234567890','73941847d9611927275d93139981ee78316de50bc51bf398f8ccdd778c7723f370cb252c5293c085ec3c6a3d185246837ed71d651a679cb680793581ad77ac24','HHW','male','010-1234-5678','프론트','2000-01-01','과장',0,'staff2@naver.com','카카오뱅크','3333144006779',5000000),('2017013390','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KSY','female','010-1234-1234','인사부','1999-01-22','사장',1,'staff3@naver.com','신한','110463504103',5000000),('2019037129','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','SMK','female','010-4086-6441','프론트','1999-11-25','사원',1,'staff4@naver.com','IBK기업','01309582801014',50000000),('2019083436','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KYR','female','010-5678-5678','기획부','1999-01-22','이사',1,'staff5@naver.com','국민','01011112222',5000000),('2030103842','b9707ed5bdaf6351d8e96654a2f886fbd30ecb4989ed5650a37b7e9f226649068e84a8424b7877f513fd97da124c14d88d065ee756369cfd743223aaf7bee9ca','PJS','male','010-1234-5678','재무부','2000-11-22','팀장',1,'staff8@naver.com','국민','93800201008791',5000000),('2222222222','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','짱구','male','010-5555-6666','프론트','2000-01-22','부장',0,'staff9@naver.com','농협','3521151817514',50000000),('3333333333','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','신형만','male','010-5556-6665','프론트','1972-01-22','사원',0,'staff6@naver.com','신한금융','27023254777',1500000),('6666666666','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','도라에몽','male','010-1156-2225','프론트','2000-06-22','대리',0,'staff7@naver.com','미래에셋대우','12346543789001',1500000),('9876543210','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','홍길동','male','010-1111-2222','시설안전부','1999-01-22','부장',1,'staff10@naver.com','수협','999778564231201',1500000);
+INSERT INTO `users` VALUES ('1111111111','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','장금이','female','010-3333-4444','식음료부','1900-01-22','부장',1,'staff1@naver.com','우리','1002753230205',10000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('1234567890','73941847d9611927275d93139981ee78316de50bc51bf398f8ccdd778c7723f370cb252c5293c085ec3c6a3d185246837ed71d651a679cb680793581ad77ac24','HHW','male','010-1234-5678','프론트','2000-01-01','과장',0,'staff2@naver.com','카카오뱅크','3333144006779',5000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('2017013390','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KSY','female','010-1234-1234','인사부','1999-01-22','사장',1,'staff3@naver.com','신한','110463504103',5000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('2019037129','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','SMK','female','010-4086-6441','프론트','1999-11-25','사원',1,'staff4@naver.com','IBK기업','01309582801014',50000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('2019083436','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KYR','female','010-5678-5678','기획부','1999-01-22','이사',1,'staff5@naver.com','국민','01011112222',5000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('2030103842','b9707ed5bdaf6351d8e96654a2f886fbd30ecb4989ed5650a37b7e9f226649068e84a8424b7877f513fd97da124c14d88d065ee756369cfd743223aaf7bee9ca','PJS','male','010-1234-5678','재무부','2000-11-22','팀장',1,'staff8@naver.com','국민','93800201008791',5000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('2222222222','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','짱구','male','010-5555-6666','프론트','2000-01-22','부장',0,'staff9@naver.com','농협','3521151817514',50000000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('3333333333','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','신형만','male','010-5556-6665','프론트','1972-01-22','사원',0,'staff6@naver.com','신한금융','27023254777',1500000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('6666666666','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','도라에몽','male','010-1156-2225','프론트','2000-06-22','대리',0,'staff7@naver.com','미래에셋대우','12346543789001',1500000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1'),('9876543210','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','홍길동','male','010-1111-2222','시설안전부','1999-01-22','부장',1,'staff10@naver.com','수협','999778564231201',1500000,'경기도 안산시 상록구 한양대학로 55','제4공학관 408-1');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -484,4 +464,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-29 21:28:49
+-- Dump completed on 2020-11-29 23:02:35
