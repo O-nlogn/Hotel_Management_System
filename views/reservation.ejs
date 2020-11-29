@@ -160,6 +160,10 @@
             transition-duration: 0.2s;
         }
 
+        .form-group label {
+            width: 90px;
+        }
+
 
         
     </style>
@@ -178,14 +182,14 @@
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content" style="top: 100px;">
                             <div class="modal-header">
                                 <h2 class="modal-title">예약추가</h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button> <br>
                             </div>
                             <div class="modal-body">
                                 <form name="예약추가" action="" method="post">
-                                    <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
+                                    
                                     <div class="form-group">
                                         <label form="reservation_name">예약자명</label>
                                         <input name="reservation_name" type="text" id="reservation_name" class="form-control">
@@ -210,22 +214,23 @@
                                             <option value="paran.com">paran.com</option>
                                         </select>
                                     </div>
+                                    <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
                                     <div class="form-group">
                                         <label for="res_people">투숙인원</label>
                                         <input name="reservation_people" id="res_people" type="text" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>입실 예정일</label><br>
+                                        <label>입실 예정일</label>
                                         <!-- 달력기능 -->
                                         <input type="text" name="checkin_date" id="date1" size="12" class="form-control"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>퇴실 예정일</label><br>
+                                        <label>퇴실 예정일</label>
                                         <!-- 달력기능 -->
                                         <input type="text" name="checkout_date" id="date2" size="12" class="form-control"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reservation">방타입</label><br>
+                                        <label for="reservation">방타입</label>
                                         <label><input type="radio" name="reservation_type" value="single">싱글룸</label>
                                         <label><input type="radio" name="reservation_type" value="twin">트윈룸</label>
                                         <label><input type="radio" name="reservation_type" value="double">더블룸</label>
@@ -240,6 +245,7 @@
                                         <label for="room">예약 비밀번호</label>
                                         <input name="reservation_pw" type="password" class="form-control" id="res_pw">
                                     </div>
+                                    
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -274,10 +280,10 @@
                                 for="customRadio5">취소 예약 보기</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio5" name="customRadio"
+                            <input type="radio" id="customRadio6" name="customRadio"
                                 class="custom-control-input">
                             <label class="custom-control-label ml-1 text-muted f-15"
-                                for="customRadio5">입실 예정 예약보기</label>
+                                for="customRadio6">입실 예정 예약보기</label>
                         </div>
                     </div>
                     <div class="mb-4">
