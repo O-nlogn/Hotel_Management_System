@@ -39,9 +39,9 @@
 }
 
 #request {
-    margin: 50px 0 0 100px;
-    border: dotted 2px gray;
-    padding: 20px;
+    margin: 40px 0 0 100px;
+    border: dotted 2.5px black;
+    padding: 30px;
     border-radius: 30px;
 }
 
@@ -52,7 +52,7 @@
     border: 1px solid powderblue;
     background-color: powderblue;
     color: #fff;
-    margin: 10px 15px;
+    margin: 25px 0 0 15px;
     padding: 15px 80px;
     font-size: 20px;
 }
@@ -74,3 +74,4 @@
     margin-left: 5px;
     float:right;
 }
+

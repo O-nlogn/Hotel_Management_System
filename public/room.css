@@ -91,12 +91,14 @@ a:hover {
     grid-template-rows: repeat(20, 150px);
     width: max-content;
     height: 600px;
-    margin: 100px 0 0 50px;
+    margin: 100px 0 0 30px;
     border: solid 1px black;
+    border-radius: 3px;
 }
 
 .table div {
     border: solid 1px black;
+    margin: 0.1px;
 }
 
 .body {
@@ -167,7 +169,10 @@ a:hover {
 
 .floor button {
     border-radius: 3px;
-    border: solid 1px white;
+    background-color: rgba(176, 224, 230, 0.3);
+    border: solid 1px rgba(176, 224, 230, 0.4);
+    margin: 1px;
+    color: rgb(102, 102, 102);
 }
 
 .floor button:focus {
