@@ -58,28 +58,28 @@
       <!-- realtime request -->
   	<div id="request">
   			<div class="list">
-  				<% for (var i=0; i < realtime_request.length; i++) { %>
-  					<% if (realtime_request[i].status === 'undone' ) {  %>
-  						<% var r = realtime_request[i]; %>
-  						<div id="requestItem">
-  							<p class='title'>
-  								<div class="request_box"><%= r.request_time %></div>
-  								<div id="sort" class="request_box tag"><%= r.sort%></div>
-  								<div id="sort" class="request_box tag"><%= r.room %></div>
-  							</p><br>
-  							<p class="content">
-  								<div class="dropdown">
-  								  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  										<%= r.request_details %>
-  								  </button>
-  								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  										<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'update')">완료</a>
-  										<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'delete')">취소</a>
-  								  </div>
-  								</div>
-  							</p>
-  						</div>
-  					<% } %>
+  				<% for (var i=0; i < allRequest.length; i++) { %>
+					<% var r = allRequest[i]; %>
+					
+					<div id="requestItem">
+						<p class='title'>
+							<div class="request_box"><%= r.request_time %></div>
+							<div id="request_type" class="request_box tag"><%= r.request_type%></div>
+							<div id="request_type" class="request_box tag"><%= r.room %></div>
+						</p><br>
+						<p class="content">
+							<div class="dropdown">
+								<button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<%= r.details %>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'update')">완료</a>
+									<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'delete')">취소</a>
+								</div>
+							</div>
+						</p>
+					</div>
+  					
   				<% } %>
   			</div>
   			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><strong>+</strong></button>
@@ -104,10 +104,10 @@
   							<input name="request_time" type="text" value= <%= time %>  disabled />
   						</div>
   						<div class="radio-inline">
-  							<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
+  							<label for="request_type1"><input name="request_type" type="radio" name="optradio" checked id="request_type1">요청사항</label>
   						</div>
   						<div class="radio-inline">
-  							<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
+  							<label for="request_type2"><input name="request_type" type="radio" name="optradio" checked id="request_type2">룸서비스</label>
   						</div><br>
   						<!-- 스크롤이 안됨
   						<label for="room">방 번호</label>
@@ -133,8 +133,8 @@
   	              <input name="room" type="text" class="form-control">
   	            </div>
   	            <div class="form-group">
-  	                <label for="request_details">요청사항</label>
-  	                <textarea name="request_details" class="form-control"></textarea>
+  	                <label for="details">요청사항</label>
+  	                <textarea name="details" class="form-control"></textarea>
   	            </div>
   	        </form>
           </div>
