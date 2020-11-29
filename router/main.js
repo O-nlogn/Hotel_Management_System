@@ -131,7 +131,7 @@ module.exports = function (app) {
 
     app.get('/staff', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work FROM users';
+            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account FROM users';
             var users;
 
             dbconfig.query(sql, function (err, rows, fields) {
@@ -171,7 +171,31 @@ module.exports = function (app) {
 
     app.get('/mypage', function(req,res){
         if (req.cookies.is_logged_in === 'true'){
-            res.render('mypage');
+
+            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account FROM users where id = ?';
+            var params = [req.cookies.userID], info;
+
+            dbconfig.query(sql, params, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else info = rows;
+            });
+
+            sql = 'SELECT * FROM multilingual WHERE id = ?'
+            dbconfig.query(sql, params, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else{
+                    console.log({info:info, multilingual: rows});
+                    res.render('mypage', {info: info, multilingual: rows});
+                }
+            });
         }
         else res.redirect('/login');
     });
@@ -186,5 +210,14 @@ module.exports = function (app) {
     
     app.get('/equipment', function (req, res) {
         res.render('equipment');
+    });
+
+    
+    /* 도로명주소 API */
+    app.get('/jusoPopup', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+            res.render('jusoPopup');
+        }
+        else res.redirect('/login');
     });
 }

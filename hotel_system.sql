@@ -16,6 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `bank`
+--
+
+DROP TABLE IF EXISTS `bank`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bank` (
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bank`
+--
+
+LOCK TABLES `bank` WRITE;
+/*!40000 ALTER TABLE `bank` DISABLE KEYS */;
+INSERT INTO `bank` VALUES ('IBK기업'),('NH투자'),('SC제일'),('경남'),('광주'),('국민'),('농협'),('대구'),('미래에셋대우'),('부산'),('삼성증권'),('새마을'),('수협'),('신한'),('신한금융'),('신협'),('씨티'),('우리'),('우체국'),('유안타'),('전북'),('제주'),('카카오뱅크'),('키움증권'),('하나'),('하나금융');
+/*!40000 ALTER TABLE `bank` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `customers`
 --
 
@@ -177,6 +200,7 @@ CREATE TABLE `receipt_service` (
   `service` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `order_time` datetime NOT NULL,
   `paid` tinyint(1) NOT NULL,
+  `done` tinyint(1) NOT NULL,
   PRIMARY KEY (`room`,`service`,`order_time`),
   KEY `service` (`service`),
   CONSTRAINT `receipt_service_ibfk_1` FOREIGN KEY (`room`) REFERENCES `stay` (`room`) ON UPDATE CASCADE,
@@ -190,8 +214,34 @@ CREATE TABLE `receipt_service` (
 
 LOCK TABLES `receipt_service` WRITE;
 /*!40000 ALTER TABLE `receipt_service` DISABLE KEYS */;
-INSERT INTO `receipt_service` VALUES (301,'apple juice','2020-11-25 11:02:00',0),(301,'extra towel','2020-11-23 12:42:00',0);
+INSERT INTO `receipt_service` VALUES (301,'apple juice','2020-11-25 11:02:00',0,0),(301,'extra towel','2020-11-23 12:42:00',0,1);
 /*!40000 ALTER TABLE `receipt_service` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `request`
+--
+
+DROP TABLE IF EXISTS `request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `request` (
+  `room` int NOT NULL,
+  `request_time` datetime NOT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`room`,`request_time`),
+  CONSTRAINT `request_ibfk_1` FOREIGN KEY (`room`) REFERENCES `stay` (`room`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `request`
+--
+
+LOCK TABLES `request` WRITE;
+/*!40000 ALTER TABLE `request` DISABLE KEYS */;
+INSERT INTO `request` VALUES (303,'2020-11-29 17:24:00','의자 좀 가져다 주세요');
+/*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -344,7 +394,6 @@ CREATE TABLE `stay` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `reservation_time` datetime NOT NULL,
   `cardkey` tinyint(1) NOT NULL,
-  `request` text COLLATE utf8mb4_unicode_ci,
   `cleaning` tinyint(1) NOT NULL,
   `personnel` int NOT NULL,
   PRIMARY KEY (`room`),
@@ -359,7 +408,7 @@ CREATE TABLE `stay` (
 
 LOCK TABLES `stay` WRITE;
 /*!40000 ALTER TABLE `stay` DISABLE KEYS */;
-INSERT INTO `stay` VALUES (301,'alsrud606@hanyang.ac.kr','2020-11-22 22:48:12',1,'영어 가능 직원 요망.',0,2),(303,'test1@naver.com','2020-11-23 22:48:12',0,'의자 하나만 더 주세요',1,1),(411,'test2@gmail.com','2020-11-19 01:48:12',0,'',0,4),(502,'test4@gmail.com','2021-11-01 18:48:12',1,'',0,2),(509,'test3@gmail.com','2020-11-19 12:48:12',1,'',0,2);
+INSERT INTO `stay` VALUES (301,'alsrud606@hanyang.ac.kr','2020-11-22 22:48:12',1,0,2),(303,'test1@naver.com','2020-11-23 22:48:12',0,1,1),(411,'test2@gmail.com','2020-11-19 01:48:12',0,0,4),(502,'test4@gmail.com','2021-11-01 18:48:12',1,0,2),(509,'test3@gmail.com','2020-11-19 12:48:12',1,0,2);
 /*!40000 ALTER TABLE `stay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,11 +452,16 @@ CREATE TABLE `users` (
   `job_title` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `on_work` tinyint(1) NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salary` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `department` (`department`),
   KEY `job_title` (`job_title`),
+  KEY `bank` (`bank`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`department`) REFERENCES `department` (`name`) ON UPDATE CASCADE,
-  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`job_title`) REFERENCES `positions` (`name`) ON UPDATE CASCADE
+  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`job_title`) REFERENCES `positions` (`name`) ON UPDATE CASCADE,
+  CONSTRAINT `users_ibfk_3` FOREIGN KEY (`bank`) REFERENCES `bank` (`name`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -417,7 +471,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('1111111111','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','장금이','female','010-3333-4444','식음료부','1900-01-22','부장',1,'staff1@naver.com'),('1234567890','73941847d9611927275d93139981ee78316de50bc51bf398f8ccdd778c7723f370cb252c5293c085ec3c6a3d185246837ed71d651a679cb680793581ad77ac24','HHW','male','010-1234-5678','프론트','2000-01-01','과장',0,'staff2@naver.com'),('2017013390','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KSY','female','010-1234-1234','인사부','1999-01-22','사장',1,'staff3@naver.com'),('2019037129','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','SMK','female','010-4086-6441','프론트','1999-11-25','사원',1,'staff4@naver.com'),('2019083436','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KYR','female','010-5678-5678','기획부','1999-01-22','이사',1,'staff5@naver.com'),('2030103842','b9707ed5bdaf6351d8e96654a2f886fbd30ecb4989ed5650a37b7e9f226649068e84a8424b7877f513fd97da124c14d88d065ee756369cfd743223aaf7bee9ca','PJS','male','010-1234-5678','재무부','2000-11-22','팀장',1,'staff8@naver.com'),('2222222222','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','짱구','male','010-5555-6666','프론트','2000-01-22','부장',0,'staff9@naver.com'),('3333333333','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','신형만','male','010-5556-6665','프론트','1972-01-22','사원',0,'staff6@naver.com'),('6666666666','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','도라에몽','male','010-1156-2225','프론트','2000-06-22','대리',0,'staff7@naver.com'),('9876543210','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','홍길동','male','010-1111-2222','시설안전부','1999-01-22','부장',1,'staff10@naver.com');
+INSERT INTO `users` VALUES ('1111111111','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','장금이','female','010-3333-4444','식음료부','1900-01-22','부장',1,'staff1@naver.com','우리','1002753230205',10000000),('1234567890','73941847d9611927275d93139981ee78316de50bc51bf398f8ccdd778c7723f370cb252c5293c085ec3c6a3d185246837ed71d651a679cb680793581ad77ac24','HHW','male','010-1234-5678','프론트','2000-01-01','과장',0,'staff2@naver.com','카카오뱅크','3333144006779',5000000),('2017013390','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KSY','female','010-1234-1234','인사부','1999-01-22','사장',1,'staff3@naver.com','신한','110463504103',5000000),('2019037129','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','SMK','female','010-4086-6441','프론트','1999-11-25','사원',1,'staff4@naver.com','IBK기업','01309582801014',50000000),('2019083436','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','KYR','female','010-5678-5678','기획부','1999-01-22','이사',1,'staff5@naver.com','국민','01011112222',5000000),('2030103842','b9707ed5bdaf6351d8e96654a2f886fbd30ecb4989ed5650a37b7e9f226649068e84a8424b7877f513fd97da124c14d88d065ee756369cfd743223aaf7bee9ca','PJS','male','010-1234-5678','재무부','2000-11-22','팀장',1,'staff8@naver.com','국민','93800201008791',5000000),('2222222222','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','짱구','male','010-5555-6666','프론트','2000-01-22','부장',0,'staff9@naver.com','농협','3521151817514',50000000),('3333333333','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','신형만','male','010-5556-6665','프론트','1972-01-22','사원',0,'staff6@naver.com','신한금융','27023254777',1500000),('6666666666','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','도라에몽','male','010-1156-2225','프론트','2000-06-22','대리',0,'staff7@naver.com','미래에셋대우','12346543789001',1500000),('9876543210','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','홍길동','male','010-1111-2222','시설안전부','1999-01-22','부장',1,'staff10@naver.com','수협','999778564231201',1500000);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -430,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28  2:11:52
+-- Dump completed on 2020-11-29 21:06:00
