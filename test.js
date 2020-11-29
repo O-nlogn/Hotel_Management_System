@@ -20,11 +20,11 @@ app.get('/room', function (req, res) {
                     checkin: '2020-11-21 14:00:00', checkout: '2020-11-25 11:00:00'},
             {room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
             checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'},
-            
+
             {room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
             checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'}
         ],
-        
+
         //완료된 request는 allRequest에 포함되지않도록 쿼리문 짰습니당
         allRequest:
         [
@@ -107,12 +107,12 @@ app.get('/staff', function (req, res) {
 
 app.get('/reservation', function (req, res) {
     res.render('reservation', {
-        reservation: 
+        reservation:
         [
-                {name: '스핑크스', reservation_time: '2021-11-23T03:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout:'2021-01-12T02:00:00.000Z',
-                room_type: 'Twin', personnel: 3, breakfast_price: 0, rate: 50000, extra: 12000, total_price: 67000},
-                {name: '가으앙시', reservation_time: ' 2021-11-09T12:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout: '2021-01-12T02:00:00.000Z',
-                room_type: 'single', personnel: 1, breakfast_price: 7000, rate: 50000, extra: 0, total_price: 57000}
+          {name: '스핑크스', status:'취소',reservation_time: '2021-11-23T03:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout:'2021-01-12T02:00:00.000Z',
+          room_type: 'Twin', personnel: 3, breakfast_price: 0, rate: 50000, extra: 12000, total_price: 67000},
+          {name: '가으앙시',  status:'입실예정',reservation_time: ' 2021-11-09T12:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout: '2021-01-12T02:00:00.000Z',
+          room_type: 'single', personnel: 1, breakfast_price: 7000, rate: 50000, extra: 0, total_price: 57000}
         ],
         nations:
         [
