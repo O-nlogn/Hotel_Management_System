@@ -96,19 +96,27 @@
           </div>
           <div class="modal-body">
   					<!-- 백부분 코드 필요 (데이터 받아서 processing_status(??)를 false로 해서 디비에 저장해 주면 될듯 )-->
-  					<form action="/new_request" method="post">
-  						<div class="form-group">
-  							<label for="request_time">현재시간</label>
-  							<% var dt = new Date();
-  								var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();%>
-  							<input name="request_time" type="text" value= <%= time %>  disabled />
-  						</div>
-  						<div class="radio-inline">
-  							<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
-  						</div>
-  						<div class="radio-inline">
-  							<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
-  						</div><br>
+					  <form action="/new_request" method="post">
+						<div style="display: flex;">
+							<div class="form-group">
+								<label for="request_time" style="margin-right: 5px;">현재시간</label>
+								<% var dt = new Date();
+									var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();%>
+								<input name="request_time" type="text" style="width: 70px;" value= <%= time %>  disabled />
+						    </div>
+						    <div style="margin-top: 2px; margin-left: 100px;">
+						    	<label style="margin-right: 5px; margin-top: -0.5px;">종류</label>
+								<div class="radio-inline">
+									<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
+								</div>
+								<div class="radio-inline">
+									<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
+								</div>
+
+						    </div>
+
+						</div>
+  						
   						<!-- 스크롤이 안됨
   						<label for="room">방 번호</label>
     					  <select class="form-control" id="room_select">
@@ -128,13 +136,13 @@
     					    <option>4</option>
     					    <option>5</option>
     					  </select>-->
-  	            <div class="form-group">
-  	              <label for="room">방 번호</label>
-  	              <input name="room" type="text" class="form-control">
+  	            <div class="form-group" style="display: flex;">
+					<label for="room" style="margin-top: 5px; margin-right: 5px;">방 번호</label>
+					<input name="room" type="text" class="form-control" style="width: 55px;">
   	            </div>
   	            <div class="form-group">
   	                <label for="request_details">요청사항</label>
-  	                <textarea name="request_details" class="form-control"></textarea>
+  	                <textarea name="request_details" class="form-control" style="height: 200px;"></textarea>
   	            </div>
   	        </form>
           </div>
