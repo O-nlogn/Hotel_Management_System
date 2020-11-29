@@ -39,18 +39,32 @@
             margin-bottom: 50px;
         }
     </style>
+    <!-- 생년월일 입력 기능 -->
+    <script type="text/javascript">
+        $(function() {
+            $("#reservation_birth").datepicker({
+                dateFormat:'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true
+            });
+        });
+    </script>
     <!-- 예약추가 달력기능 -->
     <script type="text/javascript">
         $(function() {
             $("#date1").datepicker({
-                dateFormat:'yy-mm-dd'
+                dateFormat:'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true
             });
         });
     </script>
     <script type="text/javascript">
         $(function() {
             $("#date2").datepicker({
-                dateFormat:'yy-mm-dd'
+                dateFormat:'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true
             });
         });
     </script>
@@ -163,9 +177,6 @@
         .form-group label {
             width: 90px;
         }
-
-
-        
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
     </head>
@@ -195,6 +206,10 @@
                                         <input name="reservation_name" type="text" id="reservation_name" class="form-control">
                                     </div>
                                     <div class="form-group">
+                                        <label form="reservation_birth">생년월일</label>
+                                        <input type="text" name="reservation_birth" id="reservation_birth" size="12" />
+                                    </div>
+                                    <div class="form-group">
                                         <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
                                         <label for="email_id">예약자 이메일</label>
                                         <input type="text" name="email_id" id="email_id" class="form-control"> @
@@ -214,6 +229,32 @@
                                             <option value="paran.com">paran.com</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="reservation_nation">예약자 국적</label>
+                                        <select class="form-control" name="reservation_nation" id="reservation_nation">
+                                            <option value="Austria"></option>Austria</option>
+                                            <option value="Germany">Germany</option>
+                                            <option value="Russia">Russia</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Mexico">Mexico</option>
+                                            <option value="Spain">Spain</option>
+                                            <option value="Egypt">Egypt</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="UK">UK</option>
+                                            <option value="USA">USA</option>
+                                            <option value="Italy">Italy</option>
+                                            <option value="Japan">Japan</option>
+                                            <option value="China">China</option>
+                                            <option value="HongKong">HongKong</option>
+                                            <option value="Turkey">Turkey</option>
+                                            <option value="Brazil">Brazil</option>
+                                            <option value="France">France</option>
+                                            <option value="SouthKorea"selected>SouthKorea</option>
+                                            <option value="India">India</option>
+                                        </select>
+                                    </div>
+                                    
                                     <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
                                     <div class="form-group">
                                         <label for="res_people">투숙인원</label>
