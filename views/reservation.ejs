@@ -70,18 +70,18 @@
     </script>
     <!-- 이메일폼 -->
     <script type="text/javascript">
-        //이메일 입력방식 선택 
+        //이메일 입력방식 선택
         $('#selectEmail').change(function () {
             $("#selectEmail option:selected").each(function () {
                 if ($(this).val() == '1') { //직접입력일 경우 (일단 안함)
-                    $("#str_email02").val(''); //값 초기화 
+                    $("#str_email02").val(''); //값 초기화
                     $("#str_email02").attr("disabled", false); //활성화
-                } else { //직접입력이 아닐경우 
+                } else { //직접입력이 아닐경우
                     $("#str_email02").val($(this).text()); //선택값 입력
                     $("#str_email02").attr("disabled", true); //비활성화
                 }
             });
-        }); 
+        });
     </script>
     <!-- 예약검색기능 -->
     <script>
@@ -143,7 +143,7 @@
         #email_id {
             width: 110px;
         }
-        
+
         #selectEmail {
             width: 130px;
         }
@@ -189,7 +189,7 @@
         <div class="container" style="padding-top: 70px;">
             <div class="row">
                 <!-- 예약추가 버튼 : 디자인시 바꿔주세용 -->
-                
+
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
@@ -200,7 +200,7 @@
                             </div>
                             <div class="modal-body">
                                 <form name="예약추가" action="" method="post">
-                                    
+
                                     <div class="form-group">
                                         <label form="reservation_name">예약자명</label>
                                         <input name="reservation_name" type="text" id="reservation_name" class="form-control">
@@ -254,7 +254,7 @@
                                             <option value="India">India</option>
                                         </select>
                                     </div>
-                                    
+
                                     <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
                                     <div class="form-group">
                                         <label for="res_people">투숙인원</label>
@@ -286,7 +286,7 @@
                                         <label for="room">예약 비밀번호</label>
                                         <input name="reservation_pw" type="password" class="form-control" id="res_pw">
                                     </div>
-                                    
+
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -305,6 +305,14 @@
                         </div>
                     </div>
                     <div class="mb-4">
+                      <div id="myBtnContainer" class="btn-group">
+                        <div class="small mb-3">예약상태별 보기</div>
+                        <button class="btn active" onclick="myFunction('')"> Show all</button>
+                        <button class="btn" onclick="myFunction('취소')"> 취소</button>
+                        <button class="btn" onclick="myFunction('입실예정')"> 입실예정</button>
+                      </div>
+                    </div>
+                    <div class="mb-4">
                         <div class="small mb-3">월별 예약 현황</div>
                         <ul class="nav flex-column nav-pills">
                             <li class="nav-item"><a href="#" class="nav-link"><i
@@ -312,21 +320,7 @@
                                         <!-- 달력기능 : 개인적으로 꼭 넣고 싶음..^^ -->
                         </ul>
                     </div>
-                    <div class="mb-4">
-                        <div class="small mb-3">예약보기</div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio5" name="customRadio"
-                                class="custom-control-input">
-                            <label class="custom-control-label ml-1 text-muted f-15"
-                                for="customRadio5">취소 예약 보기</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio6" name="customRadio"
-                                class="custom-control-input">
-                            <label class="custom-control-label ml-1 text-muted f-15"
-                                for="customRadio6">입실 예정 예약보기</label>
-                        </div>
-                    </div>
+
                     <div class="mb-4">
                         <!-- 직원 배정을 위해 현재 출근 상태인 직원 나타내주면 좋을 듯 -->
                         <div class="small mb-3">출근 중 직원</div>
@@ -404,68 +398,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  <% for (var i = 0; i < reservation.length; i++) { %>
                                     <tr>
                                         <td class="align-middle">
-                                            <div>권유리</div>
+                                            <div><%= reservation[i].name %></div>
                                         </td>
-                                        <!-- 뱃지 색상 적용 필요 -->
-                                        <td class="align-middle"><span class="badge badge-success badge-pill">취소</span>
-                                        </td>
-                                        <td class="align-middle">
-                                            
-                                            <div>2020-09-20 16:00</div>
+                                       <td><span class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else {%> label-success  <% }%> label-pill"><%= reservation[i].status %></span>
                                         </td>
                                         <td class="align-middle">
-                                            <div>스위트룸</div>
+                                            <div><%= reservation[i].checkin%></div>
                                         </td>
                                         <td class="align-middle">
-                                            <div role="group" class="btn-group">
-                                                <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
-                                                        class="fa-fw fa fa-plus"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle">
-                                            <div>권유리</div>
-                                        </td>
-                                        <td class="align-middle"><span class="badge badge-primary badge-pill">입실대기</span>
+                                            <div><%= reservation[i].room_type %></div>
                                         </td>
                                         <td class="align-middle">
-                                            
-                                            <div>2020-09-20 16:00</div>
+                                                <button id="tooltipAddNew" class="align-self-center btn btn-light"><i  class="fa-fw fa fa-plus"></i></button>
                                         </td>
-                                        <td class="align-middle">
-                                            <div>스위트룸</div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div role="group" class="btn-group">
-                                                <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
-                                                        class="fa-fw fa fa-plus"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- 검색기능 테스트용 코드 -->
-                                    <tr>
-                                        <td class="align-middle">
-                                            <div>가나다</div>
-                                        </td>
-                                        <td class="align-middle"><span class="badge badge-primary badge-pill">입실대기</span>
-                                        </td>
-                                        <td class="align-middle">
-                                            
-                                            <div>2020-09-20 16:00</div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div>스위트룸</div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div role="group" class="btn-group">
-                                                <button id="tooltipAddNew" class="align-self-center btn btn-primary"><i
-                                                        class="fa-fw fa fa-plus"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                      </tr>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
@@ -490,7 +440,27 @@
         </div>
 
     </div>
-    
+    <script>
+    function myFunction(input) {
+      var filter, table, tr, td, i, txtValue;
+      filter = input;
+      table = document.getElementById("reservation_table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.innerHTML || td.innerText;
+          if (txtValue.indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    </script>
+
 </body>
 
 </html>

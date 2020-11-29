@@ -12,3 +12,7 @@
     background-color: powderblue;
     border: 1px solid powderblue;
 }
+
+.card-footer {
+    text-align: center; border-top: solid 1px rgb(216, 216, 216);
+}
