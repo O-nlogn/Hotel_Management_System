@@ -10,70 +10,119 @@
             width: max-content;
             margin: 0;
         }
+
+        #info tr {
+            height: 30px;
+        }
+
+        #box1 {
+            /* margin-top: 100px; */
+            margin-left: 300px;
+            border: solid 1px black;
+            width: max-content;
+            padding: 20px;
+            border-radius: 10px;
+            position: absolute;
+            top: 250px;
+        }
+
+        #info {
+            margin-left: 20px;
+        }
+
+        
+
+        .btn {
+            background-color: powderblue;
+            border: none;
+            /* color: white; */
+            border-radius: 5px;
+            padding: 3px;
+            margin: 2px;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            background-color: rgba(176, 224, 230, 0.7);
+        }
+
+        #box1 > .btn {
+            margin-left: 500px;
+            padding: 10px;
+        }
+        
+        
+        #box1 > .btn:hover {
+            background-color: rgb(77, 98, 100);
+            color: white;
+        }
     </style>
     <title>내 정보</title>
 </head>
 <body>
-    <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
-    <div>
-        <div style="display: flex;" id="profile">
-            <img width=120 src="https://post-phinf.pstatic.net/MjAxNzA2MjlfOTAg/MDAxNDk4NzM5NzUxMDEz.AaHgW4nN3_oyFlvxr-6l3UpJ3C_qSbxCWugcmw0_OI4g.EcUsgmdE_oNTw0dWcxLWexeY8Jd3bGQIA0S08MPmACsg.PNG/1_%281%29.png?type=w1200" width=>
-            <div id="info">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>이름</th>
-                            <td>김진우</td>
-                        </tr>
-        
-                        <tr>
-                            <th>사번</th>
-                            <td>2020112910</td>
-                        </tr>
-        
-                        <tr>
-                            <th>비밀번호</th>
-                            <td>
-                                <input value="********" disabled>
-                                <button onclick="location.href='../changepw'">변경</button>
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <th>부서</th>
-                            <td>소프트</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>직급</th>
-                            <td>팀장</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>언어</th>
-                            <td>python, c++</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>연락처</th>
-                            <td>010-1234-5678</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>주소</th>
-                            <!-- <td>사랑시 고백구 행복동</td> -->
-                            <td class="text-primary">
-                                <div style="display: flex;">
-                                    <div id="road">도로</div> <div id="detail">세부</div><button onclick="goPopup();">변경</button>
-                                    <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
-                                </div>
-                           </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <%- include('./nav'); %>
+    <div style="height: 800px; background-color: #f8f8f8;">
+        <div id="box1">
+            <div style="display: flex;" id="profile">
+                <img width=120 src="https://post-phinf.pstatic.net/MjAxNzA2MjlfOTAg/MDAxNDk4NzM5NzUxMDEz.AaHgW4nN3_oyFlvxr-6l3UpJ3C_qSbxCWugcmw0_OI4g.EcUsgmdE_oNTw0dWcxLWexeY8Jd3bGQIA0S08MPmACsg.PNG/1_%281%29.png?type=w1200" width=>
+                <div id="info">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <td>김진우</td>
+                            </tr>
+            
+                            <tr>
+                                <th>사번</th>
+                                <td>2020112910</td>
+                            </tr>
+            
+                            <tr>
+                                <th>비밀번호</th>
+                                <td>
+                                    <input value="********" disabled>
+                                    <button onclick="location.href='../changepw'" class="btn">변경</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th>부서</th>
+                                <td>소프트</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>직급</th>
+                                <td>팀장</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>언어</th>
+                                <td>python, c++</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>연락처</th>
+                                <td>010-1234-5678</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>주소</th>
+                                <!-- <td>사랑시 고백구 행복동</td> -->
+                                <td class="text-primary">
+                                    <div style="display: flex;">
+                                        <div id="road">도로</div> <div id="detail">세부</div><button class="btn" onclick="goPopup();">변경</button>
+                                        <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                    </div>
+                               </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <button class="btn">저장</button>
         </div>
-        <button>저장</button>        
+        
     </div>                 
 </body>
 </html>

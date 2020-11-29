@@ -133,6 +133,10 @@ app.get('/equipment', function (req, res) {
     res.render('equipment');
 });
 
+
+app.get('/changepw', function (req, res) {
+    res.render('changepw', {status: '1'});
+});
 // app.get('/request', function (req, res) {
 //      res.render('request', {
 //        //해당 날짜의 실시간 request 만 넘겨
