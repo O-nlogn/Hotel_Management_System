@@ -187,20 +187,4 @@ module.exports = function (app) {
     app.get('/equipment', function (req, res) {
         res.render('equipment');
     });
-
-
-    
-    /* 테스트 관련*/
-    app.get('/test', function (req, res) {
-        var sql = 'SELECT * FROM TEST'
-        dbconfig.query(sql, (err, rows) => {
-            console.log(new Date() + ' | testing : ' + rows.length);
-            if (err) {
-                throw err;
-            }
-            res.render('reload-test',{data:rows});
-        });
-    });
-
-    
 }
