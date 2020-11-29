@@ -46,9 +46,11 @@ module.exports = function (app) {
 
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
+
             var sql = 'SELECT *, breakfast_price+rate+extra as total_price from(select name, reservation_time, checkin, checkout, room_type, reservation.personnel,';
             sql += 'breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
             sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a';
+            var reseravation_list;
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -56,7 +58,17 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('reservation', { reservation: rows });
+                else reseravation_list = rows;
+            });
+
+            sql = 'SELECT name FROM nation';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else res.render('reservation', { reservation: reseravation_list, nations: rows});
             });
         }
         else res.redirect('/login');
