@@ -19,6 +19,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
+    <script src="js/doro.js"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
@@ -515,6 +516,13 @@
                                                 <div class="form-group">
                                                     <label form="newstaff_name">이름</label>
                                                     <input name="newstaff_name" type="text" id="newstaff_name" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label form="newstaff_name">주소</label>
+                                                    <div style="display: flex;">
+                                                        <div id="road">도로</div> <div id="detail">세부</div><button onclick="goPopup();">변경</button>
+                                                        <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newstaff_photo">사진</label>
