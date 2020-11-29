@@ -174,8 +174,16 @@ module.exports = function (app) {
         res.render('equipment');
     });
 
-
     
+    /* 도로명주소 API */
+    app.get('/jusoPopup', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+            res.render('jusoPopup');
+        }
+        else res.redirect('/login');
+    });
+    
+
     /* 테스트 관련*/
     app.get('/test', function (req, res) {
         var sql = 'SELECT * FROM TEST'
@@ -187,6 +195,4 @@ module.exports = function (app) {
             res.render('reload-test',{data:rows});
         });
     });
-
-    
 }

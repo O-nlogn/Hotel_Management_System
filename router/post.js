@@ -1,8 +1,11 @@
 var qs = require('querystring');
+var express = require('express')
 var crypto = require('crypto');
 var dbconfig = require('../db');
 
 module.exports = function (app) {
+    app.use(express.json());
+    app.use(express.urlencoded( {extended : false } ));
 
     /* 로그인 버튼을 눌렀을 때 request 처리 */
     app.post('/login_data', function (req, res) {
@@ -94,5 +97,10 @@ module.exports = function (app) {
             }
 
         });
+    });
+
+    /* 도로명주소 API */
+    app.post('/jusoPopup', function (req, res) {
+        res.render('jusoPopup', {locals: req.body});
     });
 }
