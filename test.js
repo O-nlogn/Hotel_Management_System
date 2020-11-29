@@ -132,7 +132,7 @@ app.get('/notice', function (req, res) {
 });
 
 app.get('/changepw', function (req, res) {
-    res.render('changepw');
+    res.render('changepw', {status: undefined});
 });
 
 app.get('/equipment', function (req, res) {
