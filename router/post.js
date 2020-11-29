@@ -32,6 +32,7 @@ module.exports = function (app) {
                 else {
                     console.log('로그인 성공');
                     res.cookie('is_logged_in', true);
+                    res.cookie('username',rows[0].name);
                 }
             }
 
@@ -47,7 +48,7 @@ module.exports = function (app) {
         var checkpw = req.body.checkpw;
 
         if (newpw !== checkpw){ 
-            res.render('changepw', {status: 'newpw_not_match'});
+            res.render('changepw', {status: 'newpw_not_match', username: req.cookies.username});
         }
         else{
             var sql = 'SELECT password FROM users WHERE id=?';
@@ -64,7 +65,7 @@ module.exports = function (app) {
                     newpw = crypto.createHash('sha512').update(newpw).digest('hex');
                     
                     if (rows[0].password !== curpw) {
-                        res.render('changepw', {status: 'curpw_not_match'});
+                        res.render('changepw', { status: 'curpw_not_match', username: req.cookies.username});
                     }
                     else{
 
@@ -77,7 +78,7 @@ module.exports = function (app) {
                                 res.writeHead(200);
                                 res.end();
                             }
-                            else  res.render('main');
+                            else res.render('main', {username: req.cookies.username});
                         });
                     }
                 }

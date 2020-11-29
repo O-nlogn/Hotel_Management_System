@@ -32,14 +32,14 @@ module.exports = function (app) {
     /* 메뉴 관련 */
     app.get('/notice', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('notice');
+            res.render('notice', { username: req.cookies.username });
         }
         else res.redirect('/login');
     });
 
     app.get('/equipment', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('equipment');
+            res.render('equipment', { username: req.cookies.username });
         }
         else res.redirect('/login');
     });
@@ -68,7 +68,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('reservation', { reservation: reseravation_list, nations: rows});
+                else res.render('reservation', { reservation: reseravation_list, nations: rows, username: req.cookies.username});
             });
         }
         else res.redirect('/login');
@@ -102,7 +102,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('room', {stayrooms: rows, allRequest: allRequest});
+                else res.render('room', { stayrooms: rows, allRequest: allRequest, username: req.cookies.username});
             });
         }
         else res.redirect('/');
@@ -135,7 +135,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('reload_table', { rooms: rows, stayrooms: stay_room});
+                else res.render('reload_table', { rooms: rows, stayrooms: stay_room, username: req.cookies.username});
             });
         }
         else res.redirect('/');
@@ -164,7 +164,7 @@ module.exports = function (app) {
                 }
                 else{
                     console.log({users:users, multilingual:rows});
-                    res.render('staff', { staff: users, multilingual: rows});
+                    res.render('staff', { staff: users, multilingual: rows, username: req.cookies.username });
                 }
             });
         }
@@ -176,7 +176,7 @@ module.exports = function (app) {
     /* 메인페이지, 내정보, 비밀번호 수정 관련*/
     app.get('/main', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('main');
+            res.render('main', {username: req.cookies.username} );
         }
         else res.redirect('/login');
     });
@@ -205,7 +205,7 @@ module.exports = function (app) {
                 }
                 else{
                     console.log({info:info, multilingual: rows});
-                    res.render('mypage', {info: info, multilingual: rows});
+                    res.render('mypage', { info: info, multilingual: rows, username: req.cookies.username});
                 }
             });
         }
@@ -214,14 +214,14 @@ module.exports = function (app) {
 
     app.get('/changepw', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('changepw', {status: undefined});
+            res.render('changepw', { status: undefined, username: req.cookies.username});
         }
         else res.redirect('/login');
     });
 
     
     app.get('/equipment', function (req, res) {
-        res.render('equipment');
+        res.render('equipment', { username: req.cookies.username});
     });
 
     

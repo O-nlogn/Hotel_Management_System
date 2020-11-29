@@ -76,10 +76,21 @@ a:hover {
 
 #logout {
     height: max-content;
-    margin-left: 0;
-    font-size: 14px;
+    margin: 8px 5px;
+    font-size: 13px;
 }
+
+#username {
+    height: max-content;
+    margin: 8px 5px;
+    font-size: 13px;
+}
+
 #logout:hover {
+    font-weight: normal;
+    cursor: pointer;
+}
+#username:hover {
     font-weight: normal;
     cursor: pointer;
 }
