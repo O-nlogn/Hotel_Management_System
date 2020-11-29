@@ -113,6 +113,12 @@ app.get('/reservation', function (req, res) {
                 room_type: 'Twin', personnel: 3, breakfast_price: 0, rate: 50000, extra: 12000, total_price: 67000},
                 {name: '가으앙시', reservation_time: ' 2021-11-09T12:48:12.000Z', checkin: '2021-11-26T04:00:00.000Z', checkout: '2021-01-12T02:00:00.000Z',
                 room_type: 'single', personnel: 1, breakfast_price: 7000, rate: 50000, extra: 0, total_price: 57000}
+        ],
+        nations:
+        [
+            {name: 'Austria'}, {name: 'Germany'}, {name: 'Russia'}, {name: 'Argentina'}, {name: 'Mexico'}, {name: 'Spain'}, {name: 'Egypt'}, {name: 'Australia'}, {name: 'Canada'},
+            {name: 'UK'}, {name: 'USA'}, {name: 'Italy'}, {name: 'Japan'}, {name: 'China'}, {name: 'HongKong'}, {name: 'Turkey'}, {name: 'Brazil'}, {name: 'France'},
+            {name: 'Finland'}, {name: 'SouthKorea'}, {name: 'India'}
         ]
     });
 });
@@ -126,7 +132,7 @@ app.get('/notice', function (req, res) {
 });
 
 app.get('/changepw', function (req, res) {
-    res.render('changepw');
+    res.render('changepw', {status: undefined});
 });
 
 app.get('/equipment', function (req, res) {
