@@ -93,10 +93,12 @@ a:hover {
     height: 600px;
     margin: 100px 0 0 30px;
     border: solid 1px black;
+    border-radius: 3px;
 }
 
 .table div {
     border: solid 1px black;
+    margin: 0.1px;
 }
 
 .body {
