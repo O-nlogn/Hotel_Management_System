@@ -14,15 +14,6 @@ app.get('/', function (req, res) {
 
 app.get('/room', function (req, res) {
     res.render('room', {
-        rooms:
-        [
-            {number: 301, type: 'standard'},
-            { number: 302, type: 'standard' },
-            { number: 303, type: 'standard' },
-            
-            { number: 303, type: 'standard' }
-        ],
-
         stayrooms:
         [
             {room: 301, staff_name: '신민경', nationality: 'SouthKorea', personnel: 2, should_paid: 1000, cardkey: 0, request: '청소 깨끗이 해주세요', cleaning: 0,
@@ -33,24 +24,51 @@ app.get('/room', function (req, res) {
             {room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
             checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'}
         ],
-        //request 부분에 필요한 내용도 room으로 보내줘야함
-        //해당 날짜의 실시간 request 만 넘겨
-        realtime_request:
+        
+        //완료된 request는 allRequest에 포함되지않도록 쿼리문 짰습니당
+        allRequest:
         [
-          {sort:'룸서비스', request_time: '11:30:00' , room: '401', request_details:'(룸서비스 주문내역)', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' },
-          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' }
+          {request_type:'룸서비스', request_time: '11:30:00' , room: '401', details:'(룸서비스 주문내역)' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' }
 
         ]
     });
+});
+
+app.get('/reload_table', function(req, res){
+    res.render('reload_table',{rooms:
+        [
+            { number: 301, type: 'standard' },
+            { number: 302, type: 'standard' },
+            { number: 303, type: 'standard' },
+            { number: 303, type: 'standard' }
+        ],
+
+        stayrooms:
+        [
+            {
+                room: 301, staff_name: '신민경', nationality: 'SouthKorea', personnel: 2, should_paid: 1000, cardkey: 0, request: '청소 깨끗이 해주세요', cleaning: 0,
+                checkin: '2020-11-21 14:00:00', checkout: '2020-11-25 11:00:00'
+            },
+            {
+                room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
+                checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'
+            },
+
+            {
+                room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
+                checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'
+            }
+        ]});
 });
 
 app.get('/login', function (req, res) {
@@ -120,8 +138,8 @@ app.get('/equipment', function (req, res) {
 //        //해당 날짜의 실시간 request 만 넘겨
 //        realtime_request:
 //        [
-//          {sort:'룸서비스', request_time: '11:30:00' , room: '401', request_details:'(룸서비스 주문내역)', status: 'undone' },
-//          {sort:'요청사항', request_time: '12:00:00' , room: '503', request_details:'수건 부족', status: 'undone' }
+//          {request_type:'룸서비스', request_time: '11:30:00' , room: '401', details:'(룸서비스 주문내역)' },
+//          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' }
 //        ]
 //      });
 //  });

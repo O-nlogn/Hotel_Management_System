@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+    
+    <script src="js/doro.js"></script>  
+    <!-- 도로명주소 API 기능 활용을 위한 커스텀 javascript -->
+    
     <style>
         .inf-content{
             border:1px solid #DDDDDD;
@@ -113,8 +117,9 @@
                                     </strong>
                                 </td>
                                 <td class="text-primary">
-                                    --- <button>변경</button>
-                                </td>
+                                    <div id="road">도로</div> <div id="detail">세부</div><button onclick="goPopup();">변경</button>
+                                    <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                               </td>
                             </tr>
                             <tr>        
                                 <td>
