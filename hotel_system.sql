@@ -62,7 +62,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('alsrud606@hanyang.ac.kr','신민경','1999-11-25','USA'),('test1@naver.com','홍길동','1900-02-27','SouthKorea'),('test10@gmail.com','사암바','1990-08-20','Brazil'),('test2@gmail.com','박준성','2000-11-22','China'),('test3@gmail.com','하현우','2000-01-01','Japan'),('test4@gmail.com','스핑크스','2005-01-01','Egypt'),('test5@gmail.com','모차르트','2005-01-01','Austria'),('test6@gmail.com','카르에','2005-01-01','India'),('test7@gmail.com','소련여자','1993-01-01','Russia'),('test8@gmail.com','헨리','1993-01-01','Canada'),('test9@gmail.com','가으앙시','1900-01-01','HongKong');
+INSERT INTO `customers` VALUES ('alsrud606@hanyang.ac.kr','신민경','1999-11-25','USA'),('reservation_test0@naver.com','머쉬베놈','1990-11-06','France'),('reservation_test1@naver.com','스윙스','1990-03-14','Mexico'),('test1@naver.com','홍길동','1900-02-27','SouthKorea'),('test10@gmail.com','사암바','1990-08-20','Brazil'),('test2@gmail.com','박준성','2000-11-22','China'),('test3@gmail.com','하현우','2000-01-01','Japan'),('test4@gmail.com','스핑크스','2005-01-01','Egypt'),('test5@gmail.com','모차르트','2005-01-01','Austria'),('test6@gmail.com','카르에','2005-01-01','India'),('test7@gmail.com','소련여자','1993-01-01','Russia'),('test8@gmail.com','헨리','1993-01-01','Canada'),('test9@gmail.com','가으앙시','1900-01-01','HongKong');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +253,7 @@ DROP TABLE IF EXISTS `reservation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservation` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reservation_time` datetime NOT NULL,
+  `reservation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `checkin` datetime NOT NULL,
   `checkout` datetime NOT NULL,
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -273,7 +273,7 @@ CREATE TABLE `reservation` (
 
 LOCK TABLES `reservation` WRITE;
 /*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 22:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0),('test1@naver.com','2020-11-23 22:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1),('test2@gmail.com','2020-11-19 01:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','family',4,4),('test3@gmail.com','2020-11-19 12:48:12','2020-11-25 15:00:00','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test4@gmail.com','2021-11-01 18:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1),('test4@gmail.com','2021-11-23 12:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test5@gmail.com','2021-11-01 18:48:12','2021-11-25 15:00:00','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3),('test7@gmail.com','2020-11-10 18:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2),('test9@gmail.com','2021-11-09 12:48:12','2021-01-06 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,0);
+INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 13:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0),('reservation_test0@naver.com','2020-11-29 16:21:42','2020-11-09 00:00:00','2020-12-14 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','double',2,2),('reservation_test1@naver.com','2020-11-29 16:25:09','2020-11-29 00:00:00','2020-12-02 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,1),('test1@naver.com','2020-11-23 13:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1),('test2@gmail.com','2020-11-18 16:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','family',4,4),('test3@gmail.com','2020-11-19 03:48:12','2020-11-25 15:00:00','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test4@gmail.com','2021-11-01 09:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1),('test4@gmail.com','2021-11-23 03:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test5@gmail.com','2021-11-01 09:48:12','2021-11-25 15:00:00','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3),('test7@gmail.com','2020-11-10 09:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2),('test9@gmail.com','2021-11-09 03:48:12','2021-01-06 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,0);
 /*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,7 +392,7 @@ DROP TABLE IF EXISTS `stay`;
 CREATE TABLE `stay` (
   `room` int NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reservation_time` datetime NOT NULL,
+  `reservation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cardkey` tinyint(1) NOT NULL,
   `cleaning` tinyint(1) NOT NULL,
   `personnel` int NOT NULL,
@@ -408,7 +408,7 @@ CREATE TABLE `stay` (
 
 LOCK TABLES `stay` WRITE;
 /*!40000 ALTER TABLE `stay` DISABLE KEYS */;
-INSERT INTO `stay` VALUES (301,'alsrud606@hanyang.ac.kr','2020-11-22 22:48:12',1,0,2),(303,'test1@naver.com','2020-11-23 22:48:12',0,1,1),(411,'test2@gmail.com','2020-11-19 01:48:12',0,0,4),(502,'test4@gmail.com','2021-11-01 18:48:12',1,0,2),(509,'test3@gmail.com','2020-11-19 12:48:12',1,0,2);
+INSERT INTO `stay` VALUES (301,'alsrud606@hanyang.ac.kr','2020-11-22 13:48:12',1,0,2),(303,'test1@naver.com','2020-11-23 13:48:12',0,1,1),(411,'test2@gmail.com','2020-11-18 16:48:12',0,0,4),(502,'test4@gmail.com','2021-11-01 09:48:12',1,0,2),(509,'test3@gmail.com','2020-11-19 03:48:12',1,0,2);
 /*!40000 ALTER TABLE `stay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-29 21:28:49
+-- Dump completed on 2020-11-30  1:34:36
