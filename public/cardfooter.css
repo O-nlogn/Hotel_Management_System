@@ -1,0 +1,14 @@
+.card-footer .page-item a{
+    color: powderblue;
+}
+
+.card-footer .page-item a:hover{
+    color: rgb(136, 172, 177);
+    font-weight: bolder;
+}
+
+.card-footer .page-item.active a {
+    color: white;
+    background-color: powderblue;
+    border: 1px solid powderblue;
+}

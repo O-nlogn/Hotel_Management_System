@@ -81,6 +81,47 @@
             })
         })
     </script>
+
+    <style>
+        #add_res {
+            background-color: rgba(176, 224, 230, 0.2);
+            color: black;
+            font-weight: bold;
+            border: solid 2px powderblue;
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        #add_res:hover {
+            background-color: rgba(176, 224, 230, 0.7);
+            color: white;
+            transition-duration: 0.2s;
+        }
+
+        #add_res, .mb-3 {
+            margin-left: 30px;
+        }
+
+        #tooltipAddNew {
+            background-color: powderblue;
+            border-radius: 50px;
+            border: none;
+        }
+
+        #tooltipAddNew:hover {
+            background-color: rgb(120, 172, 179);
+            transition-duration: 0.2s;
+        }
+
+        .small.mb-3 {
+            margin-left: 0;
+        }
+
+        
+        
+    </style>
+    <link rel="stylesheet" type="text/css" href="cardfooter.css">
     </head>
 
 <body>
@@ -91,7 +132,7 @@
         <div class="container" style="padding-top: 70px;">
             <div class="row">
                 <!-- 예약추가 버튼 : 디자인시 바꿔주세용 -->
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+</button>
+                
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
@@ -258,7 +299,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="add_res">예약 추가하기</button>
+                <div class="col-lg-9" style="padding: 0;">
                     <div class="mb-3 Card_custom-card--border_5wJKy card">
                         <div class="table-responsive-xl">
                             <!-- 테이블 아이디 바꾸지 말아주세요 -->
