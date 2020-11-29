@@ -182,7 +182,76 @@
         .container {
             margin-left: 100px;
             padding-top: 20px;
+        }
 
+        #add_staff {
+            background-color: rgba(176, 224, 230, 0.2) !important;
+            color: black;
+            font-weight: bold;
+            border: solid 2px powderblue !important;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        #add_staff:hover {
+            background-color: rgba(176, 224, 230, 0.7) !important;
+            color: white !important;
+            transition-duration: 0.2s;
+        }
+
+        .form-group {
+            display: flex;
+        }
+
+        .form-group label {
+            width: 110px;
+            margin-right: 5px;
+        }
+
+        #newstaff_name, #newstaff_position {
+            width: 110px !important;
+        }
+
+        #newstaff_phonenum {
+            width: 150px !important;
+        }
+        #newstaff_div {
+            width: 125px !important;
+        }
+
+        #newstaff_position {
+            width: 80px !important;
+        }
+        #newstaff_account_bank {
+            width: 140px !important;
+        }
+        #newstaff_account_num {
+            width: 160px;
+        }
+
+        #newstaff_name, #newstaff_photo, #newstaff_div, #newstaff_account_bank, #newstaff_position, #newstaff_phonenum, #newstaff_account_num {
+            display: inline-block;
+        }
+
+        #checkboxes label{
+            width: max-content;
+        }
+
+        #newstaff_photo {
+            width: max-content;
+        }
+
+        #btn22 {
+            background-color: powderblue !important;
+            color: white;
+            margin-left: -50px;
+            border-radius: 5px;
+        }
+
+        #btn22:hover {
+            background-color: rgba(176, 224, 230, 0.7) !important;
+            transition-duration: 0.2s;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css" rel="stylesheet">
@@ -414,18 +483,20 @@
 
                 <!-- form으로 checkbox를 통해 받은 정보를 통해 백에서 staff 정보를 보내주면 아래에서 출력 -->
 
-                <div class="col-lg-9">
+                <div class="col-lg-9" style="margin-top: 50px; margin-left: -60px;">
                     <!-- 직원 검색창 -->
-                        <div class="mb-4">
-                            <div class="small mb-3">검색</div>
-                            <div class="input-group" style="display: flex;">
-                                <input placeholder="직원 이름 검색" type="text" class="form-control" id="keyword">
-                                <button class="btn btn-lg">검색</button>
+                    <button type="button" class="btn btn-pink btn-lg" data-toggle="modal" data-target="#myModal" id="add_staff">직원 추가하기</button>
+                        <div class="mb-4" style="text-align: right; margin-left: 480px;">
+                            <!-- <div class="small mb-3">검색</div> -->
+                            <div class="input-group" style="display: flex; width: 270px;">
+                                <input placeholder="이름 또는 사번으로 검색" style="width: 10px !important;" type="text" class="form-control" id="keyword"/>
+                                <button class="btn btn-lg" >검색</button>
                             </div>
                         </div>
+                        
                         <div>
                             <!-- 직원추가 버튼 : 디자인시 바꿔주세용 -->
-                            <button type="button" class="btn btn-pink btn-lg" data-toggle="modal" data-target="#myModal">직원추가</button>
+                            
                             <div class="modal fade" id="myModal" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -438,14 +509,14 @@
                                             <form name="직원 등록" action="" method="post">
                                                 <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
                                                 <div class="form-group">
-                                                    <label form="newstaff_name">이름 </label>
+                                                    <label form="newstaff_name">이름</label>
                                                     <input name="newstaff_name" type="text" id="newstaff_name" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newstaff_photo">사진</label>
                                                     <input type="file" name = "newstaff_photo" id="newstaff_photo" class="newstaff_photo" accept="img/*">
                                                     <!-- 버튼 디자인 부탁드려요-->
-                                                    <button class="browse-btn">사진업로드</botton>
+                                                    <button class="browse-btn" id="btn22">업로드</botton>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newstaff_div">부서</label>
@@ -471,7 +542,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>연락처</label><br>
-                                                    <input name="newstaff_phonenum" type="tel" id="newstaff_phonenum" class="form-control">
+                                                    <input name="newstaff_phonenum" placeholder="하이픈(-) 제외"type="tel" id="newstaff_phonenum" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>계좌번호</label><br>
@@ -484,21 +555,26 @@
                                                         <option value="SC제일은행">SC제일은행</option>
                                                         <option value="신한은행">신한은행</option>
                                                     </select>
-                                                    <input name="newstaff_account_num" type="text" id="newstaff_account_num" class="form-control">
+                                                    <input name="newstaff_account_num" placeholder="하이픈(-) 제외" type="text" id="newstaff_account_num" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="reservation">사용가능 언어</label><br>
-                                                    <label><input type="checkbox" name="usable_language" value="eng">영어</label>
-                                                    <label><input type="checkbox" name="usable_language" value="jap">일본어</label>
-                                                    <label><input type="checkbox" name="usable_language" value="chi">중국어</label>
-                                                    <label><input type="checkbox" name="usable_language" value="ger">독일어</label>
-                                                    <label><input type="checkbox" name="usable_language" value="rus">러시아어</label>
-                                                    <label><input type="checkbox" name="usable_language" value="esp">스페인어</label><br>
+                                                    <div id="checkboxes">
+                                                        <label><input type="checkbox" name="usable_language" value="eng">영어</label>
+                                                        <label><input type="checkbox" name="usable_language" value="jap">일본어</label>
+                                                        <label><input type="checkbox" name="usable_language" value="chi">중국어</label>
+                                                        <div style="display: block"></div>
+                                                        <label><input type="checkbox" name="usable_language" value="ger">독일어</label>
+                                                        <label><input type="checkbox" name="usable_language" value="rus">러시아어</label>
+                                                        <label><input type="checkbox" name="usable_language" value="esp">스페인어</label>
+                                                        
+                                                    </div>
+                                                    
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-default" data-dismiss="modal">등록</button>
+                                            <button type="submit" class="btn btn-default" data-dismiss="modal" id="btn22">등록</button>
                                         </div>
                                     </div>
                                 </div>
