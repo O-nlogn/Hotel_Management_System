@@ -10,8 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -297,6 +295,13 @@
                     <form action="/staff_lookup" method="post">
                         <!-- 백부분 코드 필요 -->
                         <div class="left-sidebar">
+
+                            <div class="mb-4">
+                                <div class="input-group" style="display: flex;">
+                                    <input placeholder="예약자명으로 검색" type="text" class="form-control" id="keyword">
+                                    <button><img src="search.png" width=37></button>
+                                </div>
+                            </div>
                             <div class="accordion" id="accordionExample">
                                 <div class="card mt-4">
                                     <a data-toggle="collapse" class="job-list" aria-expanded="true">
@@ -493,13 +498,7 @@
                 <div class="col-lg-9" style="margin-top: 50px; margin-left: -60px;">
                     <!-- 직원 검색창 -->
                     <button type="button" class="btn btn-pink btn-lg" data-toggle="modal" data-target="#myModal" id="add_staff">직원 추가하기</button>
-                        <div class="mb-4" style="text-align: right; margin-left: 480px;">
-                            <!-- <div class="small mb-3">검색</div> -->
-                            <div class="input-group" style="display: flex; width: 270px;">
-                                <input placeholder="이름 또는 사번으로 검색" style="width: 10px !important;" type="text" class="form-control" id="keyword"/>
-                                <button class="btn btn-lg" >검색</button>
-                            </div>
-                        </div>
+                        
                         
                         <div>
                             <!-- 직원추가 버튼 : 디자인시 바꿔주세용 -->

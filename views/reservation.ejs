@@ -156,7 +156,11 @@
             width: 100px;
         }
 
-        #reservation_name, #email_id, #selectEmail, #res_people, #date1, #date2, #res_pw, #res_breakfast {
+        #reservation_nation {
+            width: 130px;
+        }
+
+        #reservation_name, #email_id, #selectEmail, #res_people, #date1, #date2, #res_pw, #res_breakfast, #reservation_nation {
             display: inline-block;
         }
 
@@ -167,6 +171,8 @@
         #res_commit {
             background-color: powderblue;
             border: none;
+            color: white;
+            margin-left: 500px;
         }
 
         #res_commit:hover {
@@ -177,6 +183,7 @@
         .form-group label {
             width: 90px;
         }
+        
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
     </head>
@@ -411,7 +418,7 @@
                                             <div><%= reservation[i].room_type %></div>
                                         </td>
                                         <td class="align-middle">
-                                                <button id="tooltipAddNew" class="align-self-center btn btn-light"><i  class="fa-fw fa fa-plus"></i></button>
+                                                <button id="tooltipAddNew" class="align-self-center btn btn-light"><i  class="fa-fw fa fa-plus" style="color: white"></i></button>
                                         </td>
                                       </tr>
                                     <% } %>
