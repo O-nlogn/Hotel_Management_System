@@ -34,9 +34,9 @@ body {
     height: 100%;
     background: rgba(0,0,0,0.1);
 }
-.type1 {
-    border: solid 1px black;
-    border-radius: 5px;
+/* .type1 {
+    border: solid 1px black !important;
+    border-radius: 5px !important;
     width: 450px;
 }
 
@@ -46,14 +46,29 @@ body {
     border-radius: 3px;
     text-align: right;
     padding-right: 5px;
+} */
+
+
+.type1 {
+    margin-top: 40px;
+    margin-left: 20px;
+}
+.type1, .type1 tr, .type1 th, .type1 td {
+    border: solid 1px black;
+    /* border-radius: 20px !important; */
+    padding: 5px 10px 5px 10px;
 }
 
 .type1 th {
-    border: solid 1px black;
-    border-radius: 3px;
-    background-color: powderblue;
     text-align: center;
+    background-color: rgba(176, 224, 230, 0.66);
 }
+
+.type1 td {
+    width: 300px;
+    text-align: right;
+}
+
 
 h2 {
     margin-top: 0;
@@ -178,4 +193,19 @@ a:hover {
 .floor button:focus {
     background-color: rgba(176, 224, 230, 0.7);
     outline: none;
+}
+
+
+
+#btn22 {
+    background-color: powderblue !important;
+    border: none;
+    color: white;
+    margin-left: -50px;
+    border-radius: 5px;
+}
+
+#btn22:hover {
+    background-color: rgb(120, 172, 179) !important;
+    transition-duration: 0.2s;
 }

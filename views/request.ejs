@@ -101,6 +101,7 @@
 								<label for="request_time" style="margin-right: 5px;" class="req_label">현재시간</label>
 								<% var dt = new Date();
 									var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();%>
+<<<<<<< HEAD
 								<input name="request_time" type="text" style="width: 70px;" value= <%= time %>  disabled />
 							</div>-->
 	
@@ -112,6 +113,22 @@
 								<div class="radio-inline">
 									<label for="sort2"><input id="b" name="request_type" type="radio" value="룸서비스" onclick="setDisplay()">룸서비스</label>
 								</div>
+=======
+								<input name="request_time" type="text" style="width: 70px;" value= <%= time %> id="req_time" class="form-control" disabled />
+						    </div>
+						    <div style="margin-top: 2px; margin-left: 100px; display: flex;">
+								<label class="req_label">종류</label>
+								<div style="display: block;">
+									<div class="radio-inline">
+										<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
+									</div>
+									<div class="radio-inline">
+										<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
+									</div>
+
+								</div>
+								
+>>>>>>> 06bb50d6a865faeebecfff1bc92b94589bf8a1b6
 						    </div>
 						</div>
   						
@@ -137,6 +154,7 @@
   	            <div class="form-group" style="display: flex;">
 					<label for="room" class="req_label">방 번호</label>
 					<input name="room" type="text" class="form-control" style="width: 55px;">
+<<<<<<< HEAD
 				</div>
 
 				<div id="select_menu" class="form-group" style="display: none">
@@ -171,6 +189,18 @@
 					<input type="button" class="btn btn-default" style="background-color: powderblue; border: none; color: white;" value="저장" onclick="post_event()">
 			</div>
 		</form>
+=======
+  	            </div>
+  	            <div class="form-group" style="display: block;">
+  	                <label for="request_details">요청사항</label>
+  	                <textarea name="request_details" class="form-control" style="height: 200px;"></textarea>
+  	            </div>
+  	        </form>
+          </div>
+          <div class="modal-footer">
+				<button type="submit" class="btn btn-default" data-dismiss="modal" style="background-color: powderblue; border: none; color: white;">저장</button>
+          </div>
+>>>>>>> 06bb50d6a865faeebecfff1bc92b94589bf8a1b6
         </div>
 
       </div>

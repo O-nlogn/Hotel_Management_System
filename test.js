@@ -102,7 +102,11 @@ app.get('/staff', function (req, res) {
         staff:
             [
                 {name: '짱구', id: '2222222222', department: '프론트', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
-                {name: '장금이', id:'1111111111', department: '식음료부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1}
+                {name: '장금이', id:'2222222222', department: '식음료부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1},
+                {name: '짱구', id: '2222222222', department: '재무부', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
+                {name: '장금이', id:'2222222222', department: '인사부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1},
+                {name: '짱구', id: '2222222222', department: '기획부', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
+                {name: '장금이', id:'2222222222', department: '시설안전부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1}
             ],
         bank:
             [
