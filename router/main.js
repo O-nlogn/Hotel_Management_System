@@ -144,7 +144,7 @@ module.exports = function (app) {
     app.get('/staff', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
             var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account FROM users';
-            var users;
+            var users, bank;
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -153,6 +153,16 @@ module.exports = function (app) {
                     res.end();
                 }
                 else users = rows;
+            });
+
+            sql = 'SELECT * from bank';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else bank = rows;
             });
 
             sql = 'SELECT name, id, language FROM multilingual NATURAL JOIN users';
@@ -164,7 +174,7 @@ module.exports = function (app) {
                 }
                 else{
                     console.log({users:users, multilingual:rows});
-                    res.render('staff', { staff: users, multilingual: rows, username: req.cookies.username });
+                    res.render('staff', { staff: users, multilingual: rows, bank:bank, username: req.cookies.username });
                 }
             });
         }

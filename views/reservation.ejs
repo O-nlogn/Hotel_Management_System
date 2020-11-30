@@ -238,26 +238,9 @@
                                     <div class="form-group">
                                         <label for="reservation_nation">예약자 국적</label>
                                         <select class="form-control" name="reservation_nation" id="reservation_nation">
-                                            <option value="Austria"></option>Austria</option>
-                                            <option value="Germany">Germany</option>
-                                            <option value="Russia">Russia</option>
-                                            <option value="Argentina">Argentina</option>
-                                            <option value="Mexico">Mexico</option>
-                                            <option value="Spain">Spain</option>
-                                            <option value="Egypt">Egypt</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="UK">UK</option>
-                                            <option value="USA">USA</option>
-                                            <option value="Italy">Italy</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="China">China</option>
-                                            <option value="HongKong">HongKong</option>
-                                            <option value="Turkey">Turkey</option>
-                                            <option value="Brazil">Brazil</option>
-                                            <option value="France">France</option>
-                                            <option value="SouthKorea" selected>SouthKorea</option>
-                                            <option value="India">India</option>
+                                            <% for (var i=0; i<nations.length; i++){ %>
+                                                <option value="<%=nations[i].name%>"><%=nations[i].name%></option>
+                                            <%}%>
                                         </select>
                                     </div>
                                     <div class="form-group">

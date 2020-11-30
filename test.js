@@ -9,7 +9,7 @@ app.engine('html', require('ejs').renderFile);
 var server = app.listen(3000);
 
 app.get('/', function (req, res) {
-    res.render('main');
+    res.render('main',{username: '홍길동'});
 });
 
 app.get('/room', function (req, res) {
@@ -28,19 +28,20 @@ app.get('/room', function (req, res) {
         //완료된 request는 allRequest에 포함되지않도록 쿼리문 짰습니당
         allRequest:
         [
-          {request_type:'룸서비스', request_time: '11:30:00' , room: '401', details:'(룸서비스 주문내역)' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' },
-          {request_type:'요청사항', request_time: '12:00:00' , room: '503', details:'수건 부족' }
+          {request_type:'룸서비스', request_time: '2020-11-30 11:30:00' , room: '401', details:'(룸서비스 주문내역)' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' },
+          {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' }
 
-        ]
+        ],
+        username: '홍길동'
     });
 });
 
@@ -68,11 +69,11 @@ app.get('/reload_table', function(req, res){
                 room: 303, staff_name: '홍길동', nationality: 'USA', personnel: 1, should_paid: 3000, cardkey: 1, request: '영어 가능 직원 불러주세요', cleaning: 1,
                 checkin: '2020-11-20 14:00:00', checkout: '2020-11-26 11:00:00'
             }
-        ]});
+        ], username: '홍길동'});
 });
 
 app.get('/login', function (req, res) {
-    res.render('login', {login: false});
+    res.render('login', { login: false, username: '홍길동'});
 });
 
 app.get('/logout', function (req, res) {
@@ -86,8 +87,8 @@ app.get('/room_status', function (req, res) {
             [
                 {room_number: '301', check_in: 'true', country: "South Korea", trash: 'true', key: 'true', request: 'true'},
                 {room_number: '302', check_in: 'true', country: "South Korea", trash: 'true', key: 'false', request: 'true'}
-            ]
-
+            ],
+        username: '홍길동'
     });
 });
 
@@ -98,10 +99,14 @@ app.get('/staff', function (req, res) {
                 {name: '짱구', id: '2222222222', department: '프론트', phone_number: '010-5555-6666', email: 'staff9@naver.com', job_title: '부장', on_work: 0},
                 {name: '장금이', id:'1111111111', department: '식음료부', phone_number: '010-3333-4444', email: 'staff1@naver.com', job_title: '과장', on_work:1}
             ],
+        bank:
+            [
+                {name: 'IBK기업'}, {name: '농협'}, {name: '우리'}, {name: '신한'}, {name: '국민'}, {name: '하나'}, {name: '수협'}, {name: '새마을'}
+            ],
         multilingual:
             [
                 {name: '짱구', id:'2222222222', language: '일본어'}
-            ]
+            ], username: '홍길동'
     });
 });
 
@@ -119,29 +124,29 @@ app.get('/reservation', function (req, res) {
             {name: 'Austria'}, {name: 'Germany'}, {name: 'Russia'}, {name: 'Argentina'}, {name: 'Mexico'}, {name: 'Spain'}, {name: 'Egypt'}, {name: 'Australia'}, {name: 'Canada'},
             {name: 'UK'}, {name: 'USA'}, {name: 'Italy'}, {name: 'Japan'}, {name: 'China'}, {name: 'HongKong'}, {name: 'Turkey'}, {name: 'Brazil'}, {name: 'France'},
             {name: 'Finland'}, {name: 'SouthKorea'}, {name: 'India'}
-        ]
+        ], username: '홍길동'
     });
 });
 
 app.get('/mypage', function (req, res) {
-    res.render('mypage');
+    res.render('mypage', { username: '홍길동'});
 });
 
 app.get('/notice', function (req, res) {
-    res.render('notice');
+    res.render('notice', { username: '홍길동'});
 });
 
 app.get('/changepw', function (req, res) {
-    res.render('changepw', {status: undefined});
+    res.render('changepw', { status: undefined, username: '홍길동'});
 });
 
 app.get('/equipment', function (req, res) {
-    res.render('equipment');
+    res.render('equipment', { username: '홍길동'});
 });
 
 
 app.get('/changepw', function (req, res) {
-    res.render('changepw', {status: '1'});
+    res.render('changepw', { status: '1', username: '홍길동'});
 });
 // app.get('/request', function (req, res) {
 //      res.render('request', {
