@@ -41,6 +41,10 @@ app.get('/room', function (req, res) {
           {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' }
 
         ],
+        room_service:
+        [
+            {service: 'orange juice'}, {service: 'apple juice'}
+        ],
         username: '홍길동'
     });
 });

@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `receipt_service`;
 CREATE TABLE `receipt_service` (
   `room` int NOT NULL,
   `service` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order_time` datetime NOT NULL,
+  `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `paid` tinyint(1) NOT NULL,
   `done` tinyint(1) NOT NULL,
   PRIMARY KEY (`room`,`service`,`order_time`),
@@ -214,7 +214,7 @@ CREATE TABLE `receipt_service` (
 
 LOCK TABLES `receipt_service` WRITE;
 /*!40000 ALTER TABLE `receipt_service` DISABLE KEYS */;
-INSERT INTO `receipt_service` VALUES (301,'apple juice','2020-11-25 11:02:00',0,0),(301,'extra towel','2020-11-23 12:42:00',0,1);
+INSERT INTO `receipt_service` VALUES (301,'apple juice','2020-11-25 02:02:00',0,0),(301,'extra towel','2020-11-23 03:42:00',0,1);
 /*!40000 ALTER TABLE `receipt_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ DROP TABLE IF EXISTS `request`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `request` (
   `room` int NOT NULL,
-  `request_time` datetime NOT NULL,
+  `request_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`room`,`request_time`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`room`) REFERENCES `stay` (`room`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -240,7 +240,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
-INSERT INTO `request` VALUES (303,'2020-11-29 17:24:00','의자 좀 가져다 주세요');
+INSERT INTO `request` VALUES (303,'2020-11-29 08:24:00','의자 좀 가져다 주세요'),(411,'2020-11-30 06:15:43','너무 시끄러워요');
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-30  1:34:36
+-- Dump completed on 2020-11-30 15:28:59

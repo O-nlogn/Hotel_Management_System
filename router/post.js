@@ -141,6 +141,38 @@ module.exports = function (app) {
         });
     });
 
+
+    /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
+    app.post('/new_request', function (req, res) {
+        var type = req.body.request_type;
+        var room = req.body.room;
+        var sql, params;
+
+        if (type === '요청사항') {
+            var content = req.body.request_details;
+
+            sql = 'INSERT INTO request VALUES(?,DEFAULT,?)';
+            params = [room,content];
+        }
+        else {
+           var service = req.body.service;
+           
+           sql = 'INSERT INTO receipt_service VALUES(?,?,DEFAULT,?,?)';
+           params = [room, service, 0, 0];
+        }
+
+        dbconfig.query(sql, params, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
+            }
+        });
+
+        res.render('/room');
+    });
+
+
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
         res.render('jusoPopup', {locals: req.body});
