@@ -119,53 +119,45 @@ module.exports = function (app) {
     });
 
     app.get('/request_list', function (req, res) {
-        if (req.cookies.is_logged_in === 'true') {
-
-            var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
-            dbconfig.query(sql, function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(200);
-                    res.end();
-                }
-                else res.render('request_list',{allRequest:rows});
-            });
-
-        }
-        else res.redirect('/');
+        var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
+        dbconfig.query(sql, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
+            }
+            else res.render('request_list',{allRequest:rows});
+        });
     });
 
     app.get('/reload_table', function (req, res) {
-        if (req.cookies.is_logged_in === 'true') {
-            var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
-            sql += 'exists(select * from (select room from receipt_service where done=0 union select room from request)k where k.room = stay.room) AS request from stay';
-            sql += ' JOIN responsibility ON stay.room = responsibility.room';
-            sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
-            sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
-            sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
-            var stay_room, allRequest;
+        var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
+        sql += 'exists(select * from (select room from receipt_service where done=0 union select room from request)k where k.room = stay.room) AS request from stay';
+        sql += ' JOIN responsibility ON stay.room = responsibility.room';
+        sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
+        sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
+        sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
+        sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
+        var stay_room, allRequest;
 
-            dbconfig.query(sql, function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(200);
-                    res.end();
-                }
-                else stay_room = rows;
-            });
+        dbconfig.query(sql, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
+            }
+            else stay_room = rows;
+        });
 
-            sql = 'SELECT * FROM room ORDER BY number';
-            dbconfig.query(sql, function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(200);
-                    res.end();
-                }
-                else res.render('reload_table', { rooms: rows, stayrooms: stay_room, username: req.cookies.username});
-            });
-        }
-        else res.redirect('/');
+        sql = 'SELECT * FROM room ORDER BY number';
+        dbconfig.query(sql, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
+            }
+            else res.render('reload_table', { rooms: rows, stayrooms: stay_room, username: req.cookies.username});
+        });
     });
 
     app.get('/staff', function (req, res) {
