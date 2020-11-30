@@ -1,6 +1,7 @@
 var qs = require('querystring');
 var express = require('express')
 var crypto = require('crypto');
+var moment = require('moment');
 var dbconfig = require('../db');
 
 module.exports = function (app) {
@@ -140,6 +141,24 @@ module.exports = function (app) {
             res.redirect('/reservation');
         });
     });
+
+    app.post('/add_user', function (req, res) {
+        var count_query = 'SELECT COUNT(*) as cnt '
+                        + 'FROM users '
+                        + 'WHERE id LIKE ?';
+        // var date_format = moment().format('YYYYMM')+'%';
+        var date_format = '201903%';
+        console.log(date_format);
+        dbconfig.query(count_query, date_format, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            else {
+                console.log(rows);
+            }
+        })
+
+    })
 
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {

@@ -253,4 +253,8 @@ module.exports = function (app) {
         }
         else res.redirect('/login');
     });
+
+    app.get('/test', (req, res) => {
+        res.render('test');
+    })
 }
