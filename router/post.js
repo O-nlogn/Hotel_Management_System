@@ -174,7 +174,7 @@ module.exports = function (app) {
                         insert_query += ')';
 
                         var new_user_id = date_format + department_number + ('000'+String(user_count+1)).slice(-3);
-                        params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
+                        var params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
                                 req.body.name,  req.body.gender, req.body.phone_number, 
                                 req.body.department, req.body.birth, req.body.job_title,
                                 0, req.body.email, req.body.bank, req.body.account, 
@@ -196,6 +196,7 @@ module.exports = function (app) {
                 }
             });
         }
+    });
 
     /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
     app.post('/new_request', function (req, res) {
