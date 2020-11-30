@@ -263,7 +263,7 @@
         }
 
         #btn22:hover {
-            background-color: rgba(176, 224, 230, 0.7) !important;
+            background-color: rgb(120, 172, 179) !important;
             transition-duration: 0.2s;
         }
 
@@ -299,7 +299,7 @@
 
 <body>
     <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
-    <div style="background-color: #f8f8f8; height: max-content;">
+    <div style="background-color: #f8f8f8; height: max-content; padding-bottom: 20px;">
         <div class="container">
             <!-- for문 직원 개수 만큼 돌려서.. 여기에 출력 해야 함.. -->
             <div class="row">
@@ -535,7 +535,7 @@
                                                 <label form="newstaff_name">주소</label>
                                                 <div style="display: flex;">
                                                     <div id="road">도로</div>
-                                                    <div id="detail">세부</div><button onclick="goPopup();">변경</button>
+                                                    <div id="detail">세부</div><button onclick="goPopup();" id="btn22" style="margin-left: 235px;">변경</button>
                                                     <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
                                                 </div>
                                             </div>

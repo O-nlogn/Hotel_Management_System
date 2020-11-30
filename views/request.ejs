@@ -51,7 +51,26 @@
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<style>
+		.req_label {
+			width: 60px;
+			margin-right: 5px;
+			margin-top: -0.5px; 
+		}
 
+		.form-group {
+			display: flex;
+		}
+
+		#req_time {
+			width: 100px !important;
+		}
+
+		.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+			margin-left: 0;
+		}
+	</style>
     </head>
 
     <body>
@@ -99,22 +118,24 @@
 					  <form action="/new_request" method="post">
 						<div style="display: flex;">
 							<div class="form-group">
-								<label for="request_time" style="margin-right: 5px;">현재시간</label>
+								<label for="request_time" style="margin-right: 5px;" class="req_label">현재시간</label>
 								<% var dt = new Date();
 									var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();%>
-								<input name="request_time" type="text" style="width: 70px;" value= <%= time %>  disabled />
+								<input name="request_time" type="text" style="width: 70px;" value= <%= time %> id="req_time" class="form-control" disabled />
 						    </div>
-						    <div style="margin-top: 2px; margin-left: 100px;">
-						    	<label style="margin-right: 5px; margin-top: -0.5px;">종류</label>
-								<div class="radio-inline">
-									<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
-								</div>
-								<div class="radio-inline">
-									<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
-								</div>
+						    <div style="margin-top: 2px; margin-left: 100px; display: flex;">
+								<label class="req_label">종류</label>
+								<div style="display: block;">
+									<div class="radio-inline">
+										<label for="sort1"><input name="sort" type="radio" name="optradio" checked id="sort1">요청사항</label>
+									</div>
+									<div class="radio-inline">
+										<label for="sort2"><input name="sort" type="radio" name="optradio" checked id="sort2">룸서비스</label>
+									</div>
 
+								</div>
+								
 						    </div>
-
 						</div>
   						
   						<!-- 스크롤이 안됨
@@ -137,10 +158,10 @@
     					    <option>5</option>
     					  </select>-->
   	            <div class="form-group" style="display: flex;">
-					<label for="room" style="margin-top: 5px; margin-right: 5px;">방 번호</label>
+					<label for="room" class="req_label">방 번호</label>
 					<input name="room" type="text" class="form-control" style="width: 55px;">
   	            </div>
-  	            <div class="form-group">
+  	            <div class="form-group" style="display: block;">
   	                <label for="request_details">요청사항</label>
   	                <textarea name="request_details" class="form-control" style="height: 200px;"></textarea>
   	            </div>
