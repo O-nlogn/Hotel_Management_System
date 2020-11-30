@@ -14,7 +14,7 @@ module.exports = function (app) {
         var pw = req.body.pw;
         res.cookie('userID', id);
 
-        /* db에서 id, pw가 일치하는 직원이 있는지 검색 */
+        // db에서 id, pw가 일치하는 직원이 있는지 검색 
         var sql = 'SELECT * FROM users WHERE id=? and password=?';
         var params = [id, crypto.createHash('sha512').update(pw).digest('hex')];
 
@@ -32,6 +32,7 @@ module.exports = function (app) {
                 else {
                     console.log('로그인 성공');
                     res.cookie('is_logged_in', true);
+                    res.cookie('username',rows[0].name);
                 }
             }
 
@@ -42,54 +43,101 @@ module.exports = function (app) {
 
     /* 비밀번호 변경 확인을 눌렀을 때 request 처리*/
     app.post('/password', function (req, res) {
-        var body = '';
-        req.on('data', function (data) {
-            body = body + data;
-        });
-        req.on('end', function () {
-            var post = qs.parse(body);
-            var curpw = post.curpw;
-            var newpw = post.newpw;
-            var checkpw = post.checkpw;
+        var curpw = req.body.curpw;
+        var newpw = req.body.newpw;
+        var checkpw = req.body.checkpw;
 
-            if (newpw !== checkpw){ 
-                res.render('changepw', {status: 'newpw_not_match'});
+        if (newpw !== checkpw){ 
+            res.render('changepw', {status: 'newpw_not_match', username: req.cookies.username});
+        }
+        else{
+            var sql = 'SELECT password FROM users WHERE id=?';
+            var params = [req.cookies.userID];
+
+            dbconfig.query(sql, params, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else {
+                    curpw = crypto.createHash('sha512').update(curpw).digest('hex');
+                    newpw = crypto.createHash('sha512').update(newpw).digest('hex');
+                    
+                    if (rows[0].password !== curpw) {
+                        res.render('changepw', { status: 'curpw_not_match', username: req.cookies.username});
+                    }
+                    else{
+
+                        sql = 'UPDATE users SET password=? WHERE id=?';
+                        params = [newpw,req.cookies.userID];
+
+                        dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                            if (err2) {
+                                console.log(err2);
+                                res.writeHead(200);
+                                res.end();
+                            }
+                            else res.render('main', {username: req.cookies.username});
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+
+    /* 예약 추가 버튼을 눌렀을때 request 처리 */
+    app.post('/add_reservation', function (req, res) {
+        var name = req.body.reservation_name;
+        var email = req.body.email_id+"@"+req.body.email_select;
+        var birth = req.body.reservation_birth;
+        var nationality = req.body.reservation_nation;
+        var personnel = req.body.reservation_people;
+        var checkin = req.body.checkin_date;
+        var checkout = req.body.checkout_date;
+        var room_type = req.body.reservation_type;
+        var breakfast = req.body.reservation_breakfast;
+        var password = crypto.createHash('sha512').update(req.body.reservation_pw).digest('hex');
+
+        var sql = 'SELECT * from customers where email=?';
+        var params = [email];
+
+        dbconfig.query(sql, params, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
             }
-            else{
-                var sql = 'SELECT password FROM users WHERE id=?';
-                var params = [req.cookies.userID];
+            else {
+                /* 새로운 고객이면 DB에 추가 */
+                if (rows.length == 0) {
+                    sql = 'INSERT INTO customers VALUES(?,?,?,?)';
+                    params = [email, name, birth, nationality];
 
-                dbconfig.query(sql, params, function (err, rows, fields) {
-                    if (err) {
+                    dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                        if (err2) {
+                            console.log(err);
+                            res.writeHead(200);
+                            res.end();
+                        }
+                    });
+                }
+
+                /* 예약 추가 */
+                sql = 'INSERT INTO reservation VALUES(?,DEFAULT,?,?,?,?,?,?)';
+                params = [email, checkin, checkout, password, room_type, personnel, breakfast]; 
+
+                dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                    if (err2) {
                         console.log(err);
                         res.writeHead(200);
                         res.end();
                     }
-                    else {
-                        curpw = crypto.createHash('sha512').update(curpw).digest('hex');
-                        newpw = crypto.createHash('sha512').update(newpw).digest('hex');
-                        
-                        if (rows[0].password !== curpw) {
-                            res.render('changepw', {status: 'curpw_not_match'});
-                        }
-                        else{
-
-                            sql = 'UPDATE users SET password=? WHERE id=?';
-                            params = [newpw,req.cookies.userID];
-
-                            dbconfig.query(sql, params, function (err2, rows2, fields2) {
-                                if (err2) {
-                                    console.log(err2);
-                                    res.writeHead(200);
-                                    res.end();
-                                }
-                                else  res.render('main');
-                            });
-                        }
-                    }
                 });
             }
 
+            res.redirect('/reservation');
         });
     });
 

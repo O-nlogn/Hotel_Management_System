@@ -32,23 +32,25 @@ module.exports = function (app) {
     /* 메뉴 관련 */
     app.get('/notice', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('notice');
+            res.render('notice', { username: req.cookies.username });
         }
         else res.redirect('/login');
     });
 
     app.get('/equipment', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('equipment');
+            res.render('equipment', { username: req.cookies.username });
         }
         else res.redirect('/login');
     });
 
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
+
             var sql = 'SELECT *, breakfast_price+rate+extra as total_price from(select name, reservation_time, checkin, checkout, room_type, reservation.personnel,';
             sql += 'breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
             sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a';
+            var reseravation_list;
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -56,7 +58,17 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('reservation', { reservation: rows });
+                else reseravation_list = rows;
+            });
+
+            sql = 'SELECT name FROM nation';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else res.render('reservation', { reservation: reseravation_list, nations: rows, username: req.cookies.username});
             });
         }
         else res.redirect('/login');
@@ -65,8 +77,9 @@ module.exports = function (app) {
     app.get('/room', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
 
-            var allRequest;
+            var allRequest, room_service;
             var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
+           
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
@@ -76,6 +89,16 @@ module.exports = function (app) {
                 else allRequest = rows;
             });
             
+            sql = 'SELECT service from room_service';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else room_service = rows;
+            });
+
             sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
             sql += 'exists(select * from (select room from receipt_service where done=0 union select room from request)k where k.room = stay.room) AS request from stay';
             sql += ' JOIN responsibility ON stay.room = responsibility.room';
@@ -90,7 +113,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('room', {stayrooms: rows, allRequest: allRequest});
+                else res.render('room', { stayrooms: rows, allRequest: allRequest, room_service: room_service, username: req.cookies.username});
             });
         }
         else res.redirect('/');
@@ -123,7 +146,7 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('reload_table', { rooms: rows, stayrooms: stay_room});
+                else res.render('reload_table', { rooms: rows, stayrooms: stay_room, username: req.cookies.username});
             });
         }
         else res.redirect('/');
@@ -132,7 +155,7 @@ module.exports = function (app) {
     app.get('/staff', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
             var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account FROM users';
-            var users;
+            var users, bank;
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -141,6 +164,16 @@ module.exports = function (app) {
                     res.end();
                 }
                 else users = rows;
+            });
+
+            sql = 'SELECT * from bank';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else bank = rows;
             });
 
             sql = 'SELECT name, id, language FROM multilingual NATURAL JOIN users';
@@ -152,7 +185,7 @@ module.exports = function (app) {
                 }
                 else{
                     console.log({users:users, multilingual:rows});
-                    res.render('staff', { staff: users, multilingual: rows});
+                    res.render('staff', { staff: users, multilingual: rows, bank:bank, username: req.cookies.username });
                 }
             });
         }
@@ -164,7 +197,7 @@ module.exports = function (app) {
     /* 메인페이지, 내정보, 비밀번호 수정 관련*/
     app.get('/main', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('main');
+            res.render('main', {username: req.cookies.username} );
         }
         else res.redirect('/login');
     });
@@ -193,7 +226,7 @@ module.exports = function (app) {
                 }
                 else{
                     console.log({info:info, multilingual: rows});
-                    res.render('mypage', {info: info, multilingual: rows});
+                    res.render('mypage', { info: info, multilingual: rows, username: req.cookies.username});
                 }
             });
         }
@@ -202,14 +235,14 @@ module.exports = function (app) {
 
     app.get('/changepw', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('changepw', {status: undefined});
+            res.render('changepw', { status: undefined, username: req.cookies.username});
         }
         else res.redirect('/login');
     });
 
     
     app.get('/equipment', function (req, res) {
-        res.render('equipment');
+        res.render('equipment', { username: req.cookies.username});
     });
 
     
