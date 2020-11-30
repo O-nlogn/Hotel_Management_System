@@ -164,12 +164,9 @@ module.exports = function (app) {
         dbconfig.query(sql, params, function (err, rows, fields) {
             if (err) {
                 console.log(err);
-                res.writeHead(200);
-                res.end();
             }
         });
-
-        res.render('/room');
+        res.send();
     });
 
 

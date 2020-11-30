@@ -77,19 +77,9 @@ module.exports = function (app) {
     app.get('/room', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
 
-            var allRequest, room_service;
-            var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
-           
-            dbconfig.query(sql, function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(200);
-                    res.end();
-                }
-                else allRequest = rows;
-            });
-            
-            sql = 'SELECT service from room_service';
+            var room_service;
+            var sql = 'SELECT service from room_service';
+
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
@@ -113,8 +103,25 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else res.render('room', { stayrooms: rows, allRequest: allRequest, room_service: room_service, username: req.cookies.username});
+                else res.render('room', { stayrooms: rows, room_service: room_service, username: req.cookies.username});
             });
+        }
+        else res.redirect('/');
+    });
+
+    app.get('/request_list', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+
+            var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+                else res.render('request_list',{allRequest:rows});
+            });
+
         }
         else res.redirect('/');
     });

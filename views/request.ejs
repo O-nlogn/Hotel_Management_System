@@ -77,29 +77,7 @@
       <!-- realtime request -->
   	<div id="request">
   			<div class="list">
-  				<% for (var i=0; i < allRequest.length; i++) { %>
-					<% var r = allRequest[i]; %>
-					
-					<div id="requestItem">
-						<p class='title'>
-							<div class="request_box"><%= r.request_time %></div>
-							<div id="request_type" class="request_box tag"><%= r.request_type%></div>
-							<div id="request_type" class="request_box tag"><%= r.room %></div>
-						</p><br>
-						<p class="content">
-							<div class="dropdown">
-								<button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<%= r.details %>
-								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'update')">완료</a>
-									<a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'delete')">취소</a>
-								</div>
-							</div>
-						</p>
-					</div>
-  					
-  				<% } %>
+  				<!--실시간 처리-->
   			</div>
   			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><strong>+</strong></button>
   </div>
@@ -113,7 +91,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button> <br>
 
 		  </div>
-			<form action="/new_request" method="post">
+			<form method="post" id="add_request">
           		<div class="modal-body">
   					<!-- 백부분 코드 필요 (데이터 받아서 processing_status(??)를 false로 해서 디비에 저장해 주면 될듯 )-->
 						<div style="display: flex;">
@@ -199,5 +177,28 @@
 
       </div>
     </div>
-    </body>
+	</body>
+	
+	<script>
+		function get_list_data() {
+			$.ajax({
+				type: 'GET',
+				url: '/request_list',
+				success: (data) => {
+					$('.list').html(data);
+					setTimeout('get_list_data()', 1000);
+				}
+			});
+		}
+		get_list_data();
+
+		$.ajax({
+			type: 'POST',
+			url: "/new_request",
+			data: $('#add_request').serialize(),
+			success: function (response) {  
+			}
+		});
+
+	</script>
 </html>
