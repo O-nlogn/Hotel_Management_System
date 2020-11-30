@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
 -- Host: localhost    Database: hotel_system
 -- ------------------------------------------------------
--- Server version	8.0.22-0ubuntu0.20.04.2
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES UTF8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -197,9 +197,8 @@ DROP TABLE IF EXISTS `receipt_service`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receipt_service` (
   `room` int NOT NULL,
-  `service` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `service` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
   `paid` tinyint(1) NOT NULL,
   `done` tinyint(1) NOT NULL,
   PRIMARY KEY (`room`,`service`,`order_time`),
@@ -215,7 +214,6 @@ CREATE TABLE `receipt_service` (
 
 LOCK TABLES `receipt_service` WRITE;
 /*!40000 ALTER TABLE `receipt_service` DISABLE KEYS */;
-INSERT INTO `receipt_service` VALUES (301,'apple juice','2020-11-25 02:02:00',0,0),(301,'extra towel','2020-11-23 03:42:00',0,1);
 /*!40000 ALTER TABLE `receipt_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,8 +227,7 @@ DROP TABLE IF EXISTS `request`;
 CREATE TABLE `request` (
   `room` int NOT NULL,
   `request_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
-
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`room`,`request_time`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`room`) REFERENCES `stay` (`room`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -254,7 +251,7 @@ DROP TABLE IF EXISTS `reservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservation` (
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `reservation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `checkin` datetime NOT NULL,
   `checkout` datetime NOT NULL,
@@ -262,6 +259,7 @@ CREATE TABLE `reservation` (
   `room_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `personnel` int NOT NULL,
   `breakfast` int NOT NULL,
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '예약완료',
   PRIMARY KEY (`email`,`reservation_time`),
   KEY `room_type` (`room_type`),
   CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`room_type`) REFERENCES `room_type` (`type`) ON UPDATE CASCADE,
@@ -275,7 +273,7 @@ CREATE TABLE `reservation` (
 
 LOCK TABLES `reservation` WRITE;
 /*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 13:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0),('reservation_test0@naver.com','2020-11-29 16:21:42','2020-11-09 00:00:00','2020-12-14 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','double',2,2),('reservation_test1@naver.com','2020-11-29 16:25:09','2020-11-29 00:00:00','2020-12-02 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,1),('test1@naver.com','2020-11-23 13:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1),('test2@gmail.com','2020-11-18 16:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','family',4,4),('test3@gmail.com','2020-11-19 03:48:12','2020-11-25 15:00:00','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test4@gmail.com','2021-11-01 09:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1),('test4@gmail.com','2021-11-23 03:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0),('test5@gmail.com','2021-11-01 09:48:12','2021-11-25 15:00:00','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3),('test7@gmail.com','2020-11-10 09:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2),('test9@gmail.com','2021-11-09 03:48:12','2021-01-06 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,0);
+INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 13:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0,'예약완료'),('reservation_test0@naver.com','2020-11-29 16:21:42','2020-11-30 19:52:24','2020-12-14 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','double',2,2,'입실예정'),('reservation_test1@naver.com','2020-11-29 16:25:09','2020-11-30 19:52:28','2020-12-02 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,1,'입실예정'),('test1@naver.com','2020-11-23 13:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1,'예약완료'),('test2@gmail.com','2020-11-18 16:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','family',4,4,'예약완료'),('test3@gmail.com','2020-11-19 03:48:12','2020-11-25 15:00:00','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'예약완료'),('test4@gmail.com','2021-11-01 09:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1,'예약완료'),('test4@gmail.com','2021-11-23 03:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'예약완료'),('test5@gmail.com','2021-11-01 09:48:12','2020-11-30 19:52:08','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3,'입실예정'),('test7@gmail.com','2020-11-10 09:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2,'취소'),('test9@gmail.com','2021-11-09 03:48:12','2020-11-30 19:51:27','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','single',1,0,'취소');
 /*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +391,7 @@ DROP TABLE IF EXISTS `stay`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stay` (
   `room` int NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `reservation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cardkey` tinyint(1) NOT NULL,
   `cleaning` tinyint(1) NOT NULL,
@@ -435,8 +433,8 @@ CREATE TABLE `users` (
   `bank` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `account` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `salary` int NOT NULL,
-  `addressRoad` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `addressDetail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressRoad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressDetail` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `department` (`department`),
   KEY `job_title` (`job_title`),
@@ -466,6 +464,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
--- Dump completed on 2020-11-30  1:34:36
-
+-- Dump completed on 2020-11-30 20:19:49

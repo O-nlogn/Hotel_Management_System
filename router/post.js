@@ -126,7 +126,7 @@ module.exports = function (app) {
                 }
 
                 /* 예약 추가 */
-                sql = 'INSERT INTO reservation VALUES(?,DEFAULT,?,?,?,?,?,?)';
+                sql = 'INSERT INTO reservation VALUES(?,DEFAULT,?,?,?,?,?,?,DEFAULT)';
                 params = [email, checkin, checkout, password, room_type, personnel, breakfast]; 
 
 
