@@ -205,7 +205,7 @@ module.exports = function (app) {
     app.get('/mypage', function(req,res){
         if (req.cookies.is_logged_in === 'true'){
 
-            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account FROM users where id = ?';
+            var sql = 'SELECT name, id, department, phone_number, email, job_title, on_work, bank, account, addressRoad, addressDetail FROM users where id = ?';
             var params = [req.cookies.userID], info;
 
             dbconfig.query(sql, params, function (err, rows, fields) {
