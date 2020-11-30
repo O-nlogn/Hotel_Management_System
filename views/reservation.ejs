@@ -153,19 +153,23 @@
         }
 
         #res_pw {
-            width: 100px;
+            width: 150px;
         }
 
         #reservation_nation {
             width: 130px;
         }
 
-        #reservation_name, #email_id, #selectEmail, #res_people, #date1, #date2, #res_pw, #res_breakfast, #reservation_nation {
+        #reservation_birth {
+            width: 110px;
+        }
+
+        #reservation_name, #email_id, #selectEmail, #res_people, #date1, #date2, #res_pw, #res_breakfast, #reservation_nation, #reservation_birth {
             display: inline-block;
         }
 
         #date1, #date2 {
-            width: 150px;
+            width: 110px;
         }
 
         #res_commit {
@@ -182,6 +186,7 @@
 
         .form-group label {
             width: 90px;
+            margin-right: 1px;
         }
         
     </style>
@@ -213,7 +218,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label form="reservation_birth">생년월일</label>
-                                        <input type="text" name="reservation_birth" id="reservation_birth" size="12" />
+                                        <input type="text" name="reservation_birth" id="reservation_birth" size="12" class="form-control"/>
                                     </div>
                                     <div class="form-group">
                                         <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
@@ -277,7 +282,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default" id="res_commit">예약추가</button>
+                                        <button type="submit" class="btn btn-default" id="res_commit">추가</button>
                                     </div>
                                 </div>
                             </div>

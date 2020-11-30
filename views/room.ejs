@@ -130,15 +130,10 @@
 													<div>미결제 금액, 담당 직원, 입실 시간, 퇴실 예정 시간, 특이사항, 투숙 인원</div>
 												</details> -->
 					</caption>
-					<colgroup>
-						<col style="width: 111px">
-						<col>
-					</colgroup>
 					<tbody>
 						<tr>
-							<th style="text-align: center;">미결제 금액</th>
+							<th>미결제 금액</th>
 							<td><%=stayrooms[i].should_paid%> 원</td>
-							<!-- %=data[temp].name% -->
 						</tr>
 						<tr>
 							<th>담당 직원</th>
@@ -153,17 +148,17 @@
 							<td><%=stayrooms[i].checkout%></td>
 						</tr>
 						<tr>
-							<th style="height: 150px;">특이 사항</th>
+							<th>특이 사항</th>
 							<td>
 								<textarea id="inputbox" cols="43" rows="6"></textarea>
 								<div><button id="save" class="commit" style="border: none; margin-bottom: 2px;">저장</button></div>
 								<div id="result"></div>
-								<div><button class="modify" style="border: none">수정</button></div>
+								<div><button id="btn22">수정</button></div>
 							</td>
 						</tr>
 						<tr>
 							<th><label for="txt6">투숙 인원</label></th>
-							<td>5</td>
+							<td><%=stayrooms[i].personnel%></td>
 						</tr>
 					</tbody>
 				</table>

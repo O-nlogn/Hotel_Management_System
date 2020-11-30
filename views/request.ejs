@@ -51,7 +51,26 @@
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<style>
+		.req_label {
+			width: 60px;
+			margin-right: 5px;
+			margin-top: -0.5px; 
+		}
 
+		.form-group {
+			display: flex;
+		}
+
+		#req_time {
+			width: 100px !important;
+		}
+
+		.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+			margin-left: 0;
+		}
+	</style>
     </head>
 
     <body>
@@ -101,7 +120,7 @@
 
 							<!--시간은 백에서 처리하면 돼서 일단 주석처리 해놓겠습니다-
 							<div class="form-group">
-								<label for="request_time" style="margin-right: 5px;">현재시간</label>
+								<label for="request_time" style="margin-right: 5px;" class="req_label">현재시간</label>
 								<% var dt = new Date();
 									var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();%>
 								<input name="request_time" type="text" style="width: 70px;" value= <%= time %>  disabled />
@@ -122,7 +141,7 @@
   						<label for="room">방 번호</label>
     					  <select class="form-control" id="room_select">
     					    <option>1</option>
-      					  <option>2</option>
+      					 s <option>2</option>
     					    <option>3</option>
     					    <option>4</option>
     					    <option>5</option>
@@ -138,15 +157,16 @@
     					    <option>5</option>
     					  </select>-->
   	            <div class="form-group" style="display: flex;">
-					<label for="room" style="margin-top: 5px; margin-right: 5px;">방 번호</label>
+					<label for="room" class="req_label">방 번호</label>
 					<input name="room" type="text" class="form-control" style="width: 55px;">
 				</div>
 
 				<div id="select_menu" class="form-group" style="display: none">
 					<label for="room_service">메뉴</label>
 					<select class="form-control" name="service">
-						<option value="apple_juice">Apple Juice</option>
-						<option value="orange_juice">Orange Juice</option>
+						<% for(var i=0; i<room_service.length; i++){ %>
+							<option value="<%=room_service[i].service%>"><%=room_service[i].service%></option>
+						<%}%>
 					</select>
 				</div>
 
@@ -179,8 +199,5 @@
 
       </div>
     </div>
-
-
-
     </body>
 </html>
