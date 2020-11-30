@@ -1,6 +1,7 @@
 var qs = require('querystring');
 var express = require('express')
 var crypto = require('crypto');
+var moment = require('moment');
 var dbconfig = require('../db');
 
 module.exports = function (app) {
@@ -128,6 +129,7 @@ module.exports = function (app) {
                 sql = 'INSERT INTO reservation VALUES(?,DEFAULT,?,?,?,?,?,?)';
                 params = [email, checkin, checkout, password, room_type, personnel, breakfast]; 
 
+
                 dbconfig.query(sql, params, function (err2, rows2, fields2) {
                     if (err2) {
                         console.log(err);
@@ -141,6 +143,59 @@ module.exports = function (app) {
         });
     });
 
+
+    app.post('/add_user', function (req, res) {
+        var count_query = 'SELECT COUNT(*) as cnt '
+                        + 'FROM users '
+                        + 'WHERE id LIKE ?';
+        var date_format = moment().format('YYYYMM');
+        if (req.body.department === undefined) {
+            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+        }
+        else {
+            var department_number = {'기획부' : 0, '시설안전부' : 1, '식음료부' : 2, '인사부' : 3, '재무부' : 4, '프론트' : 5}[req.body.department];
+
+            console.log(date_format + department_number);
+            dbconfig.query(count_query, date_format + department_number + '%', (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                else {
+                    console.log(rows[0].cnt);
+                    var user_count = rows[0].cnt;
+                    if (user_count >= 999) {
+                        res.send({success: false, error: 'TOO_MANY_USERS'});
+                    }
+                    else {
+                        var insert_query = 'INSERT INTO users VALUES(?';
+                        for (var i = 1; i < 15 ; i++) {
+                            insert_query += ', ?';
+                        }
+                        insert_query += ')';
+
+                        var new_user_id = date_format + department_number + ('000'+String(user_count+1)).slice(-3);
+                        params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
+                                req.body.name,  req.body.gender, req.body.phone_number, 
+                                req.body.department, req.body.birth, req.body.job_title,
+                                0, req.body.email, req.body.bank, req.body.account, 
+                                req.body.salary, req.body.addressRoad, 
+                                req.body.addressDetail]
+
+                        if (undefined in params) {
+                            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+                        }
+                        else {
+                            dbconfig.query(insert_query, params, (err, rows) => {
+                                if (err) {
+                                    throw err;
+                                }
+                                res.send({success: true, user_id: new_user_id});
+                            });
+                        }
+                    }
+                }
+            });
+        }
 
     /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
     app.post('/new_request', function (req, res) {

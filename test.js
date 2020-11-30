@@ -41,6 +41,7 @@ app.get('/room', function (req, res) {
           {request_type:'요청사항', request_time: '2020-11-30 12:00:00' , room: '503', details:'수건 부족' }
 
         ],
+
         room_service:
         [
             {service: 'orange juice'}, {service: 'apple juice'}
@@ -133,7 +134,20 @@ app.get('/reservation', function (req, res) {
 });
 
 app.get('/mypage', function (req, res) {
-    res.render('mypage', { username: '홍길동'});
+    res.render('mypage', {
+        info:
+        [
+            {name: 'SMK', id: '2019037129', department: '프론트', phone_number: '010-4086-6441', email: 'staff4@naver.com', job_title: '사원',
+            on_work: 1, bank: 'IBK기업', account: '01309582801014', addressRoad: '경기도 안산시 상록구 한양대학로 55', addressDetail: '제4공학관 408-1'} 
+        ],
+
+        multilingual:
+        [
+            {id: '2019037129', language: '영어'},
+            {id: '2019037129', language: '프랑스어'}
+        ],
+        username: '홍길동'
+    });
 });
 
 app.get('/notice', function (req, res) {
