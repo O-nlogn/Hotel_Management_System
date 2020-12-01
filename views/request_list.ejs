@@ -10,24 +10,33 @@
     border-right: solid 1px rgb(161, 161, 161);
     border-left: solid 1px rgb(207, 207, 207)">
         <p class='title'>
+          <button type="button" class="close" aria-label="Close" onclick="modify_request(<%= r.request_time %>,'delete')" >
+              <span aria-hidden="true">&times;</span>
+          </button>
         <div class="request_box"><%= r.request_time %></div>
         <div id="request_type" class="request_box tag"><%= r.request_type%></div>
         <div id="request_type" class="request_box tag"><%= r.room %></div>
         </p><br>
         <p class="content">
         <div class="dropdown">
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'update')">완료</a>
-                <a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'delete')">취소</a>
-            </div>
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <button type="button" name="button">완료</button>
+              <button type="button" name="button">취소</button>
+                <!-- <a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'update')">완료</a>
+                <a class="dropdown-item" onclick="modify_request(<%= r.request_time %>,'delete')">취소</a> --
+            </div> -->
             <div style="margin-top: 80px; padding: 10px; word-break: break-all; background-color: rgba(245, 222, 179, 0.3); border-radius: 5px;">
                 <%= r.details %>
                 <!-- asdfasdfasdfsadfasdfasdfasdfasdsafd -->
             </div>
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" style="margin-left: 109px;">
-                처리
-            </button>
+            <div class="btn-group" role="group">
+              <button class="btn btn-light" type="button"  onclick="modify_request(<%= r.request_time %>,'update')"
+                style="margin-left: 109px; display: inline;">
+                  완료
+               </button>
+
+            </div>
+
         </div>
         </p>
     </div>
