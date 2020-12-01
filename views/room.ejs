@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-	
+
 	<!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->
 	<script>
 		window.onload = function () {
@@ -24,52 +24,58 @@
 			resultString += '</ul>';
 			var blk = document.getElementById("result");
 			blk.innerHTML = resultString;
-		}   
+		}
 	</script>
-	
+
 	<!-- 층별보기 -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function(){
             $('#floor3').click(function(){
                 var offset = $('#301').offset(); //선택한 태그의 위치를 반환
-                $('.table').animate({scrollTop : offset.top}, 400);
+								console.log(offset);
+                $('.table').animate({scrollTop : 0}, 300);
             });
 			$('#floor4').click(function(){
                 var offset = $('#401').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+																console.log(offset);
+                $('.table').animate({scrollTop :450}, 300);
             });
 			$('#floor5').click(function(){
                 var offset = $('#501').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+																console.log(offset);
+                $('.table').animate({scrollTop : 900}, 300);
             });
 			$('#floor6').click(function(){
                 var offset = $('#601').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+																console.log(offset);
+                $('.table').animate({scrollTop : 1350}, 300);
             });
 			$('#floor7').click(function(){
                 var offset = $('#701').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+																console.log(offset);
+                $('.table').animate({scrollTop : 1800}, 300);
             });
 			$('#floor8').click(function(){
                 var offset = $('#801').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+																console.log(offset);
+                $('.table').animate({scrollTop : 2250}, 300);
             });
 			$('#floor9').click(function(){
                 var offset = $('#901').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+                $('.table').animate({scrollTop : 2700}, 300);
             });
 			$('#floor10').click(function(){
                 var offset = $('#1001').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+                $('.table').animate({scrollTop : 3157}, 300);
             });
 			$('#floor11').click(function(){
                 var offset = $('#1101').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+                $('.table').animate({scrollTop : 3625}, 300);
             });
 			$('#floor12').click(function(){
                 var offset = $('#1201').offset();
-                $('.table').animate({scrollTop : offset.top}, 400);
+                $('.table').animate({scrollTop : 4200}, 300);
             });
         });
     </script>
@@ -102,24 +108,24 @@
 				<button id="floor12"><div class="button">12층</div></button>
 				<div id=""></div>
 			</div>
-			
+
 			<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
 			<div class = 'table' style="width: 620px;"></div>
-	
+
 			<%- include('./request'); %>
 		</div>
-	
+
 		<!--팝업창-->
 		<% for (var i = 0, j=0; i < stayrooms.length; i++) { %>
 		<div class="popup room<%=stayrooms[i].room%>">
-		
+
 			<div style="text-align: right;">
 				<a href="#a" class="close"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
 						clip-rule="evenodd">
 						<path
 							d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
 					</svg></a>
-		
+
 			</div>
 			<h2><%=stayrooms[i].room%>호</h2>
 			<div>
@@ -177,9 +183,9 @@
 		</div>
 		<div class="dim"></div>
 		<% } %>
-	
+
 	</div>
-	
+
 </body>
 
 <!-- 새로고침을 위한 코드 -->
