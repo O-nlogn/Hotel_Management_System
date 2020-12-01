@@ -297,6 +297,12 @@
     </script> -->
 
     <script>
+    $(document).ready(function() {
+        $("#keyword").keyup(function() {
+            //var k = $(this).val();
+          show_result();
+        })
+    })
     // // 이거는 체크박스필터랑 검색이랑 따로놈..
     // $(document).ready(function(){
     //   $("#search_staff").click(
