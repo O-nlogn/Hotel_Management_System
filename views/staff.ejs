@@ -304,60 +304,73 @@
     //
     //   });
 
-      function show_result() {
-        var value = $("#keyword").val().toLowerCase();
-        $("#table0 span").filter(function() {
-          if($(this).text().toLowerCase().indexOf(value) > -1 && $(this).css('display') !== 'none'){
-              $(this).show();
-          }else{
-            $(this).hide();
-          }
+    function search_result() {
+      var search_r=new Array();
+      var value = $("#keyword").val().toLowerCase();
+      $("#table0 span").filter(function() {
+        if($(this).text().toLowerCase().indexOf(value) > -1 ){
+          search_r.push($(this).attr('id'));
+        }
+      });
+      return search_r;
+    }
 
-        });
-      }
 
-    </script>
-    <script>
-    // 체크박스 필터링 부분(부서별, 직급별까지만 구현함 외국어는 아직 표에 없어서 체크박스 눌러도 안바뀜)
-        var list = [[ '기획부', '시설안전부', '식음료부','인사부', '재무부', '프론트'],[ '팀장','과장','대리','사원','부장'],['없음','독일어','러시아어','스페인']];
-        function checkbox_check() {
+      var list = [[ '기획부', '시설안전부', '식음료부','인사부', '재무부', '프론트'],[ '팀장','과장','대리','사원','부장','사장','이사'],['출근','퇴근'],
+      ['없음','독일어','러시아어','스페인어','아랍어','영어','이탈리아어','일본어','중국어','터키어','포르투칼어','프랑스어','핀란드어','힌디어']];
+      function checkbox_check() {
+        var checkbox_r=new Array();
         var ch=new Array();
         var cat,checkboxes,check,l,table,subt,i,j,k,p;
-        for ( i = 0; i < 3; i++ ) {
-          cat = document.getElementById("input"+i);//분류별로 가져옴
-          // console.log(cat);
-          checkboxes=cat.getElementsByTagName("input");//카테고리별 input들
-          l=list[i];
-          check=new Array();
-          for (j = 0;j < checkboxes.length;j++){
-            if(checkboxes[j].checked) {
-              check.push(l[j]);
-            }
+        for ( i = 0; i < 4; i++ ) {
+        cat = document.getElementById("input"+i);//분류별로 가져옴
+        // console.log(cat);
+        checkboxes=cat.getElementsByTagName("input");//카테고리별 input들
+        l=list[i];
+        check=new Array();
+        for (j = 0;j < checkboxes.length;j++){
+          if(checkboxes[j].checked) {
+            check.push(l[j]);
           }
-          ch.push(check);
-         }
-        table = document.getElementById("table0");
-        subt=table.getElementsByClassName("subtable");
-
-        for (j = 0; j < subt.length; j++) {
-          p=0;
-          for (i = 0; i < 3; i++) {
-            for (k=0;k<ch[i].length;k++) {
-                if (subt[j].innerText.indexOf(ch[i][k]) > -1){//존재
-                  p=p+1;
-                  break;
-                }
-            }
-          }
-          // console.log(p);
-        if(p == 2 && (subt[j].innerText.indexOf($("#keyword").val().toLowerCase())>-1)) {
-          $(subt[j]).show();
-        }else {
-          $(subt[j]).hide();
         }
+        ch.push(check);
+       }
+      table = document.getElementById("table0");
+      subt=table.getElementsByClassName("subtable");
+
+      for (j = 0; j < subt.length; j++) {
+        p=0;
+        for (i = 0; i < 4; i++) {
+          for (k=0;k<ch[i].length;k++) {
+              if (subt[j].innerText.indexOf(ch[i][k]) > -1){//존재
+                p=p+1;
+                break;
+              }
+          }
+        }
+        console.log(p);
+        if (p == 4) {
+          checkbox_r.push(subt[j].id);
         }
       }
+      return checkbox_r;
+    }
 
+
+    function show_result() {
+      var re=search_result();
+      var ch=checkbox_check();
+      console.log(re);
+      console.log(ch);
+      var subt=document.getElementsByClassName("subtable");
+      for (var i=0;i<subt.length;i++){
+      if (ch.includes($(subt[i]).attr('id')) && re.includes($(subt[i]).attr('id'))){
+          $(subt[i]).show();
+      }else {
+          $(subt[i]).hide();
+      }
+    }
+  }
 
       </script>
 
@@ -401,37 +414,37 @@
                                         <div class="card-body p-0">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio1" name="department" value="기획부"
-                                                    class="custom-control-input"  onclick="checkbox_check()" checked>
+                                                    class="custom-control-input"  onclick="show_result();" checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio1">기획부</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio2" name="department" value="시설안전부"
-                                                    class="custom-control-input"  onclick="checkbox_check()"checked>
+                                                    class="custom-control-input"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio2">시설안전부</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio3" name="department" value="식음료부"
-                                                    class="custom-control-input"  onclick="checkbox_check()"checked>
+                                                    class="custom-control-input"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio3">식음료부</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio4" name="department" value="인사부"
-                                                    class="custom-control-input"  onclick="checkbox_check()"checked>
+                                                    class="custom-control-input"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio4">인사부</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio5" name="department" value="재무부"
-                                                    class="custom-control-input"  onclick="checkbox_check()"checked>
+                                                    class="custom-control-input"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio5">재무부</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio6" name="department" value="프론트"
-                                                    class="custom-control-input"  onclick="checkbox_check()"checked>
+                                                    class="custom-control-input"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio6">프론트</label>
                                             </div>
@@ -463,44 +476,56 @@
                                     <div id="collapse2" class="collapse show" aria-labelledby="headingtwo">
                                         <div class="card-body p-0">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck7"
-                                                    name="position" value="팀장" onclick="checkbox_check()" checked>
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"
+                                                    name="position" value="팀장" onclick="show_result();" checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
-                                                    for="customCheck7">팀장</label>
+                                                    for="customCheck1">팀장</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck8"
-                                                    name="position" value="과장"  onclick="checkbox_check()"checked>
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                                    name="position" value="과장"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
-                                                    for="customCheck8">과장</label>
+                                                    for="customCheck2">과장</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3"
-                                                    name="position" value="대리"  onclick="checkbox_check()"checked>
+                                                    name="position" value="대리"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customCheck3">대리</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck4"
-                                                    name="position" value="사원"  onclick="checkbox_check()"checked>
+                                                    name="position" value="사원"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customCheck4">사원</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck5"
-                                                    name="position" value="부장"  onclick="checkbox_check()"checked>
+                                                    name="position" value="부장"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customCheck5">부장</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6"
+                                                    name="position" value="부장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck6">사장</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck7"
+                                                    name="position" value="부장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck7">이사</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- collapse one end -->
-                                <!-- <div class="card mt-4">
+                                <div class="card mt-4" id="input2">
                                     <a data-toggle="collapse" class="job-list" aria-expanded="true">
                                         <div class="card-header" id="headingtwo">
                                             <button type="button" class="btn btn-default btn-block"
@@ -512,22 +537,22 @@
                                         <div class="card-body p-0">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio7" name="customRadio1"
-                                                    class="custom-control-input" name="staff_status" value="출근" checked>
+                                                    class="custom-control-input" name="staff_status" value="출근"  onclick="show_result();" checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio7">출근</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="customRadio8" name="customRadio1"
-                                                    class="custom-control-input" name="staff_status" value="퇴근" checked>
+                                                    class="custom-control-input" name="staff_status" value="퇴근"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="customRadio8">퇴근</label>
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
 
-                                <div class="card mt-4" id="input2">
+                                <div class="card mt-4" id="input3">
                                     <a data-toggle="collapse" class="job-list" aria-expanded="true">
                                         <div class="card-header" id="headingtwo">
                                             <button type="button" class="btn btn-default btn-block"
@@ -539,29 +564,89 @@
                                         <div class="card-body p-0">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="lang1" name="customRadio3"
-                                                    class="custom-control-input" name="language" value="없음" checked>
+                                                    class="custom-control-input" name="language" value="없음"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="lang1">없음</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="lang2" name="customRadio3"
-                                                    class="custom-control-input" name="language" value="독일어" checked>
+                                                    class="custom-control-input" name="language" value="독일어"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="lang2">독일어</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="lang3" name="customRadio3"
-                                                    class="custom-control-input" name="language" value="러시아어" checked>
+                                                    class="custom-control-input" name="language" value="러시아어"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
                                                     for="lang3">러시아어</label>
                                             </div>
 
                                             <div class="custom-control custom-checkbox checkbox-info">
                                                 <input type="checkbox" id="lang4" name="customRadio3"
-                                                    class="custom-control-input" name="language" value="스페인어" checked>
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15 "
                                                     for="lang4">스페인어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang5" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang5">아랍어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang7" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang7">영어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang8" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang8">이탈리아어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang9" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang9">일본어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang10" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang10">중국어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang11" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang11">터키어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang12" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang12">포르투칼어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang13" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang13">프랑스어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang14" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang14">핀란드어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang15" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang15">힌디어</label>
                                             </div>
                                         </div>
                                     </div>
@@ -693,38 +778,63 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                        <div id="table0" style="display: grid; grid-template-columns: 400px 400px;">
-                            <% for (var i=0; i < staff.length; i++) { %>
-                            <!-- 검색기능을 위해 div에 id 부여 -->
+                      <div id="table0" style="display: grid; grid-template-columns: 400px 400px;">
+                        <% for (var i=0; i < staff.length; i++) { %>
+                        <!-- 검색기능을 위해 div에 id 부여 -->
 
-                            <span class="subtable">
-                                <div style="display: inline-block; margin: 20px; width: 400px;">
+                             <span class="subtable" id=<%="t"+i%>>
+                                 <div style="display: inline-block; margin: 20px;">
                                 <!-- 검색기능을 위해 table 에 id 부여 -->
-                                    <table id="staff_table2">
-                                        <tbody>
-                                            <tr>
-                                                <td rowspan="4"><img src=<%=staff[i].id+".png" %> alt="직원 사진" height="117px"></td>
-                                                <th>이름</th>
-                                                <td><%= staff[i].name%></td>
-                                            </tr>
-                                            <tr>
-                                                <th>부서</th>
-                                                <td><%= staff[i].department %>(<%=staff[i].job_title%>)</td>
-                                            </tr>
-                                            <tr>
-                                                <th>전화번호</th>
-                                                <td><%= staff[i].phone_number %></td>
-                                            </tr>
-                                            <tr>
-                                                <th>이메일</th>
-                                                <td><%= staff[i].email %></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </span>
-                            <% } %>
-                        </div>
+                                <table id="staff_table2">
+                                    <tbody>
+                                        <tr>
+                                           <td rowspan="5"><img src=<%=staff[i].id+".png" %> alt="직원 사진" height="117px"></td>
+                                            <th>이름</th>
+                                            <td><%= staff[i].name%>
+                                              <% if (staff[i].on_work === 1 ) {%>
+                                              <span class="badge badge-primary">출근</span>
+                                              <% } else {%>
+                                              <span class="badge badge-secondary">퇴근</span>
+                                                <% }%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>부서</th>
+                                            <td><%= staff[i].department %>(<%=staff[i].job_title%>)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>전화번호</th>
+                                            <td><%= staff[i].phone_number %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>이메일</th>
+                                            <td><%= staff[i].email %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>외국어</th>
+                                            <td>
+                                              <% var t=0;%>
+                                              <% for (var j=0; j < multilingual.length; j++) { %>
+
+                                                   <% if (staff[i].id === multilingual[j].id) { %>
+
+                                                 <% var t=1;%>
+                                                 <%=  multilingual[j].language %>
+                                                <% }%>
+
+                                                <% if(multilingual.length-1 === j && t === 0) { %>없음
+
+                                              <%}%>
+
+                                            <%}%>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                              </span>
+                                <% } %>
+                            </div>
                     </div>
 
 
