@@ -260,6 +260,8 @@
             color: white;
             margin-left: -50px;
             border-radius: 5px;
+            border: none !important;
+            outline: none !important;
         }
 
         #btn22:hover {
@@ -269,6 +271,13 @@
 
         .container {
             margin-left: 380px;
+        }
+
+        #road {
+            width: 230px;
+        }
+        #detail {
+            width: 230px;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css"
@@ -591,9 +600,21 @@
                                             <div class="form-group">
                                                 <label form="newstaff_name">주소</label>
                                                 <div style="display: flex;">
-                                                    <div id="road">도로</div>
-                                                    <div id="detail">세부</div><input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 235px;">
+                                                    <div>
+                                                        <div id="road">
+                                                            <!-- <input disabled placeholder="도로명 주소" style="width: 210px !important;"> -->
+                                                            <span style="color: grey;">
+                                                                도로명 주소
+                                                            </span>
+                                                    </div>
+                                                        <div id="detail">
+                                                            <span style="color: grey;">
+                                                                상세 주소
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                     <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                                    <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -601,7 +622,7 @@
                                                 <input type="file" name="newstaff_photo" id="newstaff_photo"
                                                     class="newstaff_photo" accept="img/*">
                                                 <!-- 버튼 디자인 부탁드려요-->
-                                                <button class="browse-btn" id="btn22">업로드</botton>
+                                                <!-- <button class="browse-btn" id="btn22">업로드</botton> -->
                                             </div>
                                             <div class="form-group">
                                                 <label for="newstaff_div">부서</label>
@@ -672,17 +693,17 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                          <div id="table0" style="display: grid; grid-template-columns: 400px 400px;">
+                        <div id="table0" style="display: grid; grid-template-columns: 400px 400px;">
                             <% for (var i=0; i < staff.length; i++) { %>
                             <!-- 검색기능을 위해 div에 id 부여 -->
 
-                                 <span class="subtable">
-                                     <div style="display: inline-block; margin: 20px;">
-                                    <!-- 검색기능을 위해 table 에 id 부여 -->
+                            <span class="subtable">
+                                <div style="display: inline-block; margin: 20px; width: 400px;">
+                                <!-- 검색기능을 위해 table 에 id 부여 -->
                                     <table id="staff_table2">
                                         <tbody>
                                             <tr>
-                                               <td rowspan="4"><img src=<%=staff[i].id+".png" %> alt="직원 사진" height="117px"></td>
+                                                <td rowspan="4"><img src=<%=staff[i].id+".png" %> alt="직원 사진" height="117px"></td>
                                                 <th>이름</th>
                                                 <td><%= staff[i].name%></td>
                                             </tr>
@@ -700,11 +721,11 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                  </div>
-                                  </span>
-                                    <% } %>
                                 </div>
-                            </div>
+                            </span>
+                            <% } %>
+                        </div>
+                    </div>
 
 
                         </div>
