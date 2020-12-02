@@ -85,17 +85,48 @@
             });
         });
     </script>
-    <!-- 예약검색기능 -->
-    <script>
-        $(document).ready(function () {
-            $("#keyword").keyup(function () {
-                var k = $(this).val();
-                $("#reservation_table > tbody > tr").hide();
-                var temp = $("#reservation_table > tbody > tr > td:nth-child(5n+1):contains('" + k + "')");
 
-                $(temp).parent().show();
-            })
+    <!-- 필터링 & 검색 기능 -->
+    <script>
+    $(document).ready(function () {
+        $("#keyword").keyup(function () {
+            show_result();
         })
+    })
+    var clicked_id="";
+
+    function show_result() {
+      var t;
+      var search_content= $("#keyword").val().toLowerCase();
+      var subt=document.getElementById("ttbody").getElementsByTagName("tr");
+      for (var i=0;i<subt.length;i++){
+        t=subt[i].getElementsByTagName("td")[1].innerText||subt[i].getElementsByTagName("td")[1].innerHTML;
+      if (subt[i].innerText.indexOf(search_content) >-1 && t.indexOf(clicked_id) >-1){
+          $(subt[i]).show();
+      }else {
+          $(subt[i]).hide();
+      }
+    }
+  }
+
+  function clicked_function(input){
+    clicked_id=input;
+    show_result();
+  }
+
+       // 버튼 클릭시 active효과
+       function click_effect(number) {
+         var btns=document.getElementById("myBtnContainer").getElementsByTagName("button");
+         for( var i=0;i<btns.length;i++) {
+           $(btns[i]).removeClass('active');
+           if (i === number) {
+             $(btns[i]).addClass('active');
+           }
+
+         }
+
+       }
+
     </script>
 
     <style>
@@ -316,9 +347,9 @@
                     <div class="mb-4">
                       <div id="myBtnContainer" class="btn-group">
                         <div class="small mb-3">예약상태별 보기</div>
-                        <button class="btn active" onclick="myFunction('')"> Show all</button>
-                        <button class="btn" onclick="myFunction('취소')"> 취소</button>
-                        <button class="btn" onclick="myFunction('입실예정')"> 입실예정</button>
+                        <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);"> Show all</button>
+                        <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
+                        <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(2);"> 입실예정</button>
                       </div>
                     </div>
                     <div class="mb-4">
@@ -406,7 +437,7 @@
                                         <th class="align-middle bt-0">상세보기</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="ttbody">
                                     <% for (var i = 0; i < reservation.length; i++) { %>
                                             <tr>
                                                 <td class="align-middle">
@@ -513,26 +544,7 @@
                 </div>
 
             </div>
-            <script>
-                function myFunction(input) {
-                    var filter, table, tr, td, i, txtValue;
-                    filter = input;
-                    table = document.getElementById("reservation_table");
-                    tr = table.getElementsByTagName("tr");
-                    for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[1];
-                        if (td) {
-                            txtValue = td.innerHTML || td.innerText;
-                            if (txtValue.indexOf(filter) > -1) {
-                                tr[i].style.display = "";
-                            } else {
-                                tr[i].style.display = "none";
-                            }
-                        }
-                    }
-                }
 
-            </script>
 
 </body>
 
