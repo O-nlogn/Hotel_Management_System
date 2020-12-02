@@ -200,23 +200,64 @@ module.exports = function (app) {
 
     /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
     app.post('/new_request', function (req, res) {
-        var type = req.body.request_type;
         var room = req.body.room;
+        var type = req.body.request_type;
+        var cnt = req.body.cnt;
+        var sql, params, email, reservation_time;
+
+        sql = 'SELECT email, reservation_time FROM stay WHERE room=?';
+        params = [room];
+        dbconfig.query(sql,params, function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+            }
+            else{
+                email = rows[0].email; 
+                reservation_time = rows[0].reservation_time;
+
+                if (type === '요청사항') {
+                    var content = req.body.request_details;
+
+                    sql = 'INSERT INTO request VALUES(DEFAULT,?,0,?,?)';
+                    params = [content, email, reservation_time];
+                }
+                else {
+                    var service = req.body.service;
+                    sql = 'INSERT INTO receipt_service VALUES(?,DEFAULT,0,0,?,?,?)';
+                    params = [service, email, reservation_time, cnt];
+                }
+
+                dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                });
+                res.send();
+            }
+        });
+    });
+
+
+    /* 요청사항 완료 또는 닫기 버튼 눌렀을 때 */
+    app.post('/request_data', function (req, res) {
+        var email = req.body.email;
+        var reservation_time = req.body.reservation_time;
+        var status = req.body.status;
+        var request_time = req.body.request_time;
+        var type = req.body.request_type;
+        var details = req.body.details;
         var sql, params;
 
-        if (type === '요청사항') {
-            var content = req.body.request_details;
-
-            sql = 'INSERT INTO request VALUES(?,DEFAULT,?)';
-            params = [room,content];
+        if (type === '룸서비스'){
+            if (status === 'delete') sql = 'DELETE from receipt_service WHERE email=? and reservation_time=? and service=? and request_time=?';
+            else sql = 'UPDATE receipt_service SET done=1 WHERE email=? and reservation_time=? and service=? and request_time=?';
         }
-        else {
-           var service = req.body.service;
-           
-           sql = 'INSERT INTO receipt_service VALUES(?,?,DEFAULT,?,?)';
-           params = [room, service, 0, 0];
+        else{
+            if (status === 'delete') sql = 'DELETE from request WHERE email=? and reservation_time=? and details=? and request_time=?';
+            else sql = 'UPDATE request SET done=1 WHERE email=? and reservation_time=? and details=? and request_time=?';
         }
 
+        params = [email, reservation_time, details, request_time];
         dbconfig.query(sql, params, function (err, rows, fields) {
             if (err) {
                 console.log(err);
@@ -224,7 +265,6 @@ module.exports = function (app) {
         });
         res.send();
     });
-
 
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {

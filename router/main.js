@@ -99,12 +99,12 @@ module.exports = function (app) {
             });
 
             sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
-            sql += 'exists(select * from (select room from receipt_service where done=0 union select room from request)k where k.room = stay.room) AS request from stay';
+            sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
             sql += ' JOIN responsibility ON stay.room = responsibility.room';
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
             sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
             sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-            sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
+            sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email';
 
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
@@ -119,7 +119,8 @@ module.exports = function (app) {
     });
 
     app.get('/request_list', function (req, res) {
-        var sql = '(select *,"요청사항" as request_type from request) union (select room, order_time as request_time, service as details, "룸서비스" as request_type from receipt_service where done=0)';
+        var sql = 'select room, email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0';
+        sql += ' union select room, email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0';
         dbconfig.query(sql, function (err, rows, fields) {
             if (err) {
                 console.log(err);
@@ -131,15 +132,17 @@ module.exports = function (app) {
     });
 
     app.get('/reload_table', function (req, res) {
+        
+        var stay_room, allRequest;
+
         var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
-        sql += 'exists(select * from (select room from receipt_service where done=0 union select room from request)k where k.room = stay.room) AS request from stay';
+        sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
         sql += ' JOIN responsibility ON stay.room = responsibility.room';
         sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
         sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
         sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-        sql += ' LEFT JOIN(SELECT SUM(price) as should_paid, room from receipt_service natural join room_service where paid = 0 group by room)a ON stay.room = a.room';
-        var stay_room, allRequest;
-
+        sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email';
+        
         dbconfig.query(sql, function (err, rows, fields) {
             if (err) {
                 console.log(err);
