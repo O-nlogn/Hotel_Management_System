@@ -74,17 +74,6 @@ a:hover {
     font-weight: bold;
 }
 
-#logout {
-    height: max-content;
-    margin: 8px 5px;
-    font-size: 13px;
-}
-
-#username, #bar {
-    height: max-content;
-    margin: 8px 5px;
-    font-size: 13px;
-}
 
 #logout, #username {
     color: black;
@@ -94,4 +83,16 @@ a:hover {
     font-weight: normal;
     cursor: pointer;
     color: rgb(72, 159, 194);
+}
+
+#area1 {
+    height: max-content;
+    margin-left: 200px !important;
+    margin: 8px 5px;
+    font-size: 13px;
+}
+
+#bar {
+    margin-right: 10px;
+    margin-left: 10px;
 }
