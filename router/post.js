@@ -180,16 +180,35 @@ module.exports = function (app) {
                                 0, req.body.email, req.body.bank, req.body.account, 
                                 req.body.salary, req.body.addressRoad, 
                                 req.body.addressDetail]
-
-                        if (undefined in params) {
-                            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+                        
+                        if (undefined in params || req.body['multilingual[]'] === undefined) {
+                            res.send({success: false, error: 'NOT_ENOUGH_INFO', body : req.body});
                         }
                         else {
                             dbconfig.query(insert_query, params, (err, rows) => {
                                 if (err) {
                                     throw err;
                                 }
-                                res.send({success: true, user_id: new_user_id});
+                    
+                                var languages = req.body['multilingual[]'];
+                                
+                                if (languages.length > 0) {
+                                    var language_query = `INSERT INTO multilingual VALUES (${new_user_id}, '${languages[0]}')`;
+                                    
+                                    for (var i = 1 ; i < languages.length ; i++) {
+                                        language_query += `, (${new_user_id}, '${languages[i]}')`;
+                                    }
+                                    
+                                    dbconfig.query(language_query, (err, rows) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                        res.send({success: true, user_id: new_user_id});
+                                    });
+                                } 
+                                else {
+                                    res.send({success: true, user_id: new_user_id});
+                                }
                             });
                         }
                     }
@@ -266,6 +285,54 @@ module.exports = function (app) {
         res.send();
     });
 
+    app.post('/checkout', (req, res) => {
+        var params = [req.body.email, req.body.time];
+        if (undefined in params) {
+            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+        }
+        else {
+            var stay_charge = 0;
+            var service_charge = 0;
+            var stay_query = 'SELECT checkin, checkout, rate, extra, A.personnel as men, B.personnel as moderate'
+                              + ' FROM reservation A, room_type B WHERE email = ? AND reservation_time = ? AND A.room_type = B.type';
+            dbconfig.query(stay_query, params, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                
+                var stay_day = Math.ceil((rows[0].checkout - rows[0].checkin)/1000/60/60/24);
+                var one_day_charge = rows[0].rate + rows[0].extra * Math.max(0, rows[0].men - rows[0].moderate);
+                
+                stay_charge = stay_day * one_day_charge;
+
+                var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
+                dbconfig.query(receipt_query, params, (err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    service_charge = rows[0].sum;
+                    var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
+                    dbconfig.query(delete_responsibility_query, params, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+
+                        var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
+                        dbconfig.query(delete_stay_query, params, (err) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            res.send({success: true, charge: stay_charge + service_charge, stay_charge: stay_charge, service_charge: service_charge,
+                                      one_day_charge: one_day_charge, stay_day: stay_day});
+                        });
+                    });
+                });
+            });
+        }
+    });
+  
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
         res.render('jusoPopup', {locals: req.body});

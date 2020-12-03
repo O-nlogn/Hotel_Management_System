@@ -18,14 +18,15 @@
                     bank: '국민', 
                     account: '1122', 
                     addressRoad: '경기도 안산시 상록구 한양대학로 55', 
-                    addressDetail: '제4공학관 408-1'
+                    addressDetail: '제4공학관 408-1',
+                    multilingual: ['영어', '일본어']
                 },
                 success: (data) => {
                     if (data.success) {
-                        console.log(data.user_id);
+                        console.log(data.user_id);   // 새로운 직원의 아이디
                     }
                     else {
-                        console.log(data.error);
+                        console.log(data.error);     // 실패 원인
                     }
                 }
             })
