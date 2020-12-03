@@ -14,6 +14,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
     <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
@@ -127,6 +129,12 @@
 
        }
 
+       $('#reservation_pw').keypress(function (e) {
+         if (e.which == 13) {
+           $('form#form1').submit();
+           return false;   
+         }
+       });
     </script>
 
     <style>
@@ -459,8 +467,6 @@
                                                     <div class="modal fade" id="myModal2" role="dialog">
                                                         <div class="modal-dialog">
                                                             <!-- Modal content-->
-                                                            <form name="예약 상세페이지" action="" method="post">
-                                                                <div class="modal-content" style="top: 100px;">
                                                                     <div class="modal-header">
                                                                         <h2 class="modal-title">예약 상세페이지</h2>
                                                                         <button type="button" class="close"
@@ -472,18 +478,27 @@
                                                                                     <div><%= reservation[i].checkout%>
                                                                                     </div>
                                                                         </div>
-                                                                        <div class="form-group">
-                                                                            <h3>예약 취소</h3>
+                                                                        <!-- form tag-->
+                                                                        <form name="예약 상세페이지" action="/reservation_status_change" method="post" id="form1">
+                                                                            <div class="modal-content" style="top: 100px;">
+                                                                           <!-- <input type="checkbox"  data-on="check-in" data-off="예약취소" checked data-toggle="toggle"> -->
+                                                                           <select name="status_change_to" id="status_change_to">
+                                                                               <option value="chach-in">체크인</option>
+                                                                               <option value="cancel_reservation">예약취소</option>
+                                                                           </select>
+                                                                          <div class="form-group">
+                                                                            <!--화면에 안보이는 부분 -->
+                                                                            <input type="hidden" id="name" name="name" value=<%= reservation[i].name %>>
+                                                                            <input type="hidden" id="reservation_time" name="reservation_time" value=<%= reservation[i].reservation_time %>>
                                                                             <label form="reservation_pw">예약 비밀번호</label>
-                                                                            <input type="password" name="reservation_pw"
-                                                                                id="reservation_pw"
-                                                                                class="form-control">
-                                                                            <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소(취소 상태로 변경) -->
+                                                                            <input type="password" name="reservation_pw" id="reservation_pw" class="form-control" >
+
+                                                                            <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소/체크인 상태로 변경) -->
                                                                             <button type="submit" class="btn_submit"
-                                                                                id="btn22"
                                                                                 style="margin-left: 235px;">확인</button>
-                                                                        </div>
-                                                                        <div class="form-group">
+                                                                          </div>
+                                                                        </form>
+                                                                        <!-- <div class="form-group">
                                                                             <h3>체크인</h3>
                                                                             <label form="reservation_checkin">배정
                                                                                 객실</label>
@@ -496,22 +511,20 @@
                                                                             <input type="text"
                                                                                 name="reservation_checkin_staff"
                                                                                 id="reservation_checkin"
-                                                                                class="form-control">
+                                                                                class="form-control">-->
                                                                             <!-- 백에 객실번호 보내면, 체크인 되게 -->
-                                                                            <button type="submit" class="btn_submit"
+                                                                            <!-- <button type="submit" class="btn_submit"
                                                                                 id="btn22"
                                                                                 style="margin-left: 235px;">완료</button>
-                                                                        </div>
+                                                                        </div>  -->
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <div class="form-group">
-                                                                            <button type="submit"
-                                                                                class="btn btn-default"
-                                                                                id="res_commit">추가</button>
+                                                                            <button class="btn btn-default" id="res_commit">완료</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </td>
