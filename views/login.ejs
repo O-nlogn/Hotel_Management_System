@@ -59,7 +59,7 @@
                 margin-bottom: 20px;
             }
         </style>
-        <script type="text/javascript">
+        <script>
             function login(){
                 var loginForm = document.loginForm;
                 var id = loginForm.id.value;
@@ -94,7 +94,9 @@
                                 <p class="style1" style="font-weight: bold; color: rgba(201, 0, 0, 0.8)">아이디 또는 비밀번호가 틀렸습니다.</p>
                             <%} %>
                         </dl>
-                        <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button>
+                        <!-- <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button> 
+                        button -> input으로 변경-->
+                        <input type="button" onclick="login()" value="로그인" class="btn_submit" onclick="location.href='/main';">
                     </form>
                 </div>
             </div>
