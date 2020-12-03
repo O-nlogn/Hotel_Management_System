@@ -59,6 +59,18 @@
                 margin-bottom: 20px;
             }
         </style>
+        <script type="text/javascript">
+            function login(){
+                var loginForm = document.loginForm;
+                var id = loginForm.id.value;
+                var pw = loginForm.pw.value;
+                if(!id || !pw){
+                    alert("아이디와 비밀번호를 모두 입력해주세요.")
+                }else{
+                    loginForm.submit();
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="box">
@@ -70,7 +82,7 @@
                     <strong>로그인</strong>
                 </div>
                 <div>
-                    <form action="/login_data" method="post">
+                    <form name="loginForm" action="/login_data" method="post">
                         <dl>
                             <dt><label for="id" class="style1">아이디 (사번)</label></dt>
                             <dd><input type="text" class="text" name="id"></dd>
