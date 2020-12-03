@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -265,6 +266,23 @@
             }
         }
     </script>
+    <script>
+        // 투숙인원 값 가져오기
+        // 라디오버튼의 값 가져오기
+        // var roomtype = $('input:radio[name="reservation_type"]:checked'). val() ;
+        // var num = reservationForm.reservation_people.value;
+        function radio(){
+            var reservationForm = document.reservationForm;
+            var people = document.getElementById("res_people").value;
+            var roomtype = reservationForm.reservation_type.value;
+            if(roomtype < people){
+                alert("객실 수용인원을 초과하였습니다.")
+            }
+            else{
+                reservationForm.submit();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -339,11 +357,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="reservation">방타입</label>
-                                        <label><input type="radio" name="reservation_type" value="single">싱글룸</label>
-                                        <label><input type="radio" name="reservation_type" value="twin">트윈룸</label>
-                                        <label><input type="radio" name="reservation_type" value="double">더블룸</label>
-                                        <label><input type="radio" name="reservation_type" value="triple">트리플룸</label>
-                                        <label><input type="radio" name="reservation_type" value="family">패밀리룸</label><br>
+                                        <!-- 인원 재설정 필요 -->
+                                        <label><input type="radio" name="reservation_type" value="1" id="single">싱글룸</label>
+                                        <label><input type="radio" name="reservation_type" value="2" id="twin">트윈룸</label>
+                                        <label><input type="radio" name="reservation_type" value="2" id="double">더블룸</label>
+                                        <label><input type="radio" name="reservation_type" value="3" id="triple">트리플룸</label>
+                                        <label><input type="radio" name="reservation_type" value="5" id="family">패밀리룸</label><br>
                                     </div>
                                     <div class="form-group">
                                         <label for="room">조식 예약 인원</label>
@@ -359,7 +378,7 @@
                                     <div class="form-group">
                                         <!-- <button type="submit" onclick="reservation()" class="btn btn-default" data-dismiss="modal" id="res_commit">추가</button>
                                         button -> input으로 변경-->
-                                        <input type="button" onclick="reservation()" value="추가" class="btn btn-default" data-dismiss="modal" id="res_commit">
+                                        <input type="button" onclick="reservation(); radio();" value="추가" class="btn btn-default" data-dismiss="modal" id="res_commit">
                                     </div>
                                 </div>
                             </div>
