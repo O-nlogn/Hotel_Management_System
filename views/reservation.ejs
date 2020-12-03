@@ -244,6 +244,27 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
+    <!-- 예약팝업 form 입력값 검증 -->
+    <script type="text.javascript">
+            function reservation(){
+                var reservationForm = document.reservationForm;
+                var name = reservationForm.reservation_name.value;
+                var birth = reservationForm.reservation_birth.value;
+                var email = reservationForm.email_id.value;
+                var num = reservationForm.reservation_people.value;
+                var checkin_date = reservationForm.checkin_date.value;
+                var checkout_date = reservationForm.reservation_birth.value;
+                var roomtype = reservationForm.reservation_type.value;
+                var breakfast = reservationForm.reservation_breakfast.value;
+                var pw = reservationForm.reservation_pw.value;
+
+                if(!name || !birth || !email || !num || !checkin_date || !checkout_date || !roomtype || !breakfast || !pw){
+                    alert("모든 정보를 입력해주세요.")
+                }else{
+                    reservationForm.submit();
+                }
+            }
+    </script>
 </head>
 
 <body>
@@ -257,7 +278,7 @@
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
-                        <form name="예약추가" action="/add_reservation" method="post">
+                        <form name="reservationForm" action="/add_reservation" method="post">
                             <div class="modal-content" style="top: 100px;">
                                 <div class="modal-header">
                                     <h2 class="modal-title">예약추가</h2>
