@@ -388,6 +388,21 @@
             realInput.click();
         });
     </script>
+    <!-- 직원추가 팝업 입력값 검증, 언어(외국어) 부분은 체크 안되어있어도 제출 가능하게 함-->
+    <script>
+        function staff(){
+            var staffForm = document.staffForm;
+            var name = staffForm.newstaff_name.value;
+            var phonenum = staffForm.newstaff_phonenum.value;
+            var account = staffForm.newstaff_account_num.value;
+            var photo = staffForm.newstaff_photo.value;
+            if(!name || !phonenum || !account || !photo){
+                alert("모든 정보를 입력해주세요.")
+            }else{
+                staffForm.submit();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -674,7 +689,7 @@
                         <div class="modal fade" id="myModal" role="dialog" style="top: 100px;">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
-                                <form name="직원 등록" action="" method="post">
+                                <form name="staffForm" action="" method="post">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h2 class="modal-title">직원 등록</h2>
@@ -775,7 +790,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-default" id="btn22">등록</button>
+                                            <!-- <button type="submit" class="btn btn-default" id="btn22">등록</button>
+                                            button ->input 태그로 변경 -->
+                                            <input type="button" onclick="staff()" value="등록" class="btn btn-default" id="btn22">
                                         </div>
                                     </div>
                                 </form>
