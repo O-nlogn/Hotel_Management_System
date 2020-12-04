@@ -262,6 +262,14 @@
             width: 90px;
             margin-right: 1px;
         }
+
+        .flexdiv {
+            display: flex;
+        }
+
+        #do label{
+            margin-top: 5px;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
     <!-- 예약팝업 form 입력값 검증 -->
@@ -379,11 +387,19 @@
                                     <div class="form-group">
                                         <label for="reservation">방타입</label>
                                         <!-- 인원 재설정 필요 -->
+<<<<<<< HEAD
                                         <label><input type="radio" name="reservation_type" id="1" value="Single" checked>싱글룸</label>
                                         <label><input type="radio" name="reservation_type" id="2" value="Twin">트윈룸</label>
                                         <label><input type="radio" name="reservation_type" id="2" value="Double">더블룸</label>
                                         <label><input type="radio" name="reservation_type" id="3" value="Triple">트리플룸</label>
                                         <label><input type="radio" name="reservation_type" id="5" value="Family">패밀리룸</label><br>
+=======
+                                        <label><input type="radio" name="reservation_type" value="1" id="single">싱글룸</label>
+                                        <label><input type="radio" name="reservation_type" value="3" id="twin">트윈룸</label>
+                                        <label><input type="radio" name="reservation_type" value="3" id="double">더블룸</label>
+                                        <label><input type="radio" name="reservation_type" value="3" id="triple">트리플룸</label>
+                                        <label><input type="radio" name="reservation_type" value="5" id="family">패밀리룸</label><br>
+>>>>>>> 58361d4817d13c4c4232924baa7d868fa48a7ce2
                                     </div>
                                     <div class="form-group">
                                         <label for="room">조식 예약 인원</label>
@@ -397,7 +413,13 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="form-group">
+<<<<<<< HEAD
                                         <input type="button" onclick="verify()" value="추가" class="btn btn-default" id="res_commit">
+=======
+                                        <!-- <button type="submit" onclick="reservation()" class="btn btn-default" data-dismiss="modal" id="res_commit">추가</button>
+                                        button -> input으로 변경-->
+                                        <input type="button" onclick="reservation(); radio();" value="추가" class="btn btn-default" data-dismiss="modal" id="res_commit">
+>>>>>>> 58361d4817d13c4c4232924baa7d868fa48a7ce2
                                     </div>
                                 </div>
                             </div>
@@ -416,9 +438,10 @@
                     <div class="mb-4">
                       <div id="myBtnContainer" class="btn-group">
                         <div class="small mb-3">예약상태별 보기</div>
-                        <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);"> Show all</button>
+                        <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);">전체</button>
                         <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
                         <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(2);"> 입실예정</button>
+                        <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(3);"> 예약완료</button>
                       </div>
                     </div>
                     <div class="mb-4">
@@ -513,7 +536,7 @@
                                                     <div><%= reservation[i].name %></div>
                                                 </td>
                                                 <td><span
-                                                        class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else {%> label-success  <% }%> label-pill"><%= reservation[i].status %></span>
+                                                        class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-success  <% }else{ %> label-primary <%}%>label-pill"><%= reservation[i].status %></span>
                                                 </td>
                                                 <td class="align-middle">
                                                     <div><%= reservation[i].checkin%></div>
@@ -525,7 +548,7 @@
                                                     <!-- 상세보기 버튼 -->
                                                     <button type="button" id="tooltipAddNew" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
                                                     <!-- 상세보기 팝업 (modal 시작)-->
-                                                    <div class="modal fade" id="myModal2" role="dialog">
+                                                    <div class="modal fade" id="myModal2" role="dialog" style="top: 200px;">
                                                         <div class="modal-dialog">
                                                             <!-- Modal content-->
                                                                 <div class="modal-content">
@@ -538,22 +561,33 @@
                                                                       <form name="예약 상세페이지" action="/reservation_status_change" method="post" id="form1">
                                                                         <div class="form-group">
 
-                                                                            <label form="checkout_time">퇴실시간<label>
-                                                                                    <div><%= reservation[i].checkout%></div>
+                                                                            <div class="flexdiv">
+                                                                                <label form="checkout_time" class="flexdiv" style="width: 200px;">퇴실시간<label>
+                                                                                <div style="display: inline-block; width: 400px;"><%= reservation[i].checkout%></div>
+                                                                            </div>
 
+                                                                            <div class="flexdiv" id="do">
+                                                                                <div class="flexdiv">
+                                                                                    <label for="inout" style="width: 50px; margin-right: 25px;">처리</label>
+                                                                                    <select name="status_change_to" id="status_change_to">
+                                                                                        <option id="inout" value="chach-in">체크인</option>
+                                                                                        <option value="cancel_reservation">예약취소</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flexdiv">
+                                                                                    <input type="hidden" id="name" name="name" value=<%= reservation[i].name %>>
+                                                                                    <input type="hidden" id="reservation_time" name="reservation_time" value=<%= reservation[i].reservation_time %>>
+                                                                                    <label form="reservation_pw" style="width: 130px; margin-right: -15px !important;">예약 비밀번호</label>
+                                                                                    <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;" class="form-control">
+                                                                                    <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소/체크인 상태로 변경) -->
+                                                                                </div>
+
+                                                                            </div>
                                                                            <!-- <input type="checkbox"  data-on="check-in" data-off="예약취소" checked data-toggle="toggle"> -->
-                                                                           <select name="status_change_to" id="status_change_to">
-                                                                               <option value="chach-in">체크인</option>
-                                                                               <option value="cancel_reservation">예약취소</option>
-                                                                           </select>
+
                                                                           <!-- <div class="form-group"> -->
                                                                             <!--화면에 안보이는 부분 (type='hidden')-->
-                                                                            <input type="hidden" id="name" name="name" value=<%= reservation[i].name %>>
-                                                                            <input type="hidden" id="reservation_time" name="reservation_time" value=<%= reservation[i].reservation_time %>>
-                                                                            <label form="reservation_pw">예약 비밀번호</label>
-                                                                            <input type="password" name="reservation_pw" id="reservation_pw" class="form-control" >
-                                                                            <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소/체크인 상태로 변경) -->
-                                                                            <button type="submit" class="btn_submit" style="margin-left: 235px;">확인</button>
+
                                                                           </div>
                                                                         </form>
                                                                       </div>

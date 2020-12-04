@@ -102,11 +102,12 @@ a:hover {
 .table {
     overflow-y: scroll;
     display: grid;
-    grid-template-columns: repeat(4, 150px);
-    grid-template-rows: repeat(20, 150px);
+    grid-template-columns: repeat(4, 160px);
+    grid-template-rows: repeat(20, 160px);
     width: max-content;
-    height: 600px;
-    margin: 100px 0 0 30px;
+    width: 640px;
+    height: 640px;
+    margin-left: 30px;
     border: solid 1px black;
     border-radius: 3px;
 }
@@ -118,13 +119,10 @@ a:hover {
 
 .body {
     display: flex;
+    width: max-content;
 }
 
 
-.icon_plus {
-    margin-left: 33px;
-    fill: rgb(175, 175, 175);
-}
 
 .status_icon{
     fill: rgb(207, 207, 207);
@@ -175,7 +173,7 @@ a:hover {
 }
 
 .floor {
-    margin: 100px 0 0 450px;
+    margin-left: 450px;
 }
 
 .floor .button {
@@ -208,4 +206,98 @@ a:hover {
 #btn22:hover {
     background-color: rgb(120, 172, 179) !important;
     transition-duration: 0.2s;
+}
+
+@media(max-width: 1900px) {
+    #container {
+        width: max-content;
+        padding-right: 355px;
+    }
+}
+
+.table::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table::-webkit-scrollbar-track {
+    background-color: rgb(230, 230, 230);
+    width: 10px;
+    border-radius: 5px;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: rgba(176, 224, 230, 0.7);
+    border-radius: 5px;
+}
+
+#status {
+    margin-top: 14px;
+}
+
+#status svg {
+    width: 25px;
+    height: 25px;
+}
+
+.icon_plus {
+    margin-left: 38px;
+    fill: rgb(175, 175, 175);
+}
+
+#clientdiv, #voiddiv {
+    height: 77px !important;
+    width: 120px;
+    padding: 2px;
+    border: none;
+}
+
+#voiddiv {
+    height: 130px;
+    margin-bottom: 28px;
+}
+@media(max-width: 1500px) {
+    .table {
+        grid-template-columns: repeat(4, 130px);
+        grid-template-rows: repeat(20, 130px);
+        width: 520px;
+        height: 520px;
+    }
+    #status {
+        margin-top: 0px;
+    }
+    
+    #status svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .icon_plus {
+        margin-left: 22px;
+        fill: rgb(175, 175, 175);
+    }
+
+    .floor {
+        margin-left: 20px !important;
+    }
+
+    #nation {
+        width: 22px;
+    }
+
+    #client {
+        width: 50px;
+        height: 50px;
+    }
+
+    #nationdiv {
+        margin-top: 10px !important;
+    }
+
+    #clientdiv {
+        height: 65px !important;
+    }
+
+    #voiddiv {
+        margin-bottom: 2px;
+    }
 }
