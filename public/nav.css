@@ -7,8 +7,21 @@
     height: 30px;
     width: 900px;
     /* (NROW*WEIGHT) */
-    margin: 0 50px 30px 250px;
+    margin-left: 90px;
     /* margin: auto auto 30px; */
+}
+
+@media(max-width: 1600px) {
+    #menu {
+        margin-left: 0px !important;
+    }
+}
+
+@media(max-width: 1200px) {
+    .menuItem, .submenuItem {
+        font-size: 12px !important;
+        width: 100px !important;
+    }
 }
 #menu ul {
     list-style-type: none;
@@ -87,12 +100,16 @@ a:hover {
 
 #area1 {
     height: max-content;
-    margin-left: 200px !important;
-    margin: 8px 5px;
     font-size: 13px;
+    position: fixed;
+    right: 10px !important;
 }
 
 #bar {
     margin-right: 10px;
     margin-left: 10px;
+}
+
+#logoarea {
+    margin-left: 200px;
 }
