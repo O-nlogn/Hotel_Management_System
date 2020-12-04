@@ -184,12 +184,6 @@ h2 {
     transition-duration: 0.2s;
 }
 
-@media(max-width: 1900px) {
-    #container {
-        width: max-content;
-        padding-right: 50px;
-    }
-}
 
 .table::-webkit-scrollbar {
     width: 10px;
