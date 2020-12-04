@@ -12,11 +12,7 @@
                 },
                 success: (data) => {
                     if (data.success) {
-                        console.log(data.charge);           // 총 비용
-                        console.log(data.one_day_charge);   // 일당 숙박비
-                        console.log(data.stay_day);         // 숙박일
-                        console.log(data.stay_charge);      // 숙박비
-                        console.log(data.service_charge);   // 룸서비스 비용
+                        console.log(data.charge);           // 룸서비스 비용
                     } 
                     else {
                         console.log(data.error);            // 실패 원인
