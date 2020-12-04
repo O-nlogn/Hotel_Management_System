@@ -59,6 +59,18 @@
                 margin-bottom: 20px;
             }
         </style>
+        <script>
+            function login(){
+                var loginForm = document.loginForm;
+                var id = loginForm.id.value;
+                var pw = loginForm.pw.value;
+                if(!id || !pw){
+                    alert("아이디와 비밀번호를 모두 입력해주세요.")
+                }else{
+                    loginForm.submit();
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="box">
@@ -70,7 +82,7 @@
                     <strong>로그인</strong>
                 </div>
                 <div>
-                    <form action="/login_data" method="post">
+                    <form name="loginForm" action="/login_data" method="post">
                         <dl>
                             <dt><label for="id" class="style1">아이디 (사번)</label></dt>
                             <dd><input type="text" class="text" name="id"></dd>
@@ -82,7 +94,9 @@
                                 <p class="style1" style="font-weight: bold; color: rgba(201, 0, 0, 0.8)">아이디 또는 비밀번호가 틀렸습니다.</p>
                             <%} %>
                         </dl>
-                        <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button>
+                        <!-- <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button> 
+                        button -> input으로 변경-->
+                        <input type="button" onclick="login()" value="로그인" class="btn_submit" onclick="location.href='/main';">
                     </form>
                 </div>
             </div>
