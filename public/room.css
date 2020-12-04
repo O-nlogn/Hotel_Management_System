@@ -110,7 +110,6 @@ a:hover {
     margin: 100px 0 0 30px;
     border: solid 1px black;
     border-radius: 3px;
-    
 }
 
 .table div {
@@ -242,4 +241,31 @@ a:hover {
 .icon_plus {
     margin-left: 30px;
     fill: rgb(175, 175, 175);
+}
+
+
+@media(max-width: 1500px) {
+    .table {
+        grid-template-columns: repeat(4, 150px);
+        grid-template-rows: repeat(20, 150px);
+        width: 600px;
+        height: 600px;
+    }
+    #status {
+        margin-top: 10px;
+    }
+    
+    #status svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .icon_plus {
+        margin-left: 40px;
+        fill: rgb(175, 175, 175);
+    }
+
+    .floor {
+        margin-left: 20px !important;
+    }
 }
