@@ -293,7 +293,7 @@ module.exports = function (app) {
         else {
             var stay_charge = 0;
             var service_charge = 0;
-            var stay_query = 'SELECT checkin, checkout, rate, extra, A.personnel as men, B.personnel as moderate'
+            var stay_query = 'SELECT checkin, checkout, rate, extra, A.personnel as men, B.personnel as moderate, breakfast'
                               + ' FROM reservation A, room_type B WHERE email = ? AND reservation_time = ? AND A.room_type = B.type';
             dbconfig.query(stay_query, params, (err, rows) => {
                 if (err) {
@@ -303,7 +303,7 @@ module.exports = function (app) {
                 var stay_day = Math.ceil((rows[0].checkout - rows[0].checkin)/1000/60/60/24);
                 var one_day_charge = rows[0].rate + rows[0].extra * Math.max(0, rows[0].men - rows[0].moderate);
                 
-                stay_charge = stay_day * one_day_charge;
+                stay_charge = stay_day * one_day_charge + rows[0].breakfast*7000;
 
                 var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
                 dbconfig.query(receipt_query, params, (err, rows) => {
