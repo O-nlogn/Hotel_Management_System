@@ -32,50 +32,36 @@
     <script>
         $(document).ready(function(){
             $('#floor3').click(function(){
-                var offset = $('#301').offset(); //선택한 태그의 위치를 반환
-								console.log(offset);
+                // var offset = $('#301').offset(); //선택한 태그의 위치를 반환
+								// console.log(offset);
                 $('.table').animate({scrollTop : 0}, 300);
             });
 			$('#floor4').click(function(){
-                var offset = $('#401').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop :450}, 300);
+                $('.table').animate({scrollTop :480}, 300);
             });
 			$('#floor5').click(function(){
-                var offset = $('#501').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 900}, 300);
+                $('.table').animate({scrollTop : 960}, 300);
             });
 			$('#floor6').click(function(){
-                var offset = $('#601').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 1350}, 300);
+                $('.table').animate({scrollTop : 1440}, 300);
             });
 			$('#floor7').click(function(){
-                var offset = $('#701').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 1800}, 300);
+                $('.table').animate({scrollTop :1920}, 300);
             });
 			$('#floor8').click(function(){
-                var offset = $('#801').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 2250}, 300);
+                $('.table').animate({scrollTop : 2400}, 300);
             });
 			$('#floor9').click(function(){
-                var offset = $('#901').offset();
-                $('.table').animate({scrollTop : 2700}, 300);
+                $('.table').animate({scrollTop : 2880}, 300);
             });
 			$('#floor10').click(function(){
-                var offset = $('#1001').offset();
-                $('.table').animate({scrollTop : 3157}, 300);
+                $('.table').animate({scrollTop : 3368}, 300);
             });
 			$('#floor11').click(function(){
-                var offset = $('#1101').offset();
-                $('.table').animate({scrollTop : 3625}, 300);
+                $('.table').animate({scrollTop : 3868}, 300);
             });
 			$('#floor12').click(function(){
-                var offset = $('#1201').offset();
-                $('.table').animate({scrollTop : 4200}, 300);
+                $('.table').animate({scrollTop : 4420}, 300);
             });
         });
     </script>
@@ -109,18 +95,18 @@
 					<button id="floor12"><div class="button">12층</div></button>
 					<div id=""></div>
 				</div>
-	
+
 				<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
 				<div class = 'table'></div>
 
 			</div>
-			
+
 
 			<%- include('./request'); %>
 		</div>
 
 		<!--팝업창-->
-		<% for (var i = 0, j=0; i < stayrooms.length; i++) { %>
+		<% for (var i = 0; i < stayrooms.length; i++) { %>
 		<div class="popup room<%=stayrooms[i].room%>">
 
 			<div style="text-align: right;">
@@ -189,9 +175,37 @@
 			</div>
 		</div>
 		<div class="dim"></div>
+
+
+
+		<div class="modal fade" id="request<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle"><%=stayrooms[i].room%>호 특이사항</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" style="color:red;">
+							<li>	<%=stayrooms[i].note%></li>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
 		<% } %>
 
 	</div>
+
+
 
 </body>
 
