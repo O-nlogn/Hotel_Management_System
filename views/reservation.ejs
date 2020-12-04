@@ -17,7 +17,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
-    <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
@@ -50,26 +50,39 @@
             $("#reservation_birth").datepicker({
                 dateFormat: 'yy-mm-dd',
                 changeYear: true,
-                changeMonth: true
+                changeMonth: true,
+                minDate: '-100y',
+                yearRange: "1910:2030"
             });
         });
     </script>
     <!-- 예약추가 달력기능 -->
     <script type="text/javascript">
+        // 체크인 달력
         $(function () {
             $("#date1").datepicker({
                 dateFormat: 'yy-mm-dd',
                 changeYear: true,
-                changeMonth: true
+                changeMonth: true,
+                minDate: '-100y',
+                yearRange: "1910:2030",
+                 onClose: function (selectedDate) {
+                    $("#date2").datepicker("option", "minDate", selectedDate);
+                }    
             });
         });
     </script>
     <script type="text/javascript">
-        $(function () {
+        $(function (checkin) {
             $("#date2").datepicker({
                 dateFormat: 'yy-mm-dd',
                 changeYear: true,
-                changeMonth: true
+                changeMonth: true,
+                minDate: '-100y',
+                yearRange: "1910:2030",
+                onClose: function (selectedDate) {
+                    $("#date1").datepicker("option", "maxDate", selectedDate);
+                } 
             });
         });
     </script>
@@ -249,9 +262,11 @@
     <script>
         function verify(){
             var reservationForm = document.reservationForm;
+
             var name = reservationForm.reservation_name.value;
             var birth = reservationForm.reservation_birth.value;
             var email = reservationForm.email_id.value;
+
             var num = reservationForm.reservation_people.value;
             var checkin_date = reservationForm.checkin_date.value;
             var checkout_date = reservationForm.reservation_birth.value;
@@ -260,16 +275,26 @@
             var pw = reservationForm.reservation_pw.value;
             var people = document.getElementById("res_people").value;
 
+
+            var strArr = checkin_date.split('-');
+            var date1 = new Date(strArr[0],strArr[1]-1,strArr[2]);
+            strArr = checkout_date.split('-');
+            var date2 = new Date(strArr[0], strArr[1] - 1, strArr[2]);
+
             if(!name || !birth || !email || !num || !checkin_date || !checkout_date || !breakfast || !pw){
                 alert("모든 정보를 입력해주세요.");
                 return;
+            }
+            if(date1 > date2){
+                alert("")
             }
             if(roomtype<people){
                 alert("객실 수용인원을 초과하였습니다.");
                 return;
             }
            
-            reservationForm.submit();
+            
+            //reservationForm.submit();
             $("#myModal").hide();
         }
     </script>
