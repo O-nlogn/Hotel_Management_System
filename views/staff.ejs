@@ -396,7 +396,10 @@
             var phonenum = staffForm.newstaff_phonenum.value;
             var account = staffForm.newstaff_account_num.value;
             var photo = staffForm.newstaff_photo.value;
-            if(!name || !phonenum || !account || !photo){
+            var gender = staffForm.newstaff_gender.value;
+            var pay = staffForm.newstaff_pay.value;
+            
+            if(!name || !phonenum || !account || !photo || !gender || !pay){
                 alert("모든 정보를 입력해주세요.")
             }else{
                 staffForm.submit();
@@ -705,8 +708,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_gender">성별</label>
-                                                <input name="newstaff_gender" type="text" id="newstaff_gender"
-                                                    class="form-control">
+                                                <label><input type="radio" name="newstaff_gender" value="남" id="man">남</label>
+                                                <label><input type="radio" name="newstaff_gender" value="여" id="man">여</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label form="newstaff_pay">봉급</label>
+                                                <input name="newstaff_pay" type="text" id="newstaff_pay"
+                                                    class="form-control">원
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_name">주소</label>
