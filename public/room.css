@@ -102,10 +102,11 @@ a:hover {
 .table {
     overflow-y: scroll;
     display: grid;
-    grid-template-columns: repeat(4, 150px);
-    grid-template-rows: repeat(20, 150px);
+    grid-template-columns: repeat(4, 170px);
+    grid-template-rows: repeat(20, 170px);
     width: max-content;
-    height: 600px;
+    width: 680px;
+    height: 680px;
     margin: 100px 0 0 30px;
     border: solid 1px black;
     border-radius: 3px;
@@ -123,10 +124,6 @@ a:hover {
 }
 
 
-.icon_plus {
-    margin-left: 33px;
-    fill: rgb(175, 175, 175);
-}
 
 .status_icon{
     fill: rgb(207, 207, 207);
@@ -231,4 +228,18 @@ a:hover {
 .table::-webkit-scrollbar-thumb {
     background-color: rgba(176, 224, 230, 0.7);
     border-radius: 5px;
+}
+
+#status {
+    margin-top: 20px;
+}
+
+#status svg {
+    width: 30px;
+    height: 30px;
+}
+
+.icon_plus {
+    margin-left: 30px;
+    fill: rgb(175, 175, 175);
 }
