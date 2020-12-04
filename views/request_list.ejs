@@ -10,7 +10,7 @@
     border-right: solid 1px rgb(161, 161, 161);
     border-left: solid 1px rgb(207, 207, 207)">
         <p class='title'>
-          <button type="button" class="close" aria-label="Close" onclick="modify_request(<%= r.request_time %>,'delete')" >
+          <button type="button" class="close" aria-label="Close" onclick="modify_request('<%=r.email%>','<%=r.reservation_time%>','<%=r.request_type%>','<%=r.request_time%>','<%=r.details%>','delete')" >
               <span aria-hidden="true">&times;</span>
           </button>
         <div class="request_box"><%= r.request_time %></div>
@@ -30,7 +30,7 @@
                 <!-- asdfasdfasdfsadfasdfasdfasdfasdsafd -->
             </div>
             <div class="btn-group" role="group">
-              <button class="btn btn-light" type="button"  onclick="modify_request(<%= r.request_time %>,'update')"
+              <button class="btn btn-light" type="button"  onclick="modify_request('<%=r.email%>','<%=r.reservation_time%>','<%=r.request_type%>','<%=r.request_time%>','<%=r.details%>','done')"
                 style="margin-left: 109px; display: inline;">
                   완료
                </button>
@@ -42,3 +42,18 @@
     </div>
 
 <% } %>
+
+<script>
+  function modify_request(email,reservation_time,request_type,request_time,details,status){
+    console.log(request_type,status);
+
+    $.ajax({
+      type: 'POST',
+      url: "/request_data",
+      data: {email:email, reservation_time:reservation_time, request_type:request_type,request_time:request_time,details:details, status:status},
+      dataType: 'json',
+      success: function (response) {  
+      }
+    });
+  }
+</script>
