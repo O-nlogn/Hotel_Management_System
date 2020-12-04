@@ -75,30 +75,6 @@ h2 {
     margin-bottom: 40px;
 }
 
-.profile {
-    display: flex;
-    margin: 150px 0px 100px 400px;
-    width: max-content;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-a:hover {
-    font-weight: bold;
-}
-
-.prfimg {
-    width: 120px;
-    border-radius: 50px;
-}
-
-.profile .content {
-    vertical-align: middle;
-}
-
 .table {
     overflow-y: scroll;
     display: grid;
@@ -173,7 +149,7 @@ a:hover {
 }
 
 .floor {
-    margin-left: 450px;
+    margin-left: 420px;
 }
 
 .floor .button {
@@ -211,7 +187,7 @@ a:hover {
 @media(max-width: 1900px) {
     #container {
         width: max-content;
-        padding-right: 355px;
+        padding-right: 50px;
     }
 }
 
@@ -259,6 +235,7 @@ a:hover {
     .table {
         grid-template-columns: repeat(4, 130px);
         grid-template-rows: repeat(20, 130px);
+        margin-left: 10px;
         width: 520px;
         height: 520px;
     }
