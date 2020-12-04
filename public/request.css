@@ -8,7 +8,7 @@
     /* margin: 100px 0 0 100px; */
     width: max-content;
     overflow-y: scroll;
-    height: 600px;
+    height: 550px;
 }
 
 #request .list::-webkit-scrollbar {
@@ -43,6 +43,7 @@
     border: dotted 2.5px black;
     padding: 30px;
     border-radius: 30px;
+    height: max-content;
 }
 
 
@@ -89,7 +90,8 @@
 
 @media(max-width: 1000px) {
     #request {
-        margin-left: 20px;
+        margin-left: 10px;
+        padding: 10px;
     }
 
     #request .list {

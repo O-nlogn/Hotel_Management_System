@@ -86,31 +86,35 @@
 	<div id="container" style="height: max-content; padding-bottom: 10px; background-color: #f8f8f8;">
 		<div class="body">
 			<!-- 층별보기 -->
-			<div class = "floor">
-				<button id="floor3"><div class="button">3층</div></button>
-				<div id=""></div>
-				<button id="floor4"><div class="button">4층</div></button>
-				<div id=""></div>
-				<button id="floor5"><div class="button">5층</div></button>
-				<div id=""></div>
-				<button id="floor6"><div class="button">6층</div></button>
-				<div id=""></div>
-				<button id="floor7"><div class="button">7층</div></button>
-				<div id=""></div>
-				<button id="floor8"><div class="button">8층</div></button>
-				<div id=""></div>
-				<button id="floor9"><div class="button">9층</div></button>
-				<div id=""></div>
-				<button id="floor10"><div class="button">10층</div></button>
-				<div id=""></div>
-				<button id="floor11"><div class="button">11층</div></button>
-				<div id=""></div>
-				<button id="floor12"><div class="button">12층</div></button>
-				<div id=""></div>
-			</div>
+			<div style="display: flex; margin-top: 50px;">
+				<div class = "floor">
+					<button id="floor3"><div class="button">3층</div></button>
+					<div id=""></div>
+					<button id="floor4"><div class="button">4층</div></button>
+					<div id=""></div>
+					<button id="floor5"><div class="button">5층</div></button>
+					<div id=""></div>
+					<button id="floor6"><div class="button">6층</div></button>
+					<div id=""></div>
+					<button id="floor7"><div class="button">7층</div></button>
+					<div id=""></div>
+					<button id="floor8"><div class="button">8층</div></button>
+					<div id=""></div>
+					<button id="floor9"><div class="button">9층</div></button>
+					<div id=""></div>
+					<button id="floor10"><div class="button">10층</div></button>
+					<div id=""></div>
+					<button id="floor11"><div class="button">11층</div></button>
+					<div id=""></div>
+					<button id="floor12"><div class="button">12층</div></button>
+					<div id=""></div>
+				</div>
+	
+				<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
+				<div class = 'table'></div>
 
-			<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
-			<div class = 'table'></div>
+			</div>
+			
 
 			<%- include('./request'); %>
 		</div>
@@ -199,7 +203,7 @@
 			url: '/reload_table',
 			success: (data) => {
 				$('.table').html(data);
-				setTimeout('get_table_data()', 1000);
+				setTimeout('get_table_data()', 100000);
 			}
 		});
 	}

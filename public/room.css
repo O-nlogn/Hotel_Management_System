@@ -102,12 +102,12 @@ a:hover {
 .table {
     overflow-y: scroll;
     display: grid;
-    grid-template-columns: repeat(4, 170px);
-    grid-template-rows: repeat(20, 170px);
+    grid-template-columns: repeat(4, 160px);
+    grid-template-rows: repeat(20, 160px);
     width: max-content;
-    width: 680px;
-    height: 680px;
-    margin: 100px 0 0 30px;
+    width: 640px;
+    height: 640px;
+    margin-left: 30px;
     border: solid 1px black;
     border-radius: 3px;
 }
@@ -173,7 +173,7 @@ a:hover {
 }
 
 .floor {
-    margin: 100px 0 0 450px;
+    margin-left: 450px;
 }
 
 .floor .button {
@@ -231,16 +231,16 @@ a:hover {
 }
 
 #status {
-    margin-top: 20px;
+    margin-top: 14px;
 }
 
 #status svg {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .icon_plus {
-    margin-left: 30px;
+    margin-left: 38px;
     fill: rgb(175, 175, 175);
 }
 
@@ -253,7 +253,7 @@ a:hover {
 
 #voiddiv {
     height: 130px;
-    margin-bottom: 33px;
+    margin-bottom: 28px;
 }
 @media(max-width: 1500px) {
     .table {
