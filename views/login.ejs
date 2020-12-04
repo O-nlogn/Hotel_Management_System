@@ -6,6 +6,10 @@
             O-(nlogn) 로그인
         </title>
         <style>
+
+            body {
+                font-size: 14px;
+            }
             legend {
                 position: absolute;
                 width: 0;
@@ -17,7 +21,6 @@
                 font-family: 'Nanum Gothic', sans-serif;
             }
             .style1 {
-                font-size: 11px;
                 color: darkgrey;
                 text-align: left;
             }
@@ -51,12 +54,35 @@
                 padding: 20px;
                 border-radius: 5px;
                 margin: auto;
+                height: 400px;
             }
 
             .header {
                 border-bottom: solid 1px black;
                 text-align: left;
                 margin-bottom: 20px;
+            }
+
+            #loginButton {
+                height: 70px;
+                margin-top: 70px;
+                border-radius: 5px;
+                padding: 0px;
+                font-size: 16px;
+                width: 150px;
+            }
+
+            #loginButton:hover {
+                background-color: rgb(141, 181, 187);
+                cursor: pointer;
+            }
+
+            #header {
+                font-size: 18px;
+            }
+
+            .header {
+                font-size: 20px;
             }
         </style>
         <script>
@@ -71,19 +97,27 @@
                 }
             }
         </script>
+
+
+        <style>
+            input {
+                width: 200px;
+                height: 30px;
+            }
+        </style>
     </head>
     <body>
         <div id="box">
             <div id="header" style="margin-bottom: 50px;">
                 <h1>O-(nlogn) Hotel Management System</h1>
             </div>
-            <div id="container" style="margin-bottom: 50px;">
+            <div id="container" style="margin-bottom: 50px; width: 400px;">
                 <div class="header">
                     <strong>로그인</strong>
                 </div>
                 <div>
-                    <form name="loginForm" action="/login_data" method="post">
-                        <dl>
+                    <form name="loginForm" action="/login_data" method="post" style="width: max-content; margin: auto; margin-top: 50px;">
+                        <dl style="text-align: left;">
                             <dt><label for="id" class="style1">아이디 (사번)</label></dt>
                             <dd><input type="text" class="text" name="id"></dd>
                             <dt><label for="pw" class="style1">비밀번호</label></dt>
@@ -96,12 +130,12 @@
                         </dl>
                         <!-- <button type="submit" class="btn_submit" onclick="location.href='/main';">로그인</button> 
                         button -> input으로 변경-->
-                        <input type="button" onclick="login()" value="로그인" class="btn_submit" onclick="location.href='/main';">
+                        <input type="button" onclick="login()" value="로그인" class="btn_submit" onclick="location.href='/main';" id="loginButton">
                     </form>
                 </div>
             </div>
             <div id="footer">
-                <h6>031-123-4567</h6>
+                <!-- <h6>031-123-4567</h6> -->
             </div>
         </div>
     </body>

@@ -7,5 +7,5 @@ const config = sql.createConnection({
     password: "1234", // your password
     database: "hotel_system"
 });
-
+// please rename this filename: db.js
 module.exports = config;
