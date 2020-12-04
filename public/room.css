@@ -243,16 +243,26 @@ a:hover {
     fill: rgb(175, 175, 175);
 }
 
+#clientdiv, #voiddiv {
+    height: 77px !important;
+    width: 120px;
+    padding: 2px;
+    border: none;
+}
 
+#voiddiv {
+    height: 130px;
+    margin-bottom: 33px;
+}
 @media(max-width: 1500px) {
     .table {
-        grid-template-columns: repeat(4, 150px);
-        grid-template-rows: repeat(20, 150px);
-        width: 600px;
-        height: 600px;
+        grid-template-columns: repeat(4, 130px);
+        grid-template-rows: repeat(20, 130px);
+        width: 520px;
+        height: 520px;
     }
     #status {
-        margin-top: 10px;
+        margin-top: 0px;
     }
     
     #status svg {
@@ -261,11 +271,32 @@ a:hover {
     }
     
     .icon_plus {
-        margin-left: 40px;
+        margin-left: 22px;
         fill: rgb(175, 175, 175);
     }
 
     .floor {
         margin-left: 20px !important;
+    }
+
+    #nation {
+        width: 22px;
+    }
+
+    #client {
+        width: 50px;
+        height: 50px;
+    }
+
+    #nationdiv {
+        margin-top: 10px !important;
+    }
+
+    #clientdiv {
+        height: 65px !important;
+    }
+
+    #voiddiv {
+        margin-bottom: 2px;
     }
 }
