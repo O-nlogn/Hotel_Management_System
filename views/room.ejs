@@ -185,7 +185,6 @@
 			url: '/reload_table',
 			success: (data) => {
 				$('.table').html(data);
-				console.log(data);
 				setTimeout('get_table_data()', 1000);
 			}
 		});
