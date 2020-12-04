@@ -316,6 +316,78 @@ module.exports = function (app) {
             });
         }
     });
+
+    app.post('/checkin', (req, res) => {
+        var params = [req.body.email, req.body.time];
+        if (undefined in params) {
+            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+        }
+        else {
+            var spec = null;
+            // must consider broken condition
+            var type_query = 'SELECT room_type, personnel FROM reservation WHERE email = ? AND reservation_time = ?';
+            dbconfig.query(type_query, params, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                
+                var room_type = rows[0].room_type;
+                var men = rows[0].personnel;
+                var room_choice_query = 'SELECT number FROM room WHERE type = ? AND number NOT IN (SELECT room FROM stay)';
+                
+                dbconfig.query(room_choice_query, [room_type], (err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+                    
+                    var match_query = 'SELECT id, name FROM users A WHERE department = \'프론트\' AND on_work = 1 '
+                                       + 'AND (SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) <= '
+                                       + ' ALL(SELECT COUNT(room) FROM users A LEFT OUTER JOIN responsibility B '
+                                       + 'ON A.id = B.id WHERE department = \'프론트\' AND on_work = 1 GROUP BY A.id)';
+
+                    var insert_query = 'INSERT INTO responsibility VALUE (?, ?)';
+
+                    if (rows.length > 0) {
+                        var selected_room = rows[0].number;
+                        var stay_query = 'INSERT INTO stay VALUE (?, ?, ?, ?, ?, ?)';
+                        var params = [selected_room, req.body.email, req.body.time, 1, 0, men];
+                        dbconfig.query(stay_query, params, (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            dbconfig.query(match_query, (err, rows) => {
+                                if (err) {
+                                    throw err;
+                                }
+
+                                if (rows.length > 0) {
+                                    var selected_user = rows[0].id;
+                                    var user_name = rows[0].name;
+                                    dbconfig.query(insert_query, [selected_user, selected_room], (err, rows) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                        else {
+                                            res.send({success:true, user_id:selected_user, user_name:user_name, 
+                                                     room_num:selected_room, spec:spec});
+                                        }
+                                    });
+                                }
+                                else {
+                                    res.send({success:false, error:'NO_WORKING_USERS'});
+                                }
+                            });                                    
+                        });
+                    }
+                    else {
+                        // 헉 빈방이 없다니
+                    }
+                });
+            });
+
+            }
+    });
   
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
