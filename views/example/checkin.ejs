@@ -1,0 +1,24 @@
+<html>
+    <button onclick="dosth();">dosth</button>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        function dosth() {
+            $.ajax({
+                url: '/checkin',
+                method: 'POST',
+                data: {
+                    email: 'alsrud606@hanyang.ac.kr',
+                    time: '2020-11-22 22:48:12'
+                },
+                success: (data) => {
+                    if (data.success) {
+                        console.log(data);
+                    }
+                    else {
+                        console.log(data.error);     // 실패 원인
+                    }
+                }
+            })
+        }
+    </script>
+</html>

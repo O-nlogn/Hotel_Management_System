@@ -326,21 +326,28 @@ module.exports = function (app) {
 
     app.post('/checkin', (req, res) => {
         var params = [req.body.email, req.body.time];
+        console.log(params)
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
         }
         else {
             // must consider broken condition
             var type_query = 'SELECT room_type, personnel, language FROM reservation NATURAL JOIN customers A, nation B '
-                             + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name';
+                             + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
             dbconfig.query(type_query, params, (err, rows) => {
                 if (err) {
                     throw err;
                 }
                 
+                if (rows.length == 0) {
+                    res.send({success: false, error: 'ALREADY_CHECKED_IN'});
+                    return;
+                }
+
                 var room_type = rows[0].room_type;
                 var men = rows[0].personnel;
                 var language = rows[0].language;
+                console.log(language)
                 var room_choice_query = 'SELECT number FROM room WHERE type = ? AND number NOT IN (SELECT room FROM stay)';
                 
                 dbconfig.query(room_choice_query, [room_type], (err, rows) => {
@@ -370,7 +377,7 @@ module.exports = function (app) {
                                 throw err;
                             }
 
-                            dbconfig.query(match_query, [language], (err, rows) => {
+                            dbconfig.query(match_query, [language, language], (err, rows) => {
                                 if (err) {
                                     throw err;
                                 }
@@ -390,7 +397,7 @@ module.exports = function (app) {
                                                 }
                                                 else {
                                                     res.send({success:true, user_id:selected_user, user_name:user_name, 
-                                                    room_num:selected_room, type_changed:true, priority:priority});
+                                                    room_num:selected_room, type_changed:false, priority:priority});
                                                 }
                                             });
                                         }
@@ -427,7 +434,7 @@ module.exports = function (app) {
                                             throw err;
                                         }
 
-                                        dbconfig.query(match_query, [language], (err, rows) => {
+                                        dbconfig.query(match_query, [language, language], (err, rows) => {
                                             if (err) {
                                                 throw err;
                                             }
