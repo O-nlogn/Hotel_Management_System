@@ -39,6 +39,34 @@ INSERT INTO `bank` VALUES ('IBK기업'),('NH투자'),('SC제일'),('경남'),('�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `broken`
+--
+
+DROP TABLE IF EXISTS `broken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `broken` (
+  `id` int NOT NULL,
+  `room` int NOT NULL,
+  `detail` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reporting_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `room` (`room`),
+  CONSTRAINT `broken_ibfk_1` FOREIGN KEY (`room`) REFERENCES `room` (`number`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `broken`
+--
+
+LOCK TABLES `broken` WRITE;
+/*!40000 ALTER TABLE `broken` DISABLE KEYS */;
+INSERT INTO `broken` VALUES (1,306,'화장실 문이 안열려요','2020-12-04 18:49:06'),(2,403,'에어컨이 안나와요','2020-12-04 18:51:26');
+/*!40000 ALTER TABLE `broken` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `customers`
 --
 
@@ -62,7 +90,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('alsrud606@hanyang.ac.kr','신민경','1999-11-25','USA'),('reservation_test0@naver.com','머쉬베놈','1990-11-06','France'),('reservation_test1@naver.com','스윙스','1990-03-14','Mexico'),('reservation_test3@naver.com','창모','1990-04-18','Italy'),('test1@naver.com','홍길동','1900-02-27','SouthKorea'),('test10@gmail.com','사암바','1990-08-20','Brazil'),('test2@gmail.com','박준성','2000-11-22','China'),('test3@gmail.com','하현우','2000-01-01','Japan'),('test4@gmail.com','스핑크스','2005-01-01','Egypt'),('test5@gmail.com','모차르트','2005-01-01','Austria'),('test6@gmail.com','카르에','2005-01-01','India'),('test7@gmail.com','소련여자','1993-01-01','Russia'),('test8@gmail.com','헨리','1993-01-01','Canada'),('test9@gmail.com','가으앙시','1900-01-01','HongKong');
+INSERT INTO `customers` VALUES ('alsrud606@hanyang.ac.kr','신민경','1999-11-25','USA'),('reservation_test0@naver.com','머쉬베놈','1990-11-06','France'),('reservation_test1@naver.com','스윙스','1990-03-14','Mexico'),('reservation_test2@naver.com','나루토','1980-04-09','Japan'),('reservation_test3@naver.com','창모','1990-04-18','Italy'),('test1@naver.com','홍길동','1900-02-27','SouthKorea'),('test10@gmail.com','사암바','1990-08-20','Brazil'),('test2@gmail.com','박준성','2000-11-22','China'),('test3@gmail.com','하현우','2000-01-01','Japan'),('test4@gmail.com','스핑크스','2005-01-01','Egypt'),('test5@gmail.com','모차르트','2005-01-01','Austria'),('test6@gmail.com','카르에','2005-01-01','India'),('test7@gmail.com','소련여자','1993-01-01','Russia'),('test8@gmail.com','헨리','1993-01-01','Canada'),('test9@gmail.com','가으앙시','1900-01-01','HongKong');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,6 +250,36 @@ INSERT INTO `receipt_service` VALUES ('apple juice','2020-12-02 08:54:02',0,1,'t
 UNLOCK TABLES;
 
 --
+-- Table structure for table `repair`
+--
+
+DROP TABLE IF EXISTS `repair`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `repair` (
+  `staff_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `undertaken_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int NOT NULL,
+  `cost` int NOT NULL,
+  `done` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `staff_id` (`staff_id`),
+  CONSTRAINT `repair_ibfk_2` FOREIGN KEY (`id`) REFERENCES `broken` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `repair_ibfk_3` FOREIGN KEY (`staff_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `repair`
+--
+
+LOCK TABLES `repair` WRITE;
+/*!40000 ALTER TABLE `repair` DISABLE KEYS */;
+INSERT INTO `repair` VALUES ('2019037129','2020-12-04 18:52:36',2,1000000,0);
+/*!40000 ALTER TABLE `repair` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `request`
 --
 
@@ -280,7 +338,7 @@ CREATE TABLE `reservation` (
 
 LOCK TABLES `reservation` WRITE;
 /*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 13:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0,'예약완료'),('reservation_test0@naver.com','2020-11-29 16:21:42','2020-11-30 19:52:24','2020-12-14 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',2,2,'입실예정'),('reservation_test1@naver.com','2020-11-29 16:25:09','2020-11-30 19:52:28','2020-12-02 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Single',1,1,'입실예정'),('reservation_test3@naver.com','2020-11-30 11:29:07','2020-11-30 00:00:00','2020-12-10 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',5,4,'입실예정'),('test1@naver.com','2020-11-23 13:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1,'예약완료'),('test2@gmail.com','2020-11-18 16:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',4,4,'예약완료'),('test3@gmail.com','2020-11-19 03:48:12','2020-11-25 15:00:00','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'예약완료'),('test4@gmail.com','2021-11-01 09:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1,'예약완료'),('test4@gmail.com','2021-11-23 03:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'예약완료'),('test5@gmail.com','2021-11-01 09:48:12','2020-11-30 19:52:08','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3,'입실예정'),('test7@gmail.com','2020-11-10 09:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2,'취소'),('test9@gmail.com','2021-11-09 03:48:12','2020-11-30 19:51:27','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Single',1,0,'취소');
+INSERT INTO `reservation` VALUES ('alsrud606@hanyang.ac.kr','2020-11-22 13:48:12','2020-11-24 14:00:00','2020-11-29 11:00:00','c0d5d09aaab80397d7dd4c00ea92dc4a259ae853eeb8b533042e999583a4467e277d0874eb76c1598e73261a0e821338f05388ac64a66ce27f8609e7eae33f6d','Double',2,0,'예약완료'),('reservation_test0@naver.com','2020-11-29 16:21:42','2020-11-30 19:52:24','2020-12-14 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',2,2,'입실예정'),('reservation_test1@naver.com','2020-11-29 16:25:09','2020-11-30 19:52:28','2020-12-02 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Single',1,1,'입실예정'),('reservation_test2@naver.com','2020-12-04 14:12:31','2020-12-04 00:00:00','2020-12-08 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,2,'입실예정'),('reservation_test3@naver.com','2020-11-30 11:29:07','2020-11-30 00:00:00','2020-12-10 00:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',5,4,'입실예정'),('test1@naver.com','2020-11-23 13:48:12','2020-11-25 14:00:00','2020-11-30 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,1,'예약완료'),('test2@gmail.com','2020-11-18 16:48:12','2020-11-22 15:00:00','2020-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',4,4,'예약완료'),('test3@gmail.com','2020-11-19 03:48:12','2020-12-04 22:02:21','2020-12-08 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'입실예정'),('test4@gmail.com','2021-11-01 09:48:12','2021-11-25 13:00:00','2021-01-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Family',2,1,'예약완료'),('test4@gmail.com','2021-11-23 03:48:12','2021-11-26 13:00:00','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Twin',2,0,'예약완료'),('test5@gmail.com','2021-11-01 09:48:12','2020-11-30 19:52:08','2021-12-01 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,3,'입실예정'),('test7@gmail.com','2020-11-10 09:48:12','2020-12-01 13:00:00','2020-12-02 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Double',3,2,'취소'),('test9@gmail.com','2021-11-09 03:48:12','2020-11-30 19:51:27','2021-01-12 11:00:00','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','Single',1,0,'취소');
 /*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,4 +529,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-02 21:07:52
+-- Dump completed on 2020-12-05  3:53:34
