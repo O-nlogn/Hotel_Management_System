@@ -75,3 +75,8 @@
     float:right;
 }
 
+.req_label2 {
+    margin-top: 5px;
+    /* width: 100px !important; */
+    margin-right: 20px;
+}
