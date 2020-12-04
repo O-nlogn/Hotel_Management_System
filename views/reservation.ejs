@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
     <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
@@ -85,17 +88,54 @@
             });
         });
     </script>
-    <!-- 예약검색기능 -->
-    <script>
-        $(document).ready(function () {
-            $("#keyword").keyup(function () {
-                var k = $(this).val();
-                $("#reservation_table > tbody > tr").hide();
-                var temp = $("#reservation_table > tbody > tr > td:nth-child(5n+1):contains('" + k + "')");
 
-                $(temp).parent().show();
-            })
+    <!-- 필터링 & 검색 기능 -->
+    <script>
+    $(document).ready(function () {
+        $("#keyword").keyup(function () {
+            show_result();
         })
+    })
+    var clicked_id="";
+
+    function show_result() {
+      var t;
+      var search_content= $("#keyword").val().toLowerCase();
+      var subt=document.getElementById("ttbody").getElementsByTagName("tr");
+      for (var i=0;i<subt.length;i++){
+        t=subt[i].getElementsByTagName("td")[1].innerText||subt[i].getElementsByTagName("td")[1].innerHTML;
+      if (subt[i].innerText.indexOf(search_content) >-1 && t.indexOf(clicked_id) >-1){
+          $(subt[i]).show();
+      }else {
+          $(subt[i]).hide();
+      }
+    }
+  }
+
+  function clicked_function(input){
+    clicked_id=input;
+    show_result();
+  }
+
+       // 버튼 클릭시 active효과
+       function click_effect(number) {
+         var btns=document.getElementById("myBtnContainer").getElementsByTagName("button");
+         for( var i=0;i<btns.length;i++) {
+           $(btns[i]).removeClass('active');
+           if (i === number) {
+             $(btns[i]).addClass('active');
+           }
+
+         }
+
+       }
+
+       $('#reservation_pw').keypress(function (e) {
+         if (e.which == 13) {
+           $('form#form1').submit();
+           return false;
+         }
+       });
     </script>
 
     <style>
@@ -205,6 +245,34 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
+    <!-- 예약팝업 form 입력값 검증 -->
+    <script>
+        function verify(){
+            var reservationForm = document.reservationForm;
+            var name = reservationForm.reservation_name.value;
+            var birth = reservationForm.reservation_birth.value;
+            var email = reservationForm.email_id.value;
+            var num = reservationForm.reservation_people.value;
+            var checkin_date = reservationForm.checkin_date.value;
+            var checkout_date = reservationForm.reservation_birth.value;
+            var roomtype = reservationForm.reservation_type.id;
+            var breakfast = reservationForm.reservation_breakfast.value;
+            var pw = reservationForm.reservation_pw.value;
+            var people = document.getElementById("res_people").value;
+
+            if(!name || !birth || !email || !num || !checkin_date || !checkout_date || !breakfast || !pw){
+                alert("모든 정보를 입력해주세요.");
+                return;
+            }
+            if(roomtype<people){
+                alert("객실 수용인원을 초과하였습니다.");
+                return;
+            }
+           
+            reservationForm.submit();
+            $("#myModal").hide();
+        }
+    </script>
 </head>
 
 <body>
@@ -218,7 +286,7 @@
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
-                        <form name="예약추가" action="/add_reservation" method="post">
+                        <form name="reservationForm" action="/add_reservation" method="post">
                             <div class="modal-content" style="top: 100px;">
                                 <div class="modal-header">
                                     <h2 class="modal-title">예약추가</h2>
@@ -279,11 +347,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="reservation">방타입</label>
-                                        <label><input type="radio" name="reservation_type" value="single">싱글룸</label>
-                                        <label><input type="radio" name="reservation_type" value="twin">트윈룸</label>
-                                        <label><input type="radio" name="reservation_type" value="double">더블룸</label>
-                                        <label><input type="radio" name="reservation_type" value="triple">트리플룸</label>
-                                        <label><input type="radio" name="reservation_type" value="family">패밀리룸</label><br>
+                                        <!-- 인원 재설정 필요 -->
+                                        <label><input type="radio" name="reservation_type" id="1" value="Single" checked>싱글룸</label>
+                                        <label><input type="radio" name="reservation_type" id="2" value="Twin">트윈룸</label>
+                                        <label><input type="radio" name="reservation_type" id="2" value="Double">더블룸</label>
+                                        <label><input type="radio" name="reservation_type" id="3" value="Triple">트리플룸</label>
+                                        <label><input type="radio" name="reservation_type" id="5" value="Family">패밀리룸</label><br>
                                     </div>
                                     <div class="form-group">
                                         <label for="room">조식 예약 인원</label>
@@ -297,7 +366,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default" id="res_commit">추가</button>
+                                        <input type="button" onclick="verify()" value="추가" class="btn btn-default" id="res_commit">
                                     </div>
                                 </div>
                             </div>
@@ -316,9 +385,9 @@
                     <div class="mb-4">
                       <div id="myBtnContainer" class="btn-group">
                         <div class="small mb-3">예약상태별 보기</div>
-                        <button class="btn active" onclick="myFunction('')"> Show all</button>
-                        <button class="btn" onclick="myFunction('취소')"> 취소</button>
-                        <button class="btn" onclick="myFunction('입실예정')"> 입실예정</button>
+                        <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);"> Show all</button>
+                        <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
+                        <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(2);"> 입실예정</button>
                       </div>
                     </div>
                     <div class="mb-4">
@@ -406,7 +475,7 @@
                                         <th class="align-middle bt-0">상세보기</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="ttbody">
                                     <% for (var i = 0; i < reservation.length; i++) { %>
                                             <tr>
                                                 <td class="align-middle">
@@ -424,35 +493,42 @@
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
                                                     <button type="button" id="tooltipAddNew" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
-                                                    <!-- 상세보기 팝업 -->
+                                                    <!-- 상세보기 팝업 (modal 시작)-->
                                                     <div class="modal fade" id="myModal2" role="dialog">
                                                         <div class="modal-dialog">
                                                             <!-- Modal content-->
-                                                            <form name="예약 상세페이지" action="" method="post">
-                                                                <div class="modal-content" style="top: 100px;">
+                                                                <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h2 class="modal-title">예약 상세페이지</h2>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal">&times;</button> <br>
                                                                     </div>
                                                                     <div class="modal-body">
+                                                                      <form name="예약 상세페이지" action="/reservation_status_change" method="post" id="form1">
                                                                         <div class="form-group">
+
                                                                             <label form="checkout_time">퇴실시간<label>
-                                                                                    <div><%= reservation[i].checkout%>
-                                                                                    </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <h3>예약 취소</h3>
+                                                                                    <div><%= reservation[i].checkout%></div>
+
+                                                                           <!-- <input type="checkbox"  data-on="check-in" data-off="예약취소" checked data-toggle="toggle"> -->
+                                                                           <select name="status_change_to" id="status_change_to">
+                                                                               <option value="chach-in">체크인</option>
+                                                                               <option value="cancel_reservation">예약취소</option>
+                                                                           </select>
+                                                                          <!-- <div class="form-group"> -->
+                                                                            <!--화면에 안보이는 부분 (type='hidden')-->
+                                                                            <input type="hidden" id="name" name="name" value=<%= reservation[i].name %>>
+                                                                            <input type="hidden" id="reservation_time" name="reservation_time" value=<%= reservation[i].reservation_time %>>
                                                                             <label form="reservation_pw">예약 비밀번호</label>
-                                                                            <input type="password" name="reservation_pw"
-                                                                                id="reservation_pw"
-                                                                                class="form-control">
-                                                                            <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소(취소 상태로 변경) -->
-                                                                            <button type="submit" class="btn_submit"
-                                                                                id="btn22"
-                                                                                style="margin-left: 235px;">확인</button>
-                                                                        </div>
-                                                                        <div class="form-group">
+                                                                            <input type="password" name="reservation_pw" id="reservation_pw" class="form-control" >
+                                                                            <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소/체크인 상태로 변경) -->
+                                                                            <button type="submit" class="btn_submit" style="margin-left: 235px;">확인</button>
+                                                                          </div>
+                                                                        </form>
+                                                                      </div>
+
+
+                                                                        <!-- <div class="form-group">
                                                                             <h3>체크인</h3>
                                                                             <label form="reservation_checkin">배정
                                                                                 객실</label>
@@ -465,22 +541,21 @@
                                                                             <input type="text"
                                                                                 name="reservation_checkin_staff"
                                                                                 id="reservation_checkin"
-                                                                                class="form-control">
+                                                                                class="form-control">-->
                                                                             <!-- 백에 객실번호 보내면, 체크인 되게 -->
-                                                                            <button type="submit" class="btn_submit"
+                                                                            <!-- <button type="submit" class="btn_submit"
                                                                                 id="btn22"
                                                                                 style="margin-left: 235px;">완료</button>
-                                                                        </div>
-                                                                    </div>
+                                                                        </div>  -->
+
                                                                     <div class="modal-footer">
                                                                         <div class="form-group">
-                                                                            <button type="submit"
-                                                                                class="btn btn-default"
-                                                                                id="res_commit">추가</button>
+                                                                            <button class="btn btn-default" id="res_commit" class="close"
+                                                                                data-dismiss="modal">완료</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -513,26 +588,7 @@
                 </div>
 
             </div>
-            <script>
-                function myFunction(input) {
-                    var filter, table, tr, td, i, txtValue;
-                    filter = input;
-                    table = document.getElementById("reservation_table");
-                    tr = table.getElementsByTagName("tr");
-                    for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[1];
-                        if (td) {
-                            txtValue = td.innerHTML || td.innerText;
-                            if (txtValue.indexOf(filter) > -1) {
-                                tr[i].style.display = "";
-                            } else {
-                                tr[i].style.display = "none";
-                            }
-                        }
-                    }
-                }
 
-            </script>
 
 </body>
 
