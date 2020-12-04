@@ -286,31 +286,38 @@ module.exports = function (app) {
     });
 
     app.post('/checkout', (req, res) => {
-        var params = [req.body.email, req.body.time];
-        if (undefined in params) {
+        if (req.body.checkout_room === undefined) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
         }
         else {
-            var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
-            dbconfig.query(receipt_query, params, (err, rows) => {
+            var id_query = "SELECT email, reservation_time as time FROM stay WHERE room = ?";
+            dbconfig.query(id_query, [req.body.checkout_room], (err, rows) => {
                 if (err) {
                     throw err;
                 }
 
-                service_charge = rows[0].sum;
-                var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
-                dbconfig.query(delete_responsibility_query, params, (err) => {
+                var params = [rows[0].email, rows[0].time];
+                var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
+                dbconfig.query(receipt_query, params, (err, rows) => {
                     if (err) {
                         throw err;
                     }
 
-                    var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
-                    dbconfig.query(delete_stay_query, params, (err) => {
+                    service_charge = rows[0].sum;
+                    var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
+                    dbconfig.query(delete_responsibility_query, params, (err) => {
                         if (err) {
                             throw err;
                         }
 
-                        res.send({success: true, charge: service_charge});
+                        var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
+                        dbconfig.query(delete_stay_query, params, (err) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            res.send({success: true, charge: service_charge});
+                        });
                     });
                 });
             });
