@@ -80,3 +80,19 @@
     /* width: 100px !important; */
     margin-right: 20px;
 }
+
+@media(max-width: 1700px) {
+    #request {
+        margin-left: 50px;
+    }
+}
+
+@media(max-width: 1000px) {
+    #request {
+        margin-left: 20px;
+    }
+
+    #request .list {
+        height: 500px;
+    }
+}

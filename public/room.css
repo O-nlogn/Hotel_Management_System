@@ -208,9 +208,10 @@ a:hover {
     transition-duration: 0.2s;
 }
 
-@media(max-width: 1500px) {
+@media(max-width: 1900px) {
     #container {
         width: max-content;
+        padding-right: 355px;
     }
 }
 
