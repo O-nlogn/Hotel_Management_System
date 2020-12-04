@@ -6,8 +6,23 @@
         <script>
             $(document).ready(function (){
                 $(".using.room301 .open").on('click', function () {
-                    $(".popup.room301").show();
-                    $(".dim").show();
+                    $.ajax({
+                        type: 'POST',
+                        url: "/room_popup",
+                        data: {room:301},
+                        success: function (data) {
+                            $("#popup_room").text(String(data.details[0].room) + "호");
+                            $("#popup_staff").text(data.details[0].staff_name);
+                            $("#popup_personnel").text(String(data.details[0].personnel) + "명");
+                            $("#popup_should_paid").text(String(data.details[0].should_paid) + "원");
+                            $("#popup_checkin").text(data.details[0].checkin);
+                            $("#popup_checkout").text(data.details[0].checkout);
+
+                            $(".popup").show();
+                            $(".dim").show();
+                        }
+                    });
+                    
                 });
                 $(".using.room303 .open").on('click', function () {
                     $(".popup.room303").show();
@@ -113,7 +128,6 @@
             </div>
             <% if(!empty){j++}%>
         <% } %>
-
     </body>
     
 </html>
