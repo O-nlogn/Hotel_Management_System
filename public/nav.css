@@ -17,10 +17,22 @@
     }
 }
 
-@media(max-width: 1200px) {
+@media(max-width: 1350px) {
     .menuItem, .submenuItem {
         font-size: 12px !important;
         width: 100px !important;
+    }
+}
+@media(max-width: 1030px) {
+    .menuItem, .submenuItem {
+        font-size: 7px !important;
+        width: 70px !important;
+    }
+}
+@media(max-width: 850px) {
+    .menuItem, .submenuItem {
+        font-size: 6px !important;
+        width: 60px !important;
     }
 }
 #menu ul {
