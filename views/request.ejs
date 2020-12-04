@@ -45,7 +45,7 @@
   				<!--실시간 처리-->
   			</div>
   			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><strong>+</strong></button>
-  </div>
+  	</div>
   <!-- 실시간 요청사항 추가 팝업 (modal popup) : 부트스트랩 사용-->
   		<div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog" style="top: 150px; left: -50px;">
@@ -59,7 +59,7 @@
 			<form method="post" id="add_request">
           		<div class="modal-body">
   					<!-- 백부분 코드 필요 (데이터 받아서 processing_status(??)를 false로 해서 디비에 저장해 주면 될듯 )-->
-						<div style="display: flex;">
+						<div style="display: flex; border-bottom: dotted 3px rgb(236, 236, 236); padding-bottom: 20px; margin-bottom: 20px;">
 
 	
 							<div class="form-group" style="display: flex;">
@@ -78,36 +78,27 @@
 								</div>
 						    </div>
 						</div>
-  						
-  						<!-- 스크롤이 안됨
-  						<label for="room">방 번호</label>
-    					  <select class="form-control" id="room_select">
-    					    <option>1</option>
-      					 s <option>2</option>
-    					    <option>3</option>
-    					    <option>4</option>
-    					    <option>5</option>
-  								<option>1</option>
-      					  <option>2</option>
-    					    <option>3</option>
-    					    <option>4</option>
-    					    <option>5</option>
-  								<option>1</option>
-      					  <option>2</option>
-    					    <option>3</option>
-    					    <option>4</option>
-    					    <option>5</option>
-    					  </select>-->
+  					
                 
 				<div id="select_menu" class="form-group" style="display: none">
-					<label for="room_service">메뉴</label>
-					<select class="form-control" name="service">
-						<% for(var i=0; i<room_service.length; i++){ %>
-							<option value="<%=room_service[i].service%>"><%=room_service[i].service%></option>
-						<%}%>
-					</select>
-					<label for="count">개수</label>
-					<input name="cnt" type="number" class="form-control" style="width: 55px;">
+					<div>
+						<div style="display: flex;">
+
+							<label for="room_service" class="req_label2">메뉴</label>
+							<select class="form-control" name="service">
+								<% for(var i=0; i<room_service.length; i++){ %>
+									<option value="<%=room_service[i].service%>"><%=room_service[i].service%></option>
+								<%}%>
+							</select>
+						</div>
+						<div style="display: flex; margin-top: 5px;">
+							<label for="count" class="req_label2" style="margin-right: 2px;">개수</label>
+							<input name="cnt" type="number" min="1" class="form-control" value=1 style="width: 55px;">
+						</div>
+						
+						
+					</div>
+					
 
 				</div>
 

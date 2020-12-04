@@ -86,7 +86,6 @@ module.exports = function (app) {
     app.get('/room', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
 
-            var room_service;
             var sql = 'SELECT service from room_service';
 
             dbconfig.query(sql, function (err, rows, fields) {
@@ -95,28 +94,13 @@ module.exports = function (app) {
                     res.writeHead(200);
                     res.end();
                 }
-                else room_service = rows;
-            });
-
-            sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
-            sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
-            sql += ' JOIN responsibility ON stay.room = responsibility.room';
-            sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
-            sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
-            sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-            sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email';
-
-            dbconfig.query(sql, function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(200);
-                    res.end();
-                }
-                else res.render('room', { stayrooms: rows, room_service: room_service, username: req.cookies.username});
+                else res.render('room', { room_service: rows, username: req.cookies.username });
             });
         }
         else res.redirect('/');
     });
+
+    
 
     app.get('/request_list', function (req, res) {
         var sql = 'select room, email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0';
@@ -133,7 +117,7 @@ module.exports = function (app) {
 
     app.get('/reload_table', function (req, res) {
         
-        var stay_room, allRequest;
+        var stay_room;
 
         var sql = 'SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
         sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';

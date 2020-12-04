@@ -6,11 +6,11 @@ var dbconfig = require('../db');
 
 module.exports = function (app) {
     app.use(express.json());
-    app.use(express.urlencoded( {extended : false } ));
+    app.use(express.urlencoded({ extended: false }));
 
     /* 로그인 버튼을 눌렀을 때 request 처리 */
     app.post('/login_data', function (req, res) {
-        
+
         var id = req.body.id;
         var pw = req.body.pw;
         res.cookie('userID', id);
@@ -33,7 +33,7 @@ module.exports = function (app) {
                 else {
                     console.log('로그인 성공');
                     res.cookie('is_logged_in', true);
-                    res.cookie('username',rows[0].name);
+                    res.cookie('username', rows[0].name);
                 }
             }
 
@@ -48,10 +48,10 @@ module.exports = function (app) {
         var newpw = req.body.newpw;
         var checkpw = req.body.checkpw;
 
-        if (newpw !== checkpw){ 
-            res.render('changepw', {status: 'newpw_not_match', username: req.cookies.username});
+        if (newpw !== checkpw) {
+            res.render('changepw', { status: 'newpw_not_match', username: req.cookies.username });
         }
-        else{
+        else {
             var sql = 'SELECT password FROM users WHERE id=?';
             var params = [req.cookies.userID];
 
@@ -64,14 +64,14 @@ module.exports = function (app) {
                 else {
                     curpw = crypto.createHash('sha512').update(curpw).digest('hex');
                     newpw = crypto.createHash('sha512').update(newpw).digest('hex');
-                    
+
                     if (rows[0].password !== curpw) {
-                        res.render('changepw', { status: 'curpw_not_match', username: req.cookies.username});
+                        res.render('changepw', { status: 'curpw_not_match', username: req.cookies.username });
                     }
-                    else{
+                    else {
 
                         sql = 'UPDATE users SET password=? WHERE id=?';
-                        params = [newpw,req.cookies.userID];
+                        params = [newpw, req.cookies.userID];
 
                         dbconfig.query(sql, params, function (err2, rows2, fields2) {
                             if (err2) {
@@ -79,7 +79,7 @@ module.exports = function (app) {
                                 res.writeHead(200);
                                 res.end();
                             }
-                            else res.render('main', {username: req.cookies.username});
+                            else res.render('main', { username: req.cookies.username });
                         });
                     }
                 }
@@ -91,7 +91,7 @@ module.exports = function (app) {
     /* 예약 추가 버튼을 눌렀을때 request 처리 */
     app.post('/add_reservation', function (req, res) {
         var name = req.body.reservation_name;
-        var email = req.body.email_id+"@"+req.body.email_select;
+        var email = req.body.email_id + "@" + req.body.email_select;
         var birth = req.body.reservation_birth;
         var nationality = req.body.reservation_nation;
         var personnel = req.body.reservation_people;
@@ -127,7 +127,7 @@ module.exports = function (app) {
 
                 /* 예약 추가 */
                 sql = 'INSERT INTO reservation VALUES(?,DEFAULT,?,?,?,?,?,?,DEFAULT)';
-                params = [email, checkin, checkout, password, room_type, personnel, breakfast]; 
+                params = [email, checkin, checkout, password, room_type, personnel, breakfast];
 
 
                 dbconfig.query(sql, params, function (err2, rows2, fields2) {
@@ -143,17 +143,16 @@ module.exports = function (app) {
         });
     });
 
-
     app.post('/add_user', function (req, res) {
         var count_query = 'SELECT COUNT(*) as cnt '
-                        + 'FROM users '
-                        + 'WHERE id LIKE ?';
+            + 'FROM users '
+            + 'WHERE id LIKE ?';
         var date_format = moment().format('YYYYMM');
         if (req.body.department === undefined) {
-            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+            res.send({ success: false, error: 'NOT_ENOUGH_INFO' });
         }
         else {
-            var department_number = {'기획부' : 0, '시설안전부' : 1, '식음료부' : 2, '인사부' : 3, '재무부' : 4, '프론트' : 5}[req.body.department];
+            var department_number = { '기획부': 0, '시설안전부': 1, '식음료부': 2, '인사부': 3, '재무부': 4, '프론트': 5 }[req.body.department];
 
             console.log(date_format + department_number);
             dbconfig.query(count_query, date_format + department_number + '%', (err, rows) => {
@@ -164,16 +163,16 @@ module.exports = function (app) {
                     console.log(rows[0].cnt);
                     var user_count = rows[0].cnt;
                     if (user_count >= 999) {
-                        res.send({success: false, error: 'TOO_MANY_USERS'});
+                        res.send({ success: false, error: 'TOO_MANY_USERS' });
                     }
                     else {
                         var insert_query = 'INSERT INTO users VALUES(?';
-                        for (var i = 1; i < 15 ; i++) {
+                        for (var i = 1; i < 15; i++) {
                             insert_query += ', ?';
                         }
                         insert_query += ')';
 
-                        var new_user_id = date_format + department_number + ('000'+String(user_count+1)).slice(-3);
+                        var new_user_id = date_format + department_number + ('000' + String(user_count + 1)).slice(-3);
                         var params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
                                 req.body.name,  req.body.gender, req.body.phone_number, 
                                 req.body.department, req.body.birth, req.body.job_title,
@@ -189,25 +188,25 @@ module.exports = function (app) {
                                 if (err) {
                                     throw err;
                                 }
-                    
+
                                 var languages = req.body['multilingual[]'];
-                                
+
                                 if (languages.length > 0) {
                                     var language_query = `INSERT INTO multilingual VALUES (${new_user_id}, '${languages[0]}')`;
-                                    
-                                    for (var i = 1 ; i < languages.length ; i++) {
+
+                                    for (var i = 1; i < languages.length; i++) {
                                         language_query += `, (${new_user_id}, '${languages[i]}')`;
                                     }
-                                    
+
                                     dbconfig.query(language_query, (err, rows) => {
                                         if (err) {
                                             throw err;
                                         }
-                                        res.send({success: true, user_id: new_user_id});
+                                        res.send({ success: true, user_id: new_user_id });
                                     });
-                                } 
+                                }
                                 else {
-                                    res.send({success: true, user_id: new_user_id});
+                                    res.send({ success: true, user_id: new_user_id });
                                 }
                             });
                         }
@@ -226,12 +225,12 @@ module.exports = function (app) {
 
         sql = 'SELECT email, reservation_time FROM stay WHERE room=?';
         params = [room];
-        dbconfig.query(sql,params, function (err, rows, fields) {
+        dbconfig.query(sql, params, function (err, rows, fields) {
             if (err) {
                 console.log(err);
             }
-            else{
-                email = rows[0].email; 
+            else {
+                email = rows[0].email;
                 reservation_time = rows[0].reservation_time;
 
                 if (type === '요청사항') {
@@ -257,6 +256,30 @@ module.exports = function (app) {
     });
 
 
+    app.post('/room_popup', function (req, res) {
+        var room = req.body.room;
+
+        var sql = 'SELECT * from(SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
+        sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
+        sql += ' JOIN responsibility ON stay.room = responsibility.room';
+        sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
+        sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
+        sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
+        sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email)z WHERE z.room=?';
+
+        dbconfig.query(sql, [room], function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                res.writeHead(200);
+                res.end();
+            }
+            else {
+                console.log(rows);
+                res.send({ details: rows });
+            }
+        });
+    });
+
     /* 요청사항 완료 또는 닫기 버튼 눌렀을 때 */
     app.post('/request_data', function (req, res) {
         var email = req.body.email;
@@ -267,11 +290,11 @@ module.exports = function (app) {
         var details = req.body.details;
         var sql, params;
 
-        if (type === '룸서비스'){
+        if (type === '룸서비스') {
             if (status === 'delete') sql = 'DELETE from receipt_service WHERE email=? and reservation_time=? and service=? and request_time=?';
             else sql = 'UPDATE receipt_service SET done=1 WHERE email=? and reservation_time=? and service=? and request_time=?';
         }
-        else{
+        else {
             if (status === 'delete') sql = 'DELETE from request WHERE email=? and reservation_time=? and details=? and request_time=?';
             else sql = 'UPDATE request SET done=1 WHERE email=? and reservation_time=? and details=? and request_time=?';
         }
@@ -286,6 +309,8 @@ module.exports = function (app) {
     });
 
     app.post('/checkout', (req, res) => {
+        // request -> done
+        // receipt_service -> paid  
         if (req.body.checkout_room === undefined) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
         }
@@ -476,6 +501,6 @@ module.exports = function (app) {
   
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
-        res.render('jusoPopup', {locals: req.body});
+        res.render('jusoPopup', { locals: req.body });
     });
 }

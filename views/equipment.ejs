@@ -15,6 +15,26 @@
             width: 40px;
             height: 40px;
         }
+
+        #deliver {
+            background-color: powderblue;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px;
+        }
+
+        #deliver:hover {
+            background-color: rgb(79, 158, 168);
+        }
+
+        #list {
+            text-align: center !important;
+        }
+
+        #list th {
+            text-align: center !important;
+        }
     </style>
 
 <body>
@@ -40,13 +60,13 @@
                     </div>
                     <div class="mb-3 Card_custom-card--border_5wJKy card">
                         <div class="table-responsive-xl">
-                            <table class="mb-0 table table-hover">
+                            <table class="mb-0 table table-hover" id="list">
                                 <thead>
                                     <tr>
-                                        <th class="align-middle bt-0">비품명</th>
-                                        <th class="align-middle bt-0">사진</th>
-                                        <th class="align-middle bt-0">잔여량</th>
-                                        <th class="align-middle bt-0">주문여부</th>
+                                        <th>비품명</th>
+                                        <th>사진</th>
+                                        <th>잔여량</th>
+                                        <th>주문여부</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +86,7 @@
                                             <div>394개</div>
                                         </td>
                                         <td class="align-middle">
-                                                <div><button>주문하기</button></div>
+                                                <div><button id="deliver">주문하기</button></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -86,7 +106,7 @@
                                         </td>
                                         <td class="align-middle">
                                             <div class="avatar-image avatar-image--loaded">
-                                                <div><button>주문하기</button></div>
+                                                <div><button id="deliver">주문하기</button></div>
                                             </div>
                                         </td>
                                     </tr>
