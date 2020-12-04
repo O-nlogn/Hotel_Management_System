@@ -158,7 +158,9 @@
 
         /* Search */
         .searchBox {
-            border: none
+            border: none;
+            width: 800px;
+            margin: auto;
         }
 
         .searchBox tbody th {
@@ -405,7 +407,7 @@
         <form>
             <!-- search -->
             <!-- 중앙정렬 필요.. -->
-            <table class="searchBox" >
+            <table class="searchBox">
                 <caption>조회</caption>
                 <colgroup>
                     <col width="123px">
@@ -415,7 +417,7 @@
                     <tr>
                         <th>조회기간</th>
                         <td>
-                            <ul class="searchDate">
+                            <ul class="searchDate" style="width: max-content; margin: auto;">
                                 <li>
                                     <span class="chkbox2">
                                         <input type="radio" name="dateType" id="dateType1" onclick="setSearchDate('0d')"/>
@@ -460,7 +462,7 @@
                                 </li>
                             </ul>
                             
-                            <div class="clearfix">
+                            <div class="clearfix" style="width: max-content; margin: auto;">
                                 <!-- 시작일 -->
                                 <span class="dset">
                                     <input type="text" class="datepicker inpType" name="searchStartDate" id="searchStartDate" >
