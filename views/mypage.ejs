@@ -57,6 +57,17 @@
             background-color: rgb(77, 98, 100);
             color: white;
         }
+
+        #info th {
+            padding-right: 20px !important;
+            height: 30px;
+        }
+
+        #save {
+            margin-top: 30px;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
     </style>
     <title>내 정보</title>
 </head>
@@ -112,7 +123,11 @@
                                 <!-- <td>사랑시 고백구 행복동</td> -->
                                 <td class="text-primary">
                                     <div style="display: flex;">
-                                        <div id="road">도로</div> <div id="detail">세부</div><button class="btn" onclick="goPopup();">변경</button>
+                                        <div style="color: grey; width: max-content; padding-right: 10px;">
+                                            <div id="road">도로</div>
+                                            <div id="detail">세부</div>
+                                        </div>
+                                        <button class="btn" onclick="goPopup();">변경</button>
                                         <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
                                     </div>
                                </td>
@@ -121,7 +136,7 @@
                     </table>
                 </div>
             </div>
-            <button class="btn">저장</button>
+            <button class="btn" id="save">저장</button>
         </div>
         
     </div>                 
