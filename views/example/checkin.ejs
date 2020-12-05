@@ -4,17 +4,18 @@
     <script>
         function dosth() {
             $.ajax({
-                url: '/checkout',
+                url: '/checkin',
                 method: 'POST',
                 data: {
-                    room : '301'
+                    email: 'alsrud606@hanyang.ac.kr',
+                    time: '2020-11-22 22:48:12'
                 },
                 success: (data) => {
                     if (data.success) {
-                        console.log(data.charge);           // 룸서비스 비용
-                    } 
+                        console.log(data);
+                    }
                     else {
-                        console.log(data.error);            // 실패 원인
+                        console.log(data.error);     // 실패 원인
                     }
                 }
             })

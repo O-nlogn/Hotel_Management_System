@@ -318,32 +318,26 @@ module.exports = function (app) {
 
 
     app.post('/checkout', (req, res) => {
-        var params = [req.body.email, req.body.time];
-        if (undefined in params) {
-            res.send({ success: false, error: 'NOT_ENOUGH_INFO' });
+        // request -> done
+        // receipt_service -> paid  
+        if (req.body.checkout_room === undefined) {
+            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
         }
         else {
-            var stay_charge = 0;
-            var service_charge = 0;
-            var stay_query = 'SELECT checkin, checkout, rate, extra, A.personnel as men, B.personnel as moderate'
-                + ' FROM reservation A, room_type B WHERE email = ? AND reservation_time = ? AND A.room_type = B.type';
-            dbconfig.query(stay_query, params, (err, rows) => {
+            var id_query = "SELECT email, reservation_time as time FROM stay WHERE room = ?";
+            dbconfig.query(id_query, [req.body.checkout_room], (err, rows) => {
                 if (err) {
                     throw err;
                 }
 
-                var stay_day = Math.ceil((rows[0].checkout - rows[0].checkin) / 1000 / 60 / 60 / 24);
-                var one_day_charge = rows[0].rate + rows[0].extra * Math.max(0, rows[0].men - rows[0].moderate);
-
-                stay_charge = stay_day * one_day_charge;
-
+                var params = [rows[0].email, rows[0].time];
                 var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
                 dbconfig.query(receipt_query, params, (err, rows) => {
                     if (err) {
                         throw err;
                     }
 
-                    service_charge = rows[0].sum;
+                    var service_charge = rows[0].sum;
                     var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
                     dbconfig.query(delete_responsibility_query, params, (err) => {
                         if (err) {
@@ -356,10 +350,7 @@ module.exports = function (app) {
                                 throw err;
                             }
 
-                            res.send({
-                                success: true, charge: stay_charge + service_charge, stay_charge: stay_charge, service_charge: service_charge,
-                                one_day_charge: one_day_charge, stay_day: stay_day
-                            });
+                            res.send({success: true, charge: service_charge});
                         });
                     });
                 });
@@ -367,6 +358,156 @@ module.exports = function (app) {
         }
     });
 
+    app.post('/checkin', (req, res) => {
+        var params = [req.body.email, req.body.time];
+        console.log(params)
+        if (params.indexOf(undefined) != -1) {
+            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+        }
+        else {
+            // must consider broken condition
+            var type_query = 'SELECT room_type, personnel, language FROM reservation NATURAL JOIN customers A, nation B '
+                             + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
+            dbconfig.query(type_query, params, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                
+                if (rows.length == 0) {
+                    res.send({success: false, error: 'ALREADY_CHECKED_IN'});
+                    return;
+                }
+
+                var room_type = rows[0].room_type;
+                var men = rows[0].personnel;
+                var language = rows[0].language;
+                console.log(language)
+                var room_choice_query = 'SELECT number FROM room WHERE type = ? AND number NOT IN (SELECT room FROM stay)';
+                
+                dbconfig.query(room_choice_query, [room_type], (err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+                    
+                    var match_query = 'SELECT id, name, (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) AS priority '
+                                       + 'FROM users A NATURAL JOIN multilingual WHERE department = \'프론트\' AND on_work = 1 '
+                                       + 'AND (SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) <= '
+                                       + ' ALL(SELECT COUNT(room) FROM users A LEFT OUTER JOIN responsibility B '
+                                       + 'ON A.id = B.id WHERE department = \'프론트\' AND on_work = 1 GROUP BY A.id) '
+                                       + 'ORDER BY (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) DESC, '
+                                       + '(SELECT COUNT(language) FROM multilingual C WHERE C.id = A.id) ASC';
+
+                    var insert_query = 'INSERT INTO responsibility VALUE (?, ?)';
+                    
+                    var stay_query = 'INSERT INTO stay VALUE (?, ?, ?, ?, ?, ?)';
+
+                    var status_query = 'UPDATE reservation SET status = \'입실완료\' WHERE email = ? AND reservation_time = ?';
+
+                    if (rows.length > 0) {
+                        var selected_room = rows[0].number;
+                        var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
+                        dbconfig.query(stay_query, params2, (err) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            dbconfig.query(match_query, [language, language], (err, rows) => {
+                                if (err) {
+                                    throw err;
+                                }
+
+                                if (rows.length > 0) {
+                                    var selected_user = rows[0].id;
+                                    var user_name = rows[0].name;
+                                    var priority = rows[0].priority;
+                                    dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                        else {
+                                            dbconfig.query(status_query, params, (err) => {
+                                                if (err) {
+                                                    throw err;
+                                                }
+                                                else {
+                                                    res.send({success:true, user_id:selected_user, user_name:user_name, 
+                                                    room_num:selected_room, type_changed:false, priority:priority});
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                                else {
+                                    res.send({success:false, error:'NO_WORKING_USERS'});
+                                }
+                            });                                    
+                        });
+                    }
+                    else {
+                        var upgrade_stay = 'SELECT COUNT(number) AS count, type FROM room NATURAL JOIN room_type WHERE number NOT IN (SELECT room FROM stay) '
+                                         + 'AND type != ? AND price >= (SELECT rate FROM WHERE type = ?) GROUP BY type ORDER BY COUNT(number) DESC, rate ASC'; 
+                        // 헉 빈방이 없다니
+                        dbconfig.query(upgrade_stay, [room_type, room_type], (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+                            
+                            if (rows[0].count == 0) {
+                                res.send({success:false, error:'NO_ROOMS'});
+                            }
+                            else {
+                                dbconfig.query(room_choice_query, [rows[0].type], (err, rows) => {
+                                    if (err) {
+                                        throw err;
+                                    }
+
+                                    var selected_room = rows[0].number;
+                                    var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
+                                    dbconfig.query(insert_query, params2, (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+
+                                        dbconfig.query(match_query, [language, language], (err, rows) => {
+                                            if (err) {
+                                                throw err;
+                                            }
+            
+                                            if (rows.length > 0) {
+                                                var selected_user = rows[0].id;
+                                                var user_name = rows[0].name;
+                                                var priority = rows[0].priority;
+                                                dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
+                                                    if (err) {
+                                                        throw err;
+                                                    }
+                                                    else {
+                                                        dbconfig.query(status_query, params, (err) => {
+                                                            if (err) {
+                                                                throw err;
+                                                            }
+                                                            else {
+                                                                res.send({success:true, user_id:selected_user, user_name:user_name, 
+                                                                room_num:selected_room, type_changed:true, priority:priority});
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                res.send({success:false, error:'NO_WORKING_USERS'});
+                                            }
+                                        });
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    });
+  
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
         res.render('jusoPopup', { locals: req.body });
