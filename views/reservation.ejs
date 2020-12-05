@@ -290,29 +290,28 @@
             var birth = reservationForm.reservation_birth.value;
             var email = reservationForm.email_id.value;
 
-            var num = reservationForm.reservation_people.value;
             var checkin_date = reservationForm.checkin_date.value;
             var checkout_date = reservationForm.reservation_birth.value;
-            var roomtype = reservationForm.reservation_type.id;
+            var roomtype = reservationForm.reservation_type.value;
             var breakfast = reservationForm.reservation_breakfast.value;
             var pw = reservationForm.reservation_pw.value;
             var people = document.getElementById("res_people").value;
 
-
-            var strArr = checkin_date.split('-');
-            var date1 = new Date(strArr[0],strArr[1]-1,strArr[2]);
-            strArr = checkout_date.split('-');
-            var date2 = new Date(strArr[0], strArr[1] - 1, strArr[2]);
-
-            if(!name || !birth || !email || !num || !checkin_date || !checkout_date || !breakfast || !pw){
+            if(!name || !birth || !email || !checkin_date || !checkout_date || !breakfast || !pw){
                 alert("모든 정보를 입력해주세요.");
                 return;
             }
-            if(roomtype<people){
+            
+            var capacity;
+            if(roomtype === 'Family') capacity = 5;
+            else if(roomtype === 'Single') capacity = 1;
+            else capacity = 3;
+
+            if(capacity<people){
                 alert("객실 수용인원을 초과하였습니다.");
                 return;
             }
-           
+        
             reservationForm.submit();
             $("#myModal").hide();
         }
@@ -392,11 +391,11 @@
                                     <div class="form-group">
                                         <label for="reservation">방타입</label>
                                         <!-- 인원 재설정 필요 -->
-                                        <label><input type="radio" name="reservation_type" id="1" value="Single" checked>싱글룸</label>
-                                        <label><input type="radio" name="reservation_type" id="2" value="Twin">트윈룸</label>
-                                        <label><input type="radio" name="reservation_type" id="2" value="Double">더블룸</label>
-                                        <label><input type="radio" name="reservation_type" id="3" value="Triple">트리플룸</label>
-                                        <label><input type="radio" name="reservation_type" id="5" value="Family">패밀리룸</label><br>
+                                        <label><input type="radio" name="reservation_type" value="Single" checked>싱글룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Twin">트윈룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Double">더블룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Triple">트리플룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Family">패밀리룸</label><br>
                                     </div>
                                     <div class="form-group">
                                         <label for="room">조식 예약 인원</label>
