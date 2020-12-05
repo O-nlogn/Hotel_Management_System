@@ -504,6 +504,10 @@ module.exports = function (app) {
         var addressRoad = req.body.addressRoad;
         var addressDetail = req.body.addressDetail;
 
+        if(addressDetail == '' || addressRoad == ''){
+            res.redirect('/');
+        }
+
         var sql= 'UPDATE users SET addressRoad=?, addressDetail=? WHERE id=?';
         var params = [addressRoad,addressDetail,req.cookies.userID];
 

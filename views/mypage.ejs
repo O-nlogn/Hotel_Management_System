@@ -95,7 +95,7 @@
                                 <th>비밀번호</th>
                                 <td>
                                     <input value="********" disabled>
-                                    <button onclick="location.href='../changepw'" class="btn">변경</button>
+                                    <input type="button" onclick="moveto('../changepw')" value="변경" class="btn">
                                 </td>
                             </tr>
 
@@ -143,4 +143,10 @@
         </form>
     </div>
 </body>
+
+<script>
+    function moveto(url){
+        location.href = url;
+    }
+</script>
 </html>
