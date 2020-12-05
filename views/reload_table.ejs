@@ -57,6 +57,10 @@
                             $("#request_popup_time").text(data.content[0].request_time);
                             $("#request_popup_details").text(data.content[0].details);
 
+                            if (data.content[0].request_type === '룸서비스'){
+                                $("#request_popup_details").text(data.content[0].details + " (개수: " + String(data.content[0].cnt) +")");
+                            }
+
                             $('.request_popup').show();
                             $(".dim").show();
                         }
