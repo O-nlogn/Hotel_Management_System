@@ -31,52 +31,39 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function(){
-            $('#floor3').click(function(){
-                var offset = $('#301').offset(); //선택한 태그의 위치를 반환
-								console.log(offset);
-                $('.table').animate({scrollTop : 0}, 300);
-            });
-			$('#floor4').click(function(){
-                var offset = $('#401').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop :450}, 300);
-            });
-			$('#floor5').click(function(){
-                var offset = $('#501').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 900}, 300);
-            });
-			$('#floor6').click(function(){
-                var offset = $('#601').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 1350}, 300);
-            });
-			$('#floor7').click(function(){
-                var offset = $('#701').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 1800}, 300);
-            });
-			$('#floor8').click(function(){
-                var offset = $('#801').offset();
-																console.log(offset);
-                $('.table').animate({scrollTop : 2250}, 300);
-            });
-			$('#floor9').click(function(){
-                var offset = $('#901').offset();
-                $('.table').animate({scrollTop : 2700}, 300);
-            });
-			$('#floor10').click(function(){
-                var offset = $('#1001').offset();
-                $('.table').animate({scrollTop : 3157}, 300);
-            });
-			$('#floor11').click(function(){
-                var offset = $('#1101').offset();
-                $('.table').animate({scrollTop : 3625}, 300);
-            });
-			$('#floor12').click(function(){
-                var offset = $('#1201').offset();
-                $('.table').animate({scrollTop : 4200}, 300);
+			$('#floor3').click(function () {
+				// var offset = $('#301').offset(); //선택한 태그의 위치를 반환
+				// console.log(offset);
+				$('.table').animate({ scrollTop: 0 }, 300);
 			});
+			$('#floor4').click(function () {
+				$('.table').animate({ scrollTop: 480 }, 300);
+			});
+			$('#floor5').click(function () {
+				$('.table').animate({ scrollTop: 960 }, 300);
+			});
+			$('#floor6').click(function () {
+				$('.table').animate({ scrollTop: 1440 }, 300);
+			});
+			$('#floor7').click(function () {
+				$('.table').animate({ scrollTop: 1920 }, 300);
+			});
+			$('#floor8').click(function () {
+				$('.table').animate({ scrollTop: 2400 }, 300);
+			});
+			$('#floor9').click(function () {
+				$('.table').animate({ scrollTop: 2880 }, 300);
+			});
+			$('#floor10').click(function () {
+				$('.table').animate({ scrollTop: 3368 }, 300);
+			});
+			$('#floor11').click(function () {
+				$('.table').animate({ scrollTop: 3868 }, 300);
+			});
+			$('#floor12').click(function () {
+				$('.table').animate({ scrollTop: 4420 }, 300);
+			});
+			
 			$('.request_popup .close').click(function(){
 				$('.request_popup').hide();
 				$('.dim').hide();

@@ -392,12 +392,12 @@
     <script>
         function staff(){
             var staffForm = document.staffForm;
-            var name = staffForm.newstaff_name.value;
-            var phonenum = staffForm.newstaff_phonenum.value;
-            var account = staffForm.newstaff_account_num.value;
+            var name = staffForm.name.value;
+            var phonenum = staffForm.phone_number.value;
+            var account = staffForm.account.value;
             var photo = staffForm.newstaff_photo.value;
-            var gender = staffForm.newstaff_gender.value;
-            var pay = staffForm.newstaff_pay.value;
+            var gender = staffForm.gender.value;
+            var pay = staffForm.salary.value;
 
             if(!name || !phonenum || !account || !photo || !gender || !pay){
                 alert("모든 정보를 입력해주세요.");
@@ -712,37 +712,33 @@
                                                 <label><input type="radio" name="gender" value="여" id="man">여</label>
                                             </div>
                                             <div class="form-group">
-                                                <label form="newstaff_pay">봉급</label>
-                                                <input name="salary" type="text" id="newstaff_pay"
-                                                    class="form-control">원
+                                                <label>생년월일</label>
+                                                <input name="birth" placeholder="" type="date"
+                                                    id="newstaff_birth" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label form="newstaff_pay">봉급(만원)</label>
+                                                <input name="salary" type="number"  min="2000" id="newstaff_pay"
+                                                    class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_name">주소</label>
                                                 <div style="display: flex;">
                                                     <div>
-                                                        <div id="road">
-                                                            <!-- <input disabled placeholder="도로명 주소" style="width: 210px !important;"> -->
-                                                            <span style="color: grey;">
-                                                                도로명 주소
-                                                            </span>
-                                                    </div>
-                                                        <div id="detail">
-                                                            <span style="color: grey;">
-                                                                상세 주소
-                                                            </span>
-                                                        </div>
+                                                      <input type="text" id="road" name="addressRoad" class="form-control" placeholder="도로명 주소" readonly/>
+                                                      <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" readonly/>
                                                     </div>
                                                     <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
                                                     <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <label for="newstaff_photo">사진</label>
                                                 <input type="file" name="newstaff_photo" id="newstaff_photo"
-                                                    class="newstaff_photo" accept="img/*">
+                                                    class="newstaff_photo" accept="img/*"> -->
                                                 <!-- 버튼 디자인 부탁드려요-->
                                                 <!-- <button class="browse-btn" id="btn22">업로드</botton> -->
-                                            </div>
+                                            <!-- </div> -->
                                             <div class="form-group">
                                                 <label for="newstaff_div">부서</label>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
@@ -770,6 +766,11 @@
                                             <div class="form-group">
                                                 <label>연락처</label><br>
                                                 <input name="phone_number" placeholder="하이픈(-) 제외" type="tel"
+                                                    id="newstaff_phonenum" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>이메일</label><br>
+                                                <input name="email" placeholder="" type="email"
                                                     id="newstaff_phonenum" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -805,7 +806,7 @@
                                         <div class="modal-footer">
                                             <!-- <button type="submit" class="btn btn-default" id="btn22">등록</button>
                                             button ->input 태그로 변경 -->
-                                            <input type="button" onclick="staff()" value="등록" class="btn btn-default" id="btn22">
+                                            <input type="button" onclick="staff();myfunction();" value="등록" class="btn btn-default" id="btn22" data-dismiss="modal">
                                         </div>
                                     </div>
                                 </form>

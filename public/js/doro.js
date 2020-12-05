@@ -33,6 +33,7 @@ function jusoCallBack(
     lnbrSlno,
     emdNo
 ) {
-    $('#road').text(roadAddrPart1);
-    $('#detail').text(addrDetail);
+    $('#road').val(roadAddrPart1);
+    $('#detail').val(addrDetail);
+
 }
