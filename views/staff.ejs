@@ -692,7 +692,7 @@
                         <div class="modal fade" id="myModal" role="dialog" style="top: 100px;">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
-                                <form name="staffForm" action="/add_user" method="post">
+                                <form name="staffForm" action="/add_user" method="post" enctype='multipart/form-data'>
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h2 class="modal-title">직원 등록</h2>
@@ -732,13 +732,7 @@
                                                     <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
                                                 </div>
                                             </div>
-                                            <!-- <div class="form-group">
-                                                <label for="newstaff_photo">사진</label>
-                                                <input type="file" name="newstaff_photo" id="newstaff_photo"
-                                                    class="newstaff_photo" accept="img/*"> -->
-                                                <!-- 버튼 디자인 부탁드려요-->
-                                                <!-- <button class="browse-btn" id="btn22">업로드</botton> -->
-                                            <!-- </div> -->
+                                             
                                             <div class="form-group">
                                                 <label for="newstaff_div">부서</label>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
@@ -787,6 +781,8 @@
                                             <div class="form-group">
                                                 <label for="reservation">사용가능 언어</label><br>
                                                 <div id="checkboxes">
+                                                    <input type="hidden" name="multilingual" value="" checked>
+                                                    <input type="hidden" name="multilingual" value="한국어" checked>
                                                     <label><input type="checkbox" name="multilingual"
                                                             value="영어">영어</label>
                                                     <label><input type="checkbox" name="multilingual"
@@ -801,6 +797,12 @@
                                                     <label><input type="checkbox" name="multilingual"
                                                             value="스페인어">스페인어</label>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newstaff_photo">사진</label>
+                                                <input type="file" name="newstaff_photo" id="newstaff_photo" class="newstaff_photo" accept="img/jpg">
+                                                <!-- 버튼 디자인 부탁드려요-->
+                                                <!-- <button class="browse-btn" id="btn22">업로드</botton> -->
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -825,7 +827,7 @@
                                 <table id="staff_table2">
                                     <tbody>
                                         <tr>
-                                           <td rowspan="5"><img src=<%=staff[i].id+".png" %> alt="직원 사진" height="117px"></td>
+                                           <td rowspan="5"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" height="117px"></td>
                                             <th>이름</th>
                                             <td><%= staff[i].name%>
                                               <% if (staff[i].on_work === 1 ) {%>

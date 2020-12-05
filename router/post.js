@@ -3,6 +3,66 @@ var express = require('express')
 var crypto = require('crypto');
 var moment = require('moment');
 var dbconfig = require('../db');
+var multer = require('multer');
+const { lang } = require('moment');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/user_img/');
+    },
+
+    //실제 저장되는 파일명 설정
+    filename: function (req, file, cb) {  
+
+        var count_query = 'SELECT COUNT(*) as cnt FROM users WHERE id LIKE ?';
+        var date_format = moment().format('YYYYMM');
+        var department_number = { '기획부': 0, '시설안전부': 1, '식음료부': 2, '인사부': 3, '재무부': 4, '프론트': 5 }[req.body.department];
+
+        dbconfig.query(count_query, date_format + department_number + '%', (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            else {
+                var user_count = rows[0].cnt;
+                var insert_query = 'INSERT INTO users VALUES(?';
+                for (var i = 1; i < 15; i++) insert_query += ', ?';
+                insert_query += ')';
+
+                var new_user_id = date_format + department_number + ('000' + String(user_count + 1)).slice(-3);
+            
+                var params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
+                req.body.name, req.body.gender, req.body.phone_number,
+                req.body.department, req.body.birth, req.body.job_title,
+                0, req.body.email, req.body.bank, req.body.account,
+                req.body.salary, req.body.addressRoad,
+                req.body.addressDetail];
+
+        
+                dbconfig.query(insert_query, params, (err2, rows2) => {
+                    if (err2) {
+                        throw err2;
+                    }
+
+                    var languages = req.body.multilingual;
+                    var language_query = `INSERT INTO multilingual VALUES ("${new_user_id}", "${languages[1]}")`;
+
+                    for (var i = 2; i < languages.length; i++) {
+                        language_query += `, ("${new_user_id}", "${languages}")`;
+                    }
+
+                    dbconfig.query(language_query, (err3, rows3) => {
+                        if (err3) {
+                            throw err3;
+                        }
+                        else{
+                            cb(null, "user"+String(new_user_id)+ '.jpg');
+                        }
+                    });
+                });
+            }
+        });
+    }
+});
+var upload = multer({storage: storage});
 
 module.exports = function (app) {
     app.use(express.json());
@@ -143,78 +203,9 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/add_user', function (req, res) {
-        console.log(req.body);
-        var count_query = 'SELECT COUNT(*) as cnt '
-            + 'FROM users '
-            + 'WHERE id LIKE ?';
-        var date_format = moment().format('YYYYMM');
-        if (req.body.department === undefined) {
-            res.send({ success: false, error: 'NOT_ENOUGH_INFO' });
-        }
-        else {
-            var department_number = { '기획부': 0, '시설안전부': 1, '식음료부': 2, '인사부': 3, '재무부': 4, '프론트': 5 }[req.body.department];
-
-            console.log(date_format + department_number);
-            dbconfig.query(count_query, date_format + department_number + '%', (err, rows) => {
-                if (err) {
-                    throw err;
-                }
-                else {
-                    console.log(rows[0].cnt);
-                    var user_count = rows[0].cnt;
-                    if (user_count >= 999) {
-                        res.send({ success: false, error: 'TOO_MANY_USERS' });
-                    }
-                    else {
-                        var insert_query = 'INSERT INTO users VALUES(?';
-                        for (var i = 1; i < 16; i++) {
-                            insert_query += ', ?';
-                        }
-                        insert_query += ')';
-
-                        var new_user_id = date_format + department_number + ('000' + String(user_count + 1)).slice(-3);
-                        var params = [new_user_id, crypto.createHash('sha512').update(new_user_id).digest('hex'),
-                            req.body.name, req.body.gender, req.body.phone_number,
-                            req.body.department, req.body.birth, req.body.job_title,
-                            0, req.body.email, req.body.bank, req.body.account,
-                            req.body.salary, req.body.addressRoad,
-                            req.body.addressDetail, req.body.newstaff_photo];
-
-                        if (undefined in params || req.body['multilingual[]'] === undefined) {
-                            res.send({ success: false, error: 'NOT_ENOUGH_INFO', body: req.body });
-                        }
-                        else {
-                            dbconfig.query(insert_query, params, (err, rows) => {
-                                if (err) {
-                                    throw err;
-                                }
-
-                                var languages = req.body['multilingual[]'];
-
-                                if (languages.length > 0) {
-                                    var language_query = `INSERT INTO multilingual VALUES (${new_user_id}, '${languages[0]}')`;
-
-                                    for (var i = 1; i < languages.length; i++) {
-                                        language_query += `, (${new_user_id}, '${languages[i]}')`;
-                                    }
-
-                                    dbconfig.query(language_query, (err, rows) => {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                        res.send({ success: true, user_id: new_user_id });
-                                    });
-                                }
-                                else {
-                                    res.send({ success: true, user_id: new_user_id });
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        }
+    /* 직원 추가 */
+    app.post('/add_user', upload.single('newstaff_photo'), function (req, res) {
+        res.redirect('/staff');
     });
 
     /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
