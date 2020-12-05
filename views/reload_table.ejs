@@ -56,7 +56,7 @@
                     $('#result').hide();
                     $('#inputbox').show();
                     $('.commit').show();
-                })
+                });
                 $('#docs.fill').on('click', function () {
                     $.ajax({
                         type: 'POST',
@@ -68,16 +68,17 @@
                             $("#request_popup_time").text(data.content[0].request_time);
                             $("#request_popup_details").text(data.content[0].details);
 
-                            $("#delete_request").on('click', function(){
+                            $("#delete_request").on('click', function () {
                                 modify_request(
-                                data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
-                                data.content[0].request_time, data.content[0].details, 'delete');
+                                    data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
+                                    data.content[0].request_time, data.content[0].details, 'delete');
+                                $(".request_popup").hide();
+                                $(".dim").hide();
                             });
-
-                            $("#complete_request").on('click', function(){
+                            $("#complete_request").on('click', function () {
                                 modify_request(
-                                data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
-                                data.content[0].request_time, data.content[0].details, 'done');
+                                    data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
+                                    data.content[0].request_time, data.content[0].details, 'done');
                                 $(".request_popup").hide();
                                 $(".dim").hide();
                             });
@@ -86,8 +87,7 @@
                             $(".dim").show();
                         }
                     });
-                    
-                })
+                });
             });
             
         </script>

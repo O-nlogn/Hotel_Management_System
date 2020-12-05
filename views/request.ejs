@@ -122,7 +122,7 @@
 		  	</div>
 
 			<div class="modal-footer">
-					<input type="button" class="btn btn-default" style="background-color: powderblue; border: none; color: white;" value="저장" onclick="post_event()">
+					<input type="button" class="btn btn-default" style="background-color: powderblue; border: none; color: white;" value="저장" onclick="post_event()" data-dismiss="modal">
 			</div>
 		</form>
         </div>
@@ -138,7 +138,7 @@
 				url: '/request_list',
 				success: (data) => {
 					$('.list').html(data);
-					setTimeout('get_list_data()', 1000);
+					setTimeout('get_list_data()', 500);
 				}
 			});
 		}
@@ -149,10 +149,9 @@
 				type: 'POST',
 				url: "/new_request",
 				data: $('#add_request').serialize(),
-				success: function (response) {  
+				success: function (response) {
 				}
 			});
-			$('#myModal').modal("hide");
 		}
 	</script>
 </html>
