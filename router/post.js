@@ -144,6 +144,7 @@ module.exports = function (app) {
     });
 
     app.post('/add_user', function (req, res) {
+        console.log(req.body);
         var count_query = 'SELECT COUNT(*) as cnt '
             + 'FROM users '
             + 'WHERE id LIKE ?';
@@ -167,7 +168,7 @@ module.exports = function (app) {
                     }
                     else {
                         var insert_query = 'INSERT INTO users VALUES(?';
-                        for (var i = 1; i < 15; i++) {
+                        for (var i = 1; i < 16; i++) {
                             insert_query += ', ?';
                         }
                         insert_query += ')';
@@ -178,7 +179,7 @@ module.exports = function (app) {
                             req.body.department, req.body.birth, req.body.job_title,
                             0, req.body.email, req.body.bank, req.body.account,
                             req.body.salary, req.body.addressRoad,
-                            req.body.addressDetail]
+                            req.body.addressDetail, req.body.newstaff_photo];
 
                         if (undefined in params || req.body['multilingual[]'] === undefined) {
                             res.send({ success: false, error: 'NOT_ENOUGH_INFO', body: req.body });
@@ -258,16 +259,26 @@ module.exports = function (app) {
 
     app.post('/room_popup', function (req, res) {
         var room = req.body.room;
+        var type = req.body.popup_type;
 
-        var sql = 'SELECT * from(SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
-        sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
-        sql += ' JOIN responsibility ON stay.room = responsibility.room';
-        sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
-        sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
-        sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
-        sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email)z WHERE z.room=?';
+        var sql, params;
+        if (type === 'room details'){
+            sql = 'SELECT * from(SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
+            sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
+            sql += ' JOIN responsibility ON stay.room = responsibility.room';
+            sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
+            sql += ' JOIN reservation ON reservation.email = stay.email and reservation.reservation_time = stay.reservation_time';
+            sql += ' JOIN customers ON stay.email = reservation.email and stay.reservation_time = reservation.reservation_time and customers.email = reservation.email';
+            sql += ' LEFT JOIN(SELECT SUM(price*cnt) as should_paid, email, reservation_time from receipt_service natural join room_service where paid = 0 group by email,reservation_time)a ON stay.reservation_time = a.reservation_time and stay.email = a.email)z WHERE z.room=?';
+            params = [room];
+        }
+        else{
+            sql = 'select email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0 and room=?';
+            sql += ' union select email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0 and room=?';
+            params = [room,room];
+        }
 
-        dbconfig.query(sql, [room], function (err, rows, fields) {
+        dbconfig.query(sql, params, function (err, rows, fields) {
             if (err) {
                 console.log(err);
                 res.writeHead(200);
@@ -275,7 +286,7 @@ module.exports = function (app) {
             }
             else {
                 console.log(rows);
-                res.send({ details: rows });
+                res.send({ content: rows });
             }
         });
     });
@@ -307,6 +318,7 @@ module.exports = function (app) {
         });
         res.send();
     });
+
 
     app.post('/checkout', (req, res) => {
         var params = [req.body.email, req.body.time];

@@ -41,7 +41,7 @@ body {
 .request_box {
   float:left;
 }
-#request_type {
+.request_type {
     border: dotted 3px rgba(176, 224, 230, 0.1);
     background-color: rgba(176, 224, 230, 0.3);
     border-radius: 10px;
