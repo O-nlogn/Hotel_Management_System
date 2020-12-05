@@ -6,6 +6,13 @@
         <script>
             var popup_room = 0;
 
+            function check_real_checkout(){
+                var msg = "체크아웃 하시겠습니까?";
+                var flag = confirm(msg);
+
+                if (flag == true) document.getElementById('checkout_request2').submit();
+            }
+
             function click_popup(room_number){
                 popup_room = room_number;
             }
@@ -109,11 +116,13 @@
                     <!-- 체크아웃 버튼 누르면 post전송 -->
                         <form id="checkout_request2" name="checkout_request2" action="/checkout" method="post">
                             <input type="hidden" id="checkout_room2" name="checkout_room2" value=<%= rooms[i].number %>>
-                            <a href="#" onclick="document.getElementById('checkout_request2').submit();" id="checkout"><svg class="icon_checkout" width="22" height="22" id="asd" xmlns="http://www.w3.org/2000/svg"
-                                fill-rule="evenodd" clip-rule="evenodd">
-                                <path
-                                    d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
-                            </svg></a>
+                            
+                            <svg class="icon_checkout" width="22" height="22" id="asd" xmlns="http://www.w3.org/2000/svg"
+                            fill-rule="evenodd" clip-rule="evenodd" onclick="check_real_checkout()">
+                            <path
+                                d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
+                            </svg>
+                            
                         </form>
                         <div style="margin-top: 20px; border: none; padding: 0;" id="nationdiv">
                             <% if (stayrooms[j].nationality !== '') {%>
