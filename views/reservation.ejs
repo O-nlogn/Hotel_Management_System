@@ -52,6 +52,7 @@
                 changeYear: true,
                 changeMonth: true,
                 minDate: '-100y',
+                maxDate: '0',
                 yearRange: "1910:2030",
                 dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
                 monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
@@ -71,6 +72,10 @@
                 dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
                 monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
                  onClose: function (selectedDate) {
+                    var date = selectedDate.split('-');
+                    selectedDate = new Date(date[0], date[1]-1, date[2]);
+                    selectedDate.setDate(selectedDate.getDate()+1);
+
                     $("#date2").datepicker("option", "minDate", selectedDate);
                 }    
             });
@@ -87,6 +92,10 @@
                 dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
                 monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
                 onClose: function (selectedDate) {
+                    var date = selectedDate.split('-');
+                    selectedDate = new Date(date[0], date[1]-1, date[2]);
+                    selectedDate.setDate(selectedDate.getDate()-1);
+
                     $("#date1").datepicker("option", "maxDate", selectedDate);
                 } 
             });
@@ -299,16 +308,12 @@
                 alert("모든 정보를 입력해주세요.");
                 return;
             }
-            if(date1 > date2){
-                alert("")
-            }
             if(roomtype<people){
                 alert("객실 수용인원을 초과하였습니다.");
                 return;
             }
            
-            
-            //reservationForm.submit();
+            reservationForm.submit();
             $("#myModal").hide();
         }
     </script>
@@ -340,7 +345,7 @@
                                     <div class="form-group">
                                         <label form="reservation_birth">생년월일</label>
                                         <input type="text" name="reservation_birth" id="reservation_birth" size="12"
-                                            class="form-control" />
+                                            class="form-control" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
@@ -377,29 +382,21 @@
                                     <div class="form-group">
                                         <label>입실 예정일</label>
                                         <!-- 달력기능 -->
-                                        <input type="text" name="checkin_date" id="date1" size="12" class="form-control" />
+                                        <input type="text" name="checkin_date" id="date1" size="12" class="form-control" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label>퇴실 예정일</label>
                                         <!-- 달력기능 -->
-                                        <input type="text" name="checkout_date" id="date2" size="12" class="form-control" />
+                                        <input type="text" name="checkout_date" id="date2" size="12" class="form-control" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label for="reservation">방타입</label>
                                         <!-- 인원 재설정 필요 -->
-<<<<<<< HEAD
                                         <label><input type="radio" name="reservation_type" id="1" value="Single" checked>싱글룸</label>
                                         <label><input type="radio" name="reservation_type" id="2" value="Twin">트윈룸</label>
                                         <label><input type="radio" name="reservation_type" id="2" value="Double">더블룸</label>
                                         <label><input type="radio" name="reservation_type" id="3" value="Triple">트리플룸</label>
                                         <label><input type="radio" name="reservation_type" id="5" value="Family">패밀리룸</label><br>
-=======
-                                        <label><input type="radio" name="reservation_type" value="1" id="single">싱글룸</label>
-                                        <label><input type="radio" name="reservation_type" value="3" id="twin">트윈룸</label>
-                                        <label><input type="radio" name="reservation_type" value="3" id="double">더블룸</label>
-                                        <label><input type="radio" name="reservation_type" value="3" id="triple">트리플룸</label>
-                                        <label><input type="radio" name="reservation_type" value="5" id="family">패밀리룸</label><br>
->>>>>>> 58361d4817d13c4c4232924baa7d868fa48a7ce2
                                     </div>
                                     <div class="form-group">
                                         <label for="room">조식 예약 인원</label>
@@ -413,13 +410,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="form-group">
-<<<<<<< HEAD
                                         <input type="button" onclick="verify()" value="추가" class="btn btn-default" id="res_commit">
-=======
-                                        <!-- <button type="submit" onclick="reservation()" class="btn btn-default" data-dismiss="modal" id="res_commit">추가</button>
-                                        button -> input으로 변경-->
-                                        <input type="button" onclick="reservation(); radio();" value="추가" class="btn btn-default" data-dismiss="modal" id="res_commit">
->>>>>>> 58361d4817d13c4c4232924baa7d868fa48a7ce2
                                     </div>
                                 </div>
                             </div>
@@ -570,7 +561,7 @@
                                                                                 <div class="flexdiv">
                                                                                     <label for="inout" style="width: 50px; margin-right: 25px;">처리</label>
                                                                                     <select name="status_change_to" id="status_change_to">
-                                                                                        <option id="inout" value="chach-in">체크인</option>
+                                                                                        <option id="inout" value="check-in">체크인</option>
                                                                                         <option value="cancel_reservation">예약취소</option>
                                                                                     </select>
                                                                                 </div>
@@ -651,10 +642,7 @@
                             </div>
                     </div>
                 </div>
-
             </div>
-
-
 </body>
 
 </html>
