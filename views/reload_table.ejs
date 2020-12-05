@@ -10,6 +10,17 @@
                 popup_room = room_number;
             }
 
+            function modify_request(email, reservation_time, request_type, request_time, details, status) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/request_data",
+                    data: { email: email, reservation_time: reservation_time, request_type: request_type, request_time: request_time, details: details, status: status },
+                    dataType: 'json',
+                    success: function (response) {
+                    }
+                });
+            }
+
             $(document).ready(function (){
                 $(".using .open").on('click', function () {
                     $.ajax({
@@ -57,9 +68,19 @@
                             $("#request_popup_time").text(data.content[0].request_time);
                             $("#request_popup_details").text(data.content[0].details);
 
-                            if (data.content[0].request_type === '룸서비스'){
-                                $("#request_popup_details").text(data.content[0].details + " (개수: " + String(data.content[0].cnt) +")");
-                            }
+                            $("#delete_request").on('click', function(){
+                                modify_request(
+                                data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
+                                data.content[0].request_time, data.content[0].details, 'delete');
+                            });
+
+                            $("#complete_request").on('click', function(){
+                                modify_request(
+                                data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
+                                data.content[0].request_time, data.content[0].details, 'done');
+                                $(".request_popup").hide();
+                                $(".dim").hide();
+                            });
 
                             $('.request_popup').show();
                             $(".dim").show();

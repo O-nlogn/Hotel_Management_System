@@ -76,7 +76,11 @@
 			$('#floor12').click(function(){
                 var offset = $('#1201').offset();
                 $('.table').animate({scrollTop : 4200}, 300);
-            });
+			});
+			$('.request_popup .close').click(function(){
+				$('.request_popup').hide();
+				$('.dim').hide();
+			});
         });
     </script>
 </head>
@@ -126,12 +130,12 @@
     border-right: solid 2px rgb(0, 0, 0);
     border-left: solid 2px rgb(0, 0, 0)">
 		<p class='title'>
-			<button type="button" class="close" id="delete_request" aria-label="Close">
+			<button type="button" class="close" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
-		<div id="request_popup_time" class="request_box">2020-01-01 12:00:00</div>
-		<div id="request_popup_room" class="request_type" class="request_box tag"></div>
-		<div id="request_popup_type" class="request_type" class="request_box tag"></div>
+			<div id="request_popup_time" class="request_box"></div>
+			<div id="request_popup_room" class="request_type" class="request_box tag"></div>
+			<div id="request_popup_type" class="request_type" class="request_box tag"></div>
 		</p><br>
 		<p class="content">
 			<div id="request_popup_details" style="margin-top: 80px; padding: 10px; word-break: break-all; background-color: rgba(245, 222, 179, 0.3); border-radius: 5px;">
@@ -139,31 +143,16 @@
 		    </div>
 			<div class="btn-group" role="group" style="margin-top: 8px; float:right;">
 				<button class="btn btn-light" id="complete_request" type="button" style="margin-left: 109px; display: inline;">
+					취소
+				</button>
+			</div>
+			<div class="btn-group" role="group" id="delete_request" style="margin-top: 8px; float:right;">
+				<button class="btn btn-light" id="complete_request" type="button" style="margin-left: 109px; display: inline;">
 					완료
 				</button>
 			</div>
 		</p>
 	</div>
-
-	<script>
-		var popup_room = 0;
-
-		function click_popup(room_number) {
-			popup_room = room_number;
-		}
-
-		$(document).ready(function () {
-			$('#delete_request').on('click', function () {
-				$('.request_popup').hide();
-				$(".dim").hide();
-			});
-			$('#complete_request').on('click', function () {
-				$('.request_popup').hide();
-				$(".dim").hide();
-			});
-		});
-
-	</script>
 
 	<div class="popup">
 		<div style="text-align: right;">

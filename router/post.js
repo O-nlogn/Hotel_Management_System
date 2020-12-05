@@ -273,8 +273,8 @@ module.exports = function (app) {
             params = [room];
         }
         else{
-            sql = 'select email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0 and room=?';
-            sql += ' union select email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0 and room=?';
+            sql = 'select * from(select email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0 and room=?';
+            sql += ' union select email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0 and room=?)a order by request_time';
             params = [room,room];
         }
 
@@ -284,10 +284,7 @@ module.exports = function (app) {
                 res.writeHead(200);
                 res.end();
             }
-            else {
-                console.log(rows);
-                res.send({ content: rows });
-            }
+            else res.send({ content: rows });
         });
     });
 
