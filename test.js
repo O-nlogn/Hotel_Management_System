@@ -166,6 +166,10 @@ app.get('/equipment', function (req, res) {
     res.render('equipment', { username: '홍길동'});
 });
 
+app.get('/sales', function (req, res) {
+    res.render('sales', { username: '홍길동'});
+});
+
 
 app.get('/changepw', function (req, res) {
     res.render('changepw', { status: '1', username: '홍길동'});

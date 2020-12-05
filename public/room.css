@@ -24,6 +24,35 @@ body {
     box-sizing: border-box;
     background: #fff;
 }
+
+.request_popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+}
+.requestItem {
+    width: 350px;
+    margin: 5px;
+}
+.request_box {
+  float:left;
+}
+#request_type {
+    border: dotted 3px rgba(176, 224, 230, 0.1);
+    background-color: rgba(176, 224, 230, 0.3);
+    border-radius: 10px;
+    padding: 4px;
+    margin-left: 5%;
+    margin-top: 10%;
+    float:right;
+}
+#requestItem .title {
+    font-weight: bold;
+}
 .dim {
     display: none;
     position: fixed;
@@ -73,30 +102,6 @@ body {
 h2 {
     margin-top: 0;
     margin-bottom: 40px;
-}
-
-.profile {
-    display: flex;
-    margin: 150px 0px 100px 400px;
-    width: max-content;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-a:hover {
-    font-weight: bold;
-}
-
-.prfimg {
-    width: 120px;
-    border-radius: 50px;
-}
-
-.profile .content {
-    vertical-align: middle;
 }
 
 .table {
@@ -173,7 +178,7 @@ a:hover {
 }
 
 .floor {
-    margin-left: 450px;
+    margin-left: 420px;
 }
 
 .floor .button {
@@ -208,12 +213,6 @@ a:hover {
     transition-duration: 0.2s;
 }
 
-@media(max-width: 1900px) {
-    #container {
-        width: max-content;
-        padding-right: 355px;
-    }
-}
 
 .table::-webkit-scrollbar {
     width: 10px;
@@ -259,6 +258,7 @@ a:hover {
     .table {
         grid-template-columns: repeat(4, 130px);
         grid-template-rows: repeat(20, 130px);
+        margin-left: 10px;
         width: 520px;
         height: 520px;
     }
