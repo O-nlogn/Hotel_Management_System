@@ -68,6 +68,10 @@
                             $("#request_popup_time").text(data.content[0].request_time);
                             $("#request_popup_details").text(data.content[0].details);
 
+                            if (data.content[0].request_type === '룸서비스'){
+                                $("#request_popup_details").text(data.content[0].details + " (개수: " + data.content[0].cnt + ")");
+                            }
+
                             $("#delete_request").on('click', function () {
                                 modify_request(
                                     data.content[0].email, data.content[0].reservation_time, data.content[0].request_type,
