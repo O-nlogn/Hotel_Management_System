@@ -499,6 +499,22 @@ module.exports = function (app) {
         }
     });
   
+    /* 내 주소 변경 */
+    app.post('/update_address', function (req, res) {
+        var addressRoad = req.body.addressRoad;
+        var addressDetail = req.body.addressDetail;
+
+        var sql= 'UPDATE users SET addressRoad=?, addressDetail=? WHERE id=?';
+        var params = [addressRoad,addressDetail,req.cookies.userID];
+
+        dbconfig.query(sql, params, function(err,rows){
+            if (err) {
+                throw err;
+            }
+            res.redirect('/');
+        });
+    });
+
     /* 도로명주소 API */
     app.post('/jusoPopup', function (req, res) {
         res.render('jusoPopup', { locals: req.body });
