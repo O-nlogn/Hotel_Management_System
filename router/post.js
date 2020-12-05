@@ -507,16 +507,17 @@ module.exports = function (app) {
         if(addressDetail == '' || addressRoad == ''){
             res.redirect('/');
         }
+        else{
+            var sql= 'UPDATE users SET addressRoad=?, addressDetail=? WHERE id=?';
+            var params = [addressRoad,addressDetail,req.cookies.userID];
 
-        var sql= 'UPDATE users SET addressRoad=?, addressDetail=? WHERE id=?';
-        var params = [addressRoad,addressDetail,req.cookies.userID];
-
-        dbconfig.query(sql, params, function(err,rows){
-            if (err) {
-                throw err;
-            }
-            res.redirect('/');
-        });
+            dbconfig.query(sql, params, function(err,rows){
+                if (err) {
+                    throw err;
+                }
+                res.redirect('/');
+            });
+        }
     });
 
     /* 도로명주소 API */
