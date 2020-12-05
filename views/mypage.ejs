@@ -121,27 +121,21 @@
                             <tr>
                                 <th>주소</th>
                                 <!-- <td>사랑시 고백구 행복동</td> -->
-                                <td class="text-primary" rowspan="2">
-                                    <div style="display: flex;">
-                                        <div style="color: grey; width: max-content; padding-right: 10px;">
-                                          <div>
-                                              <div id="road">
-                                                  <!-- <input disabled placeholder="도로명 주소" style="width: 210px !important;"> -->
-                                                  <span style="color: grey;">
-                                                      도로명 주소
-                                                  </span>
+                                <form class="" action="/update_address" method="post">
+                                  <td class="text-primary" rowspan="2">
+                                      <div style="display: flex;">
+                                          <div style="color: grey; width: max-content; padding-right: 10px;">
+                                            <div>
+                                              <input type="text" id="road" name="addressRoad" class="form-control" placeholder="도로명 주소" disabled/><br>
+                                              <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" disabled/>
+                                            </div>
                                           </div>
-                                              <div id="detail">
-                                                  <span style="color: grey;">
-                                                      상세 주소
-                                                  </span>
-                                              </div>
-                                          </div>
-                                        </div>
-                                        <button class="btn" onclick="goPopup();">변경</button>
-                                        <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
-                                    </div>
-                               </td>
+                                          <button class="btn" onclick="goPopup();">변경</button>
+                                          <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                      </div>
+                                 </td>
+
+
                             </tr>
                             <tr>
                             </tr>
@@ -149,7 +143,8 @@
                     </table>
                 </div>
             </div>
-            <button class="btn" id="save">저장</button>
+            <button  type="submit" value="Submit" class="btn" id="save" >저장</button>
+          </form>
         </div>
 
     </div>

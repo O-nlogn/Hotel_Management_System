@@ -392,12 +392,12 @@
     <script>
         function staff(){
             var staffForm = document.staffForm;
-            var name = staffForm.newstaff_name.value;
-            var phonenum = staffForm.newstaff_phonenum.value;
-            var account = staffForm.newstaff_account_num.value;
+            var name = staffForm.name.value;
+            var phonenum = staffForm.phone_number.value;
+            var account = staffForm.account.value;
             var photo = staffForm.newstaff_photo.value;
-            var gender = staffForm.newstaff_gender.value;
-            var pay = staffForm.newstaff_pay.value;
+            var gender = staffForm.gender.value;
+            var pay = staffForm.salary.value;
 
             if(!name || !phonenum || !account || !photo || !gender || !pay){
                 alert("모든 정보를 입력해주세요.")
@@ -703,34 +703,30 @@
                                             <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
                                             <div class="form-group">
                                                 <label form="newstaff_name">이름</label>
-                                                <input name="newstaff_name" type="text" id="newstaff_name"
+                                                <input name="name" type="text" id="newstaff_name"
                                                     class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_gender">성별</label>
-                                                <label><input type="radio" name="newstaff_gender" value="남" id="man">남</label>
-                                                <label><input type="radio" name="newstaff_gender" value="여" id="man">여</label>
+                                                <label><input type="radio" name="gender" value="남" id="man">남</label>
+                                                <label><input type="radio" name="gender" value="여" id="man">여</label>
                                             </div>
                                             <div class="form-group">
-                                                <label form="newstaff_pay">봉급</label>
-                                                <input name="newstaff_pay" type="text" id="newstaff_pay"
-                                                    class="form-control">원
+                                                <label>생년월일</label>
+                                                <input name="birth" placeholder="" type="date"
+                                                    id="newstaff_birth" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label form="newstaff_pay">봉급(만원)</label>
+                                                <input name="salary" type="number"  min="2000" id="newstaff_pay"
+                                                    class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_name">주소</label>
                                                 <div style="display: flex;">
                                                     <div>
-                                                        <div id="road">
-                                                            <!-- <input disabled placeholder="도로명 주소" style="width: 210px !important;"> -->
-                                                            <span style="color: grey;">
-                                                                도로명 주소
-                                                            </span>
-                                                    </div>
-                                                        <div id="detail">
-                                                            <span style="color: grey;">
-                                                                상세 주소
-                                                            </span>
-                                                        </div>
+                                                      <input type="text" id="road" name="addressRoad" class="form-control" placeholder="도로명 주소" readonly/>
+                                                      <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" readonly/>
                                                     </div>
                                                     <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
                                                     <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
@@ -746,7 +742,7 @@
                                             <div class="form-group">
                                                 <label for="newstaff_div">부서</label>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
-                                                    name="newstaff_div" id="newstaff_div">
+                                                    name="department" id="newstaff_div">
                                                     <option value="기획부" selected>기획부</option>
                                                     <option value="시설안전부">시설안전부</option>
                                                     <option value="식음료부">식음료부</option>
@@ -758,7 +754,7 @@
                                             <div class="form-group">
                                                 <label for="newstaff_position">직급</label>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
-                                                    name="newstaff_position" id="newstaff_position">
+                                                    name="job_title" id="newstaff_position">
                                                     <option value="사장">사장</option>
                                                     <option value="부장">부장</option>
                                                     <option value="팀장">팀장</option>
@@ -769,35 +765,40 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>연락처</label><br>
-                                                <input name="newstaff_phonenum" placeholder="하이픈(-) 제외" type="tel"
+                                                <input name="phone_number" placeholder="하이픈(-) 제외" type="tel"
+                                                    id="newstaff_phonenum" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>이메일</label><br>
+                                                <input name="email" placeholder="" type="email"
                                                     id="newstaff_phonenum" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>계좌번호</label><br>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
-                                                    name="newstaff_account_bank" id="newstaff_account_bank">
+                                                    name="bank" id="newstaff_account_bank">
                                                     <% for(var i=0; i<bank.length; i++){ %>
                                                         <option value=<%=bank[i].name%> ><%=bank[i].name%></option>
                                                     <%}%>
                                                 </select>
-                                                <input name="newstaff_account_num" placeholder="하이픈(-) 제외" type="text"
+                                                <input name="account" placeholder="하이픈(-) 제외" type="text"
                                                     id="newstaff_account_num" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="reservation">사용가능 언어</label><br>
                                                 <div id="checkboxes">
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="eng">영어</label>
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="jap">일본어</label>
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="chi">중국어</label>
                                                     <div style="display: block"></div>
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="ger">독일어</label>
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="rus">러시아어</label>
-                                                    <label><input type="checkbox" name="usable_language"
+                                                    <label><input type="checkbox" name="multilingual"
                                                             value="esp">스페인어</label>
                                                 </div>
                                             </div>
@@ -805,7 +806,7 @@
                                         <div class="modal-footer">
                                             <!-- <button type="submit" class="btn btn-default" id="btn22">등록</button>
                                             button ->input 태그로 변경 -->
-                                            <input type="button" onclick="staff()" value="등록" class="btn btn-default" id="btn22">
+                                            <input type="button" onclick="staff();myfunction();" value="등록" class="btn btn-default" id="btn22" data-dismiss="modal">
                                         </div>
                                     </div>
                                 </form>
