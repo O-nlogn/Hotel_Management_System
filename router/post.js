@@ -208,6 +208,15 @@ module.exports = function (app) {
         res.redirect('/staff');
     });
 
+    /* 청소 완료 */
+    app.post('/clean_room',function (req, res) {
+        var sql = 'UPDATE stay SET cleaning=? WHERE room = ?';
+
+        dbconfig.query(sql, [req.body.status, req.body.room], function(err,rows){
+            if(err) console.log(err);
+        });
+    });
+
     /* 요청사항 추가 버튼을 눌렀을 때 request 처리*/
     app.post('/new_request', function (req, res) {
         var room = req.body.room;
