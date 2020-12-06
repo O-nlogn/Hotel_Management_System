@@ -101,21 +101,7 @@
             });
         });
     </script>
-    <!-- 이메일폼 -->
-    <script type="text/javascript">
-        //이메일 입력방식 선택
-        $('#selectEmail').change(function () {
-            $("#selectEmail option:selected").each(function () {
-                if ($(this).val() == '1') { //직접입력일 경우 (일단 안함)
-                    $("#str_email02").val(''); //값 초기화
-                    $("#str_email02").attr("disabled", false); //활성화
-                } else { //직접입력이 아닐경우
-                    $("#str_email02").val($(this).text()); //선택값 입력
-                    $("#str_email02").attr("disabled", true); //비활성화
-                }
-            });
-        });
-    </script>
+   
 
     <!-- 필터링 & 검색 기능 -->
     <script>
@@ -348,7 +334,9 @@
                                         <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
                                         <label for="email_id">예약자 이메일</label>
                                         <input type="text" name="email_id" id="email_id" class="form-control"> @
-                                        <select class="form-control" name="email_select" id="selectEmail">
+                                        <input type="text" name="email_option" id="email_option" class="form-control" disabled value="naver.com" style="width:7vw; display: inline-block;">
+                                        <select class="form-control" name="email_select" id="selectEmail" style="width:7vw; display: inline-block;">
+                                            <option value="1">직접입력</option>
                                             <option value="naver.com" selected>naver.com</option>
                                             <option value="hanmail.net">hanmail.net</option>
                                             <option value="hotmail.com">hotmail.com</option>
@@ -577,5 +565,19 @@
                 </div>
             </div>
 </body>
-
+<!-- 이메일폼 -->
+<script type="text/javascript">
+    //이메일 입력방식 선택
+    $('#selectEmail').change(function () {
+        $("#selectEmail option:selected").each(function () {
+            if ($(this).val() == '1') { //직접입력일 경우
+                $("#email_option").val(''); //값 초기화
+                $("#email_option").attr("disabled", false); //활성화
+            } else { //직접입력이 아닐경우
+                $("#email_option").val($(this).text()); //선택값 입력
+                $("#email_option").attr("disabled", true); //비활성화
+            }
+        });
+    });
+</script>
 </html>
