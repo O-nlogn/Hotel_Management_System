@@ -67,6 +67,16 @@ module.exports = function (app) {
                 }
             });
 
+            // 체크아웃 날짜가 오늘인 입실완료 예약은 퇴실예정으로 바꿔줌
+            sql = 'update reservation set status = "퇴실예정" where DATE(checkout) <= DATE(NOW()) and status = "입실완료"';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+            });
+
             sql = 'SELECT *, breakfast_price+rate+extra as total_price from(select reservation.email, name, reservation_time, status, checkin, checkout, room_type, reservation.personnel,';
             sql += 'breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
             sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a ORDER BY checkin';

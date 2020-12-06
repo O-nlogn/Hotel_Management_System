@@ -371,7 +371,7 @@ module.exports = function (app) {
                     }
 
                     // 예약 상태 업데이트
-                    var sql = 'UPDATE reservation SET status="체크아웃" where email=? and reservation_time=?';
+                    var sql = 'UPDATE reservation SET status="퇴실완료" where email=? and reservation_time=?';
                     dbconfig.query(sql, params, (err2, rows2) => {
                         if (err2) {
                             throw err2;
