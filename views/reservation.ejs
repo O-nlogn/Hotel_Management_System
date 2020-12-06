@@ -148,14 +148,12 @@
        // 버튼 클릭시 active효과
        function click_effect(number) {
          var btns=document.getElementById("myBtnContainer").getElementsByTagName("button");
-         for( var i=0;i<btns.length;i++) {
+         for(var i=0;i<btns.length;i++) {
            $(btns[i]).removeClass('active');
            if (i === number) {
              $(btns[i]).addClass('active');
            }
-
          }
-
        }
 
        $('#reservation_pw').keypress(function (e) {
@@ -430,8 +428,9 @@
                         <div class="small mb-3">예약상태별 보기</div>
                         <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);">전체</button>
                         <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
-                        <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(2);"> 입실예정</button>
-                        <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(3);"> 예약완료</button>
+                        <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
+                        <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
+                        <button id="reserved "class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
                       </div>
                     </div>
                     <div class="mb-4">
@@ -526,7 +525,7 @@
                                                     <div><%= reservation[i].name %></div>
                                                 </td>
                                                 <td><span
-                                                        class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-success  <% }else{ %> label-primary <%}%>label-pill"><%= reservation[i].status %></span>
+                                                        class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-info  <% }else if(reservation[i].status === '입실완료'){ %> label-success <%}else{%> label-warning <%}%> label-pill"><%= reservation[i].status %></span>
                                                 </td>
                                                 <td class="align-middle">
                                                     <div><%= reservation[i].checkin%></div>
