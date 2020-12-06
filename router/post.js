@@ -262,27 +262,32 @@ module.exports = function (app) {
                 console.log(err);
             }
             else {
-                email = rows[0].email;
-                reservation_time = rows[0].reservation_time;
-
-                if (type === '요청사항') {
-                    var content = req.body.request_details;
-
-                    sql = 'INSERT INTO request VALUES(DEFAULT,?,0,?,?)';
-                    params = [content, email, reservation_time];
+                if(rows.length == 0){
+                    res.send({success:'no such room'});
                 }
-                else {
-                    var service = req.body.service;
-                    sql = 'INSERT INTO receipt_service VALUES(?,DEFAULT,0,0,?,?,?)';
-                    params = [service, email, reservation_time, cnt];
-                }
+                else{
+                    email = rows[0].email;
+                    reservation_time = rows[0].reservation_time;
 
-                dbconfig.query(sql, params, function (err2, rows2, fields2) {
-                    if (err2) {
-                        console.log(err2);
+                    if (type === '요청사항') {
+                        var content = req.body.request_details;
+
+                        sql = 'INSERT INTO request VALUES(DEFAULT,?,0,?,?)';
+                        params = [content, email, reservation_time];
                     }
-                });
-                res.send();
+                    else {
+                        var service = req.body.service;
+                        sql = 'INSERT INTO receipt_service VALUES(?,DEFAULT,0,0,?,?,?)';
+                        params = [service, email, reservation_time, cnt];
+                    }
+
+                    dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                        if (err2) {
+                            console.log(err2);
+                        }
+                    });
+                    res.send({success:'true'});
+                }
             }
         });
     });
@@ -414,6 +419,7 @@ module.exports = function (app) {
     });
 
     app.post('/checkin', (req, res) => {
+        console.log(req.body);
         var params = [req.body.email, req.body.time];
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
