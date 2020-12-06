@@ -369,19 +369,28 @@ module.exports = function (app) {
                     }
 
                     var service_charge = rows[0].sum;
-                    var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
-                    dbconfig.query(delete_responsibility_query, params, (err) => {
+                    var request_done_query = 'UPDATE request SET done = 1 WHERE email = ? AND reservation_time = ?';
+                    dbconfig.query(request_done_query, params, (err, rows) => {
                         if (err) {
                             throw err;
                         }
+                        var receipt_done_query = 'UPDATE receipt_service SET paid = 1, done = 1 WHERE email = ? AND reservation_time = ?';
+                        dbconfig.query(receipt_done_query, params, (err, rows) => {
+                            var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
+                            dbconfig.query(delete_responsibility_query, params, (err) => {
+                                if (err) {
+                                    throw err;
+                                }
 
-                        var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
-                        dbconfig.query(delete_stay_query, params, (err) => {
-                            if (err) {
-                                throw err;
-                            }
+                                var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
+                                dbconfig.query(delete_stay_query, params, (err) => {
+                                    if (err) {
+                                        throw err;
+                                    }
 
-                            res.send({success: true, charge: service_charge});
+                                    res.send({success: true, charge: service_charge});
+                                });
+                            });
                         });
                     });
                 });
@@ -391,14 +400,13 @@ module.exports = function (app) {
 
     app.post('/checkin', (req, res) => {
         var params = [req.body.email, req.body.time];
-        console.log(params)
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+            return;
         }
         else {
-            // must consider broken condition
             var type_query = 'SELECT room_type, personnel, language FROM reservation NATURAL JOIN customers A, nation B '
-                             + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
+                            + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
             dbconfig.query(type_query, params, (err, rows) => {
                 if (err) {
                     throw err;
@@ -421,12 +429,10 @@ module.exports = function (app) {
                     }
                     
                     var match_query = 'SELECT id, name, (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) AS priority '
-                                       + 'FROM users A NATURAL JOIN multilingual WHERE department = \'프론트\' AND on_work = 1 '
-                                       + 'AND (SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) <= '
-                                       + ' ALL(SELECT COUNT(room) FROM users A LEFT OUTER JOIN responsibility B '
-                                       + 'ON A.id = B.id WHERE department = \'프론트\' AND on_work = 1 GROUP BY A.id) '
-                                       + 'ORDER BY (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) DESC, '
-                                       + '(SELECT COUNT(language) FROM multilingual C WHERE C.id = A.id) ASC';
+                                    + 'FROM users A NATURAL JOIN multilingual WHERE department = \'프론트\' AND on_work = 1 '
+                                    + 'ORDER BY (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) DESC, '
+                                    + '(SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) ASC,'
+                                    + '(SELECT COUNT(language) FROM multilingual C WHERE C.id = A.id) ASC';
 
                     var insert_query = 'INSERT INTO responsibility VALUE (?, ?)';
                     
@@ -470,13 +476,14 @@ module.exports = function (app) {
                                 }
                                 else {
                                     res.send({success:false, error:'NO_WORKING_USERS'});
+                                    return;
                                 }
                             });                                    
                         });
                     }
                     else {
                         var upgrade_stay = 'SELECT COUNT(number) AS count, type FROM room NATURAL JOIN room_type WHERE number NOT IN (SELECT room FROM stay) '
-                                         + 'AND type != ? AND price >= (SELECT rate FROM WHERE type = ?) GROUP BY type ORDER BY COUNT(number) DESC, rate ASC'; 
+                                        + 'AND type != ? AND price >= (SELECT rate FROM WHERE type = ?) GROUP BY type ORDER BY COUNT(number) DESC, rate ASC'; 
                         // 헉 빈방이 없다니
                         dbconfig.query(upgrade_stay, [room_type, room_type], (err, rows) => {
                             if (err) {
@@ -485,6 +492,7 @@ module.exports = function (app) {
                             
                             if (rows[0].count == 0) {
                                 res.send({success:false, error:'NO_ROOMS'});
+                                return;
                             }
                             else {
                                 dbconfig.query(room_choice_query, [rows[0].type], (err, rows) => {
@@ -527,6 +535,7 @@ module.exports = function (app) {
                                             }
                                             else {
                                                 res.send({success:false, error:'NO_WORKING_USERS'});
+                                                return;
                                             }
                                         });
                                     });
