@@ -270,6 +270,14 @@ module.exports = function (app) {
         else res.redirect('/login');
     });
 
+    /* 보여주기용 */
+    app.get('/sales', function (req, res) {
+        if (req.cookies.is_logged_in === 'true') {
+            res.render('sales', { username: req.cookies.username });
+        }
+        else res.redirect('/login');
+    });
+
     // app.get('/test', (req, res) => {
     //     res.render('example/checkout');
     // });
