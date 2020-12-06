@@ -399,167 +399,150 @@ module.exports = function (app) {
     });
 
     app.post('/checkin', (req, res) => {
-        console.log(req.body)
-        if (req.body.password === undefined) {
-            res.send({success: false, error: 'NOT_ENOUGH_INFO'});
-            return;
-        }
-        var params = [req.body.email, req.body.time, crypto.createHash('sha512').update(password).digest('hex')];
-        console.log(params)
+        var params = [req.body.email, req.body.time];
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
             return;
         }
         else {
-            var password_check_qeury = 'SELECT * FROM reservation WHERE email = ? AND reservation_time = ? AND password = ?';
-            dbconfig.query(password_check_qeury, params, (err, rows) => {
+            var type_query = 'SELECT room_type, personnel, language FROM reservation NATURAL JOIN customers A, nation B '
+                            + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
+            dbconfig.query(type_query, params, (err, rows) => {
                 if (err) {
                     throw err;
                 }
+                
                 if (rows.length == 0) {
-                    res.send({success: false, error: 'INCORRECT_PASSWORD'});
+                    res.send({success: false, error: 'ALREADY_CHECKED_IN'});
                     return;
                 }
-                // must consider broken condition
-                var type_query = 'SELECT room_type, personnel, language FROM reservation NATURAL JOIN customers A, nation B '
-                                + 'WHERE email = ? AND reservation_time = ? AND A.nationality = B.name AND status != \'입실완료\'';
-                dbconfig.query(type_query, params, (err, rows) => {
+
+                var room_type = rows[0].room_type;
+                var men = rows[0].personnel;
+                var language = rows[0].language;
+                console.log(language)
+                var room_choice_query = 'SELECT number FROM room WHERE type = ? AND number NOT IN (SELECT room FROM stay)';
+                
+                dbconfig.query(room_choice_query, [room_type], (err, rows) => {
                     if (err) {
                         throw err;
                     }
                     
-                    if (rows.length == 0) {
-                        res.send({success: false, error: 'ALREADY_CHECKED_IN'});
-                        return;
-                    }
+                    var match_query = 'SELECT id, name, (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) AS priority '
+                                    + 'FROM users A NATURAL JOIN multilingual WHERE department = \'프론트\' AND on_work = 1 '
+                                    + 'ORDER BY (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) DESC, '
+                                    + '(SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) ASC,'
+                                    + '(SELECT COUNT(language) FROM multilingual C WHERE C.id = A.id) ASC';
 
-                    var room_type = rows[0].room_type;
-                    var men = rows[0].personnel;
-                    var language = rows[0].language;
-                    console.log(language)
-                    var room_choice_query = 'SELECT number FROM room WHERE type = ? AND number NOT IN (SELECT room FROM stay)';
+                    var insert_query = 'INSERT INTO responsibility VALUE (?, ?)';
                     
-                    dbconfig.query(room_choice_query, [room_type], (err, rows) => {
-                        if (err) {
-                            throw err;
-                        }
-                        
-                        var match_query = 'SELECT id, name, (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) AS priority '
-                                        + 'FROM users A NATURAL JOIN multilingual WHERE department = \'프론트\' AND on_work = 1 '
-                                        + 'ORDER BY (CASE language WHEN ? THEN 2 WHEN \'영어\' THEN 1 ELSE 0 END) DESC, '
-                                        + '(SELECT COUNT(*) FROM responsibility B WHERE B.id = A.id) ASC,'
-                                        + '(SELECT COUNT(language) FROM multilingual C WHERE C.id = A.id) ASC';
+                    var stay_query = 'INSERT INTO stay VALUE (?, ?, ?, ?, ?, ?)';
 
-                        var insert_query = 'INSERT INTO responsibility VALUE (?, ?)';
-                        
-                        var stay_query = 'INSERT INTO stay VALUE (?, ?, ?, ?, ?, ?)';
+                    var status_query = 'UPDATE reservation SET status = \'입실완료\' WHERE email = ? AND reservation_time = ?';
 
-                        var status_query = 'UPDATE reservation SET status = \'입실완료\' WHERE email = ? AND reservation_time = ?';
+                    if (rows.length > 0) {
+                        var selected_room = rows[0].number;
+                        var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
+                        dbconfig.query(stay_query, params2, (err) => {
+                            if (err) {
+                                throw err;
+                            }
 
-                        if (rows.length > 0) {
-                            var selected_room = rows[0].number;
-                            var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
-                            dbconfig.query(stay_query, params2, (err) => {
+                            dbconfig.query(match_query, [language, language], (err, rows) => {
                                 if (err) {
                                     throw err;
                                 }
 
-                                dbconfig.query(match_query, [language, language], (err, rows) => {
+                                if (rows.length > 0) {
+                                    var selected_user = rows[0].id;
+                                    var user_name = rows[0].name;
+                                    var priority = rows[0].priority;
+                                    dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                        else {
+                                            dbconfig.query(status_query, params, (err) => {
+                                                if (err) {
+                                                    throw err;
+                                                }
+                                                else {
+                                                    res.send({success:true, user_id:selected_user, user_name:user_name, 
+                                                    room_num:selected_room, type_changed:false, priority:priority});
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                                else {
+                                    res.send({success:false, error:'NO_WORKING_USERS'});
+                                    return;
+                                }
+                            });                                    
+                        });
+                    }
+                    else {
+                        var upgrade_stay = 'SELECT COUNT(number) AS count, type FROM room NATURAL JOIN room_type WHERE number NOT IN (SELECT room FROM stay) '
+                                        + 'AND type != ? AND price >= (SELECT rate FROM WHERE type = ?) GROUP BY type ORDER BY COUNT(number) DESC, rate ASC'; 
+                        // 헉 빈방이 없다니
+                        dbconfig.query(upgrade_stay, [room_type, room_type], (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+                            
+                            if (rows[0].count == 0) {
+                                res.send({success:false, error:'NO_ROOMS'});
+                                return;
+                            }
+                            else {
+                                dbconfig.query(room_choice_query, [rows[0].type], (err, rows) => {
                                     if (err) {
                                         throw err;
                                     }
 
-                                    if (rows.length > 0) {
-                                        var selected_user = rows[0].id;
-                                        var user_name = rows[0].name;
-                                        var priority = rows[0].priority;
-                                        dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
-                                            if (err) {
-                                                throw err;
-                                            }
-                                            else {
-                                                dbconfig.query(status_query, params, (err) => {
-                                                    if (err) {
-                                                        throw err;
-                                                    }
-                                                    else {
-                                                        res.send({success:true, user_id:selected_user, user_name:user_name, 
-                                                        room_num:selected_room, type_changed:false, priority:priority});
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                    else {
-                                        res.send({success:false, error:'NO_WORKING_USERS'});
-                                        return;
-                                    }
-                                });                                    
-                            });
-                        }
-                        else {
-                            var upgrade_stay = 'SELECT COUNT(number) AS count, type FROM room NATURAL JOIN room_type WHERE number NOT IN (SELECT room FROM stay) '
-                                            + 'AND type != ? AND price >= (SELECT rate FROM WHERE type = ?) GROUP BY type ORDER BY COUNT(number) DESC, rate ASC'; 
-                            // 헉 빈방이 없다니
-                            dbconfig.query(upgrade_stay, [room_type, room_type], (err, rows) => {
-                                if (err) {
-                                    throw err;
-                                }
-                                
-                                if (rows[0].count == 0) {
-                                    res.send({success:false, error:'NO_ROOMS'});
-                                    return;
-                                }
-                                else {
-                                    dbconfig.query(room_choice_query, [rows[0].type], (err, rows) => {
+                                    var selected_room = rows[0].number;
+                                    var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
+                                    dbconfig.query(insert_query, params2, (err) => {
                                         if (err) {
                                             throw err;
                                         }
 
-                                        var selected_room = rows[0].number;
-                                        var params2 = [selected_room, req.body.email, req.body.time, 1, 0, men];
-                                        dbconfig.query(insert_query, params2, (err) => {
+                                        dbconfig.query(match_query, [language, language], (err, rows) => {
                                             if (err) {
                                                 throw err;
                                             }
-
-                                            dbconfig.query(match_query, [language, language], (err, rows) => {
-                                                if (err) {
-                                                    throw err;
-                                                }
-                
-                                                if (rows.length > 0) {
-                                                    var selected_user = rows[0].id;
-                                                    var user_name = rows[0].name;
-                                                    var priority = rows[0].priority;
-                                                    dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
-                                                        if (err) {
-                                                            throw err;
-                                                        }
-                                                        else {
-                                                            dbconfig.query(status_query, params, (err) => {
-                                                                if (err) {
-                                                                    throw err;
-                                                                }
-                                                                else {
-                                                                    res.send({success:true, user_id:selected_user, user_name:user_name, 
-                                                                    room_num:selected_room, type_changed:true, priority:priority});
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                }
-                                                else {
-                                                    res.send({success:false, error:'NO_WORKING_USERS'});
-                                                    return;
-                                                }
-                                            });
+            
+                                            if (rows.length > 0) {
+                                                var selected_user = rows[0].id;
+                                                var user_name = rows[0].name;
+                                                var priority = rows[0].priority;
+                                                dbconfig.query(insert_query, [selected_user, selected_room], (err) => {
+                                                    if (err) {
+                                                        throw err;
+                                                    }
+                                                    else {
+                                                        dbconfig.query(status_query, params, (err) => {
+                                                            if (err) {
+                                                                throw err;
+                                                            }
+                                                            else {
+                                                                res.send({success:true, user_id:selected_user, user_name:user_name, 
+                                                                room_num:selected_room, type_changed:true, priority:priority});
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                res.send({success:false, error:'NO_WORKING_USERS'});
+                                                return;
+                                            }
                                         });
                                     });
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
                 });
             });
         }
