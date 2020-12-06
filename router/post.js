@@ -203,6 +203,37 @@ module.exports = function (app) {
         });
     });
 
+
+    /* 예약 비밀번호 확인 and 예약 취소 */
+    app.post('/change_reservation', function (req, res) {
+        var pw = req.body.pw;
+        var email = req.body.email;
+        var reservation_time = req.body.reservation_time;
+
+        var sql = 'SELECT password from reservation WHERE email=? and reservation_time=? and password=?';
+        var params = [email, reservation_time, crypto.createHash('sha512').update(pw).digest('hex')];
+
+        dbconfig.query(sql, params, function (err, rows) {
+            if (err) console.log(err);
+            else{
+                if (rows.length == 0) res.send({result: 'not match pw'});
+                else{
+                    if (req.body.status === 'check-in') res.send({result: 'match'});
+                    else{
+                        sql = 'UPDATE reservation SET status="취소" WHERE email=? and reservation_time=?';
+                        params = [email, reservation_time];
+
+                        dbconfig.query(sql, params, function (err2, rows2) {
+                            if (err2) console.log(err2);
+                        });
+                        res.send({result: 'match'});
+                    }
+                }
+            }
+        });
+    });
+
+
     /* 직원 추가 */
     app.post('/add_user', upload.single('newstaff_photo'), function (req, res) {
         res.redirect('/staff');

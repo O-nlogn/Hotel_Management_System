@@ -101,21 +101,7 @@
             });
         });
     </script>
-    <!-- 이메일폼 -->
-    <script type="text/javascript">
-        //이메일 입력방식 선택
-        $('#selectEmail').change(function () {
-            $("#selectEmail option:selected").each(function () {
-                if ($(this).val() == '1') { //직접입력일 경우 (일단 안함)
-                    $("#str_email02").val(''); //값 초기화
-                    $("#str_email02").attr("disabled", false); //활성화
-                } else { //직접입력이 아닐경우
-                    $("#str_email02").val($(this).text()); //선택값 입력
-                    $("#str_email02").attr("disabled", true); //비활성화
-                }
-            });
-        });
-    </script>
+   
 
     <!-- 필터링 & 검색 기능 -->
     <script>
@@ -348,7 +334,9 @@
                                         <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
                                         <label for="email_id">예약자 이메일</label>
                                         <input type="text" name="email_id" id="email_id" class="form-control"> @
-                                        <select class="form-control" name="email_select" id="selectEmail">
+                                        <input type="text" name="email_option" id="email_option" class="form-control" disabled value="naver.com" style="width:7vw; display: inline-block;">
+                                        <select class="form-control" name="email_select" id="selectEmail" style="width:7vw; display: inline-block;">
+                                            <option value="1">직접입력</option>
                                             <option value="naver.com" selected>naver.com</option>
                                             <option value="hanmail.net">hanmail.net</option>
                                             <option value="hotmail.com">hotmail.com</option>
@@ -433,75 +421,6 @@
                         <button id="reserved "class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
                       </div>
                     </div>
-                    <div class="mb-4">
-                        <div class="small mb-3">월별 예약 현황</div>
-                        <ul class="nav flex-column nav-pills">
-                            <li class="nav-item"><a href="#" class="nav-link"><i
-                                        class="fa fa-fw fa-calendar-o mr-2"></i>Calendar</a></li>
-                                        <!-- 달력기능 : 개인적으로 꼭 넣고 싶음..^^ -->
-                        </ul>
-                    </div>
-
-                    <div class="mb-4">
-                        <!-- 직원 배정을 위해 현재 출근 상태인 직원 나타내주면 좋을 듯 -->
-                        <div class="small mb-3">출근 중 직원</div>
-                        <ul class="nav flex-column nav-pills">
-                            <li class="nav-item">
-                                <a href="#" class="d-flex nav-link">
-                                    <div class="media">
-                                        <div class="mr-3 align-self-center media-left media-middle">
-                                            <div class="avatar-image avatar-image--loaded">
-                                                <div class="avatar avatar--md avatar-image__image">
-                                                    <div class="avatar__content"><img
-                                                            src="profile.png"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="mt-0">권유리1</div><span class="small">프론트 부서</span>
-                                            <div class="mt-0"></div><span class="small">영어, 일본어</span>
-                                        </div>
-                                    </div><i class="fa fa-fw fa-circle text-success ml-auto align-self-center ml-2"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="d-flex nav-link">
-                                    <div class="media">
-                                        <div class="mr-3 align-self-center media-left media-middle">
-                                            <div class="avatar-image avatar-image--loaded">
-                                                <div class="avatar avatar--md avatar-image__image">
-                                                    <div class="avatar__content"><img
-                                                            src="profile.png"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="mt-0">권유리2</div><span class="small">프론트 부서</span>
-                                            <div class="mt-0"></div><span class="small">영어, 일본어</span>
-                                        </div>
-                                    </div><i class="fa fa-fw fa-circle text-warning ml-auto align-self-center ml-2"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="d-flex nav-link">
-                                    <div class="media">
-                                        <div class="mr-3 align-self-center media-left media-middle">
-                                            <div class="avatar-image avatar-image--loaded">
-                                                <div class="avatar avatar--md avatar-image__image">
-                                                    <div class="avatar__content"><img
-                                                            src="profile.png"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="mt-0">권유리3</div><span class="small">프론트 부서</span>
-                                            <div class="mt-0"></div><span class="small">영어, 일본어</span>
-                                        </div>
-                                    </div><i class="fa fa-fw fa-circle text-danger ml-auto align-self-center ml-2"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="add_res">예약 추가하기</button>
                 <div class="col-lg-9" style="padding: 0;">
@@ -535,113 +454,124 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
-                                                    <button type="button" id="tooltipAddNew" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
-                                                    <!-- 상세보기 팝업 (modal 시작)-->
-                                                    <div class="modal fade" id="myModal2" role="dialog" style="top: 200px;">
-                                                        <div class="modal-dialog">
-                                                            <!-- Modal content-->
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h2 class="modal-title">예약 상세페이지</h2>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal">&times;</button> <br>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                      <form name="예약 상세페이지" action="/reservation_status_change" method="post" id="form1">
-                                                                        <div class="form-group">
-
-                                                                            <div class="flexdiv">
-                                                                                <label form="checkout_time" class="flexdiv" style="width: 200px;">퇴실시간<label>
-                                                                                <div style="display: inline-block; width: 400px;"><%= reservation[i].checkout%></div>
-                                                                            </div>
-
-                                                                            <div class="flexdiv" id="do">
-                                                                                <div class="flexdiv">
-                                                                                    <label for="inout" style="width: 50px; margin-right: 25px;">처리</label>
-                                                                                    <select name="status_change_to" id="status_change_to">
-                                                                                        <option id="inout" value="check-in">체크인</option>
-                                                                                        <option value="cancel_reservation">예약취소</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="flexdiv">
-                                                                                    <input type="hidden" id="name" name="name" value=<%= reservation[i].name %>>
-                                                                                    <input type="hidden" id="reservation_time" name="reservation_time" value=<%= reservation[i].reservation_time %>>
-                                                                                    <label form="reservation_pw" style="width: 130px; margin-right: -15px !important;">예약 비밀번호</label>
-                                                                                    <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;" class="form-control">
-                                                                                    <!-- 백에 비밀번호 보내고, 맞으면 -> 예약 취소/체크인 상태로 변경) -->
-                                                                                     <button type="submit" class="btn_submit" style="">확인</button>
-                                                                                </div>
-
-                                                                            </div>
-                                                                           <!-- <input type="checkbox"  data-on="check-in" data-off="예약취소" checked data-toggle="toggle"> -->
-
-                                                                          <!-- <div class="form-group"> -->
-                                                                            <!--화면에 안보이는 부분 (type='hidden')-->
-
-                                                                          </div>
-                                                                        </form>
-                                                                      </div>
-
-
-                                                                        <!-- <div class="form-group">
-                                                                            <h3>체크인</h3>
-                                                                            <label form="reservation_checkin">배정
-                                                                                객실</label>
-                                                                            <input type="text"
-                                                                                name="reservation_checkin_room"
-                                                                                id="reservation_checkin"
-                                                                                class="form-control">호<br>
-                                                                            <label form="reservation_checkin">배정
-                                                                                직원</label>
-                                                                            <input type="text"
-                                                                                name="reservation_checkin_staff"
-                                                                                id="reservation_checkin"
-                                                                                class="form-control">-->
-                                                                            <!-- 백에 객실번호 보내면, 체크인 되게 -->
-                                                                            <!-- <button type="submit" class="btn_submit"
-                                                                                id="btn22"
-                                                                                style="margin-left: 235px;">완료</button>
-                                                                        </div>  -->
-
-                                                                    <div class="modal-footer">
-                                                                        <div class="form-group">
-                                                                            <button class="btn btn-default" id="res_commit" class="close"
-                                                                                data-dismiss="modal">완료</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                        </div>
-                                                    </div>
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
                                                 </td>
                                             </tr>
-                                            <% } %>
-                                            </tbody>
-                                            </table>
-                                    </div>
-                                    <div class="d-flex justify-content-center pb-0 card-footer"
-                                        style="text-align: center;">
-                                        <nav class="" aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                                <li class="page-item"><a href="#" class="page-link"
-                                                        aria-label="Previous"><span aria-hidden="true"><i
-                                                                class="fa fa-fw fa-angle-left"></i></span><span
-                                                            class="sr-only">Previous</span></a></li>
-                                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                                <li class="page-item"><a href="#" class="page-link"
-                                                        aria-label="Next"><span aria-hidden="true"><i
-                                                                class="fa fa-fw fa-angle-right"></i></span><span
-                                                            class="sr-only">Next</span></a></li>
-                                            </ul>
-                                        </nav>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            <div class="modal fade" id="myModal2" role="dialog" style="top: 200px;">
+                                <div class="modal-dialog">
+                                <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title">예약 상세페이지</h2>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button><br>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div class="flexdiv">
+                                                    <label class="flexdiv" style="width: 200px;">퇴실시간<label>
+                                                    <div id="checkout_time_replace"style="display:inline-block; width:400px; margin-left:20px"></div>
+                                                </div>
+                            
+                                                <div class="flexdiv" id="do">
+                                                    <div class="flexdiv">
+                                                        <label for="inout" style="width: 50px; margin-right: 5px;">처리</label>
+                                                        <select name="status_change_to" id="status_change_to" style="margin-right: 50px;">
+                                                            <option id="inout" value="check-in">체크인</option>
+                                                            <option value="cancel_reservation">예약취소</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="flexdiv">
+                                                        <label form="reservation_pw" style="width: 130px; margin-right: -15px !important;">예약 비밀번호</label>
+                                                        <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <button class="btn btn-default" id="modify_reservation" class="close modify_reservation" data-dismiss="modal">완료</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-center pb-0 card-footer"
+                            style="text-align: center;">
+                            <nav class="" aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a href="#" class="page-link"
+                                            aria-label="Previous"><span aria-hidden="true"><i
+                                                    class="fa fa-fw fa-angle-left"></i></span><span
+                                                class="sr-only">Previous</span></a></li>
+                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                    <li class="page-item"><a href="#" class="page-link"
+                                            aria-label="Next"><span aria-hidden="true"><i
+                                                    class="fa fa-fw fa-angle-right"></i></span><span
+                                                class="sr-only">Next</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
 </body>
+<!-- 이메일폼 -->
+<script type="text/javascript">
+    //이메일 입력방식 선택
+    $('#selectEmail').change(function () {
+        $("#selectEmail option:selected").each(function () {
+            if ($(this).val() == '1') { //직접입력일 경우
+                $("#email_option").val(''); //값 초기화
+                $("#email_option").attr("disabled", false); //활성화
+            } else { //직접입력이 아닐경우
+                $("#email_option").val($(this).text()); //선택값 입력
+                $("#email_option").attr("disabled", true); //비활성화
+            }
+        });
+    });
 
+    function change_modal_data(email, reservation_time, checkout){
+        $("#checkout_time_replace").text(checkout);
+        $("#modify_reservation").on("click", function(){
+            change_reservation_status(email,reservation_time);
+        });
+    }
+
+    // 예약 변경 
+    function change_reservation_status(email, reservation_time){
+        var status = $("#status_change_to option:selected").val();
+        var password = $("#reservation_pw").val();
+
+        $.ajax({
+            type: 'POST',
+            url: "/change_reservation",
+            data: {email:email, reservation_time:reservation_time, pw:password, status:status},
+            success: function (data) {
+                if (data.result === 'not match pw'){
+                    alert('비밀번호가 일치하지 않습니다.');
+                }
+                else if(status === 'check-in'){
+                    $.ajax({
+                        type: 'POST',
+                        url: "/checkin",
+                        data: { email: email, time: reservation_time},
+                        success: function (data) {
+                        }
+                    });
+                }
+            }
+        });
+    }
+</script>
 </html>
