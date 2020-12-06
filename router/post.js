@@ -399,13 +399,16 @@ module.exports = function (app) {
     });
 
     app.post('/checkin', (req, res) => {
+        console.log(req.body)
         if (req.body.password === undefined) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+            return;
         }
         var params = [req.body.email, req.body.time, crypto.createHash('sha512').update(password).digest('hex')];
         console.log(params)
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
+            return;
         }
         else {
             var password_check_qeury = 'SELECT * FROM reservation WHERE email = ? AND reservation_time = ? AND password = ?';
@@ -489,6 +492,7 @@ module.exports = function (app) {
                                     }
                                     else {
                                         res.send({success:false, error:'NO_WORKING_USERS'});
+                                        return;
                                     }
                                 });                                    
                             });
@@ -504,6 +508,7 @@ module.exports = function (app) {
                                 
                                 if (rows[0].count == 0) {
                                     res.send({success:false, error:'NO_ROOMS'});
+                                    return;
                                 }
                                 else {
                                     dbconfig.query(room_choice_query, [rows[0].type], (err, rows) => {
@@ -546,6 +551,7 @@ module.exports = function (app) {
                                                 }
                                                 else {
                                                     res.send({success:false, error:'NO_WORKING_USERS'});
+                                                    return;
                                                 }
                                             });
                                         });
