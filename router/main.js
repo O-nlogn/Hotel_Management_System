@@ -47,7 +47,18 @@ module.exports = function (app) {
     app.get('/reservation', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
 
+            // 체크인이 오늘인 예약은 입실 예정으로 바꿔줌
             var sql = 'update reservation set status = "입실예정" where DATE(checkin) = DATE(NOW()) and status = "예약완료"';
+            dbconfig.query(sql, function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    res.writeHead(200);
+                    res.end();
+                }
+            });
+
+            // 체크인 날짜가 지난 입실예정 예약은 취소로 바꿔줌
+            sql = 'update reservation set status = "취소" where DATE(checkin) < DATE(NOW()) and status = "입실예정"';
             dbconfig.query(sql, function (err, rows, fields) {
                 if (err) {
                     console.log(err);
@@ -58,7 +69,7 @@ module.exports = function (app) {
 
             sql = 'SELECT *, breakfast_price+rate+extra as total_price from(select reservation.email, name, reservation_time, status, checkin, checkout, room_type, reservation.personnel,';
             sql += 'breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
-            sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type where date(checkout)>=date(subdate(now(),INTERVAL 1 DAY)))a ORDER BY checkin';
+            sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a ORDER BY checkin';
             var reseravation_list;
 
             dbconfig.query(sql, function (err, rows, fields) {

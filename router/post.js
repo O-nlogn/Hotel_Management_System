@@ -370,13 +370,22 @@ module.exports = function (app) {
                         throw err;
                     }
 
+                    // 예약 상태 업데이트
+                    var sql = 'UPDATE reservation SET status="체크아웃" where email=? and reservation_time=?';
+                    dbconfig.query(sql, params, (err2, rows2) => {
+                        if (err2) {
+                            throw err2;
+                        }
+                    });
+
                     var service_charge = rows[0].sum;
                     var request_done_query = 'UPDATE request SET done = 1 WHERE email = ? AND reservation_time = ?';
-
+                    // 요청사항 없애기
                     dbconfig.query(request_done_query, params, (err, rows) => {
                         if (err) {
                             throw err;
                         }
+                        // 룸서비스 없애기
                         var receipt_done_query = 'UPDATE receipt_service SET paid = 1, done = 1 WHERE email = ? AND reservation_time = ?';
 
                         dbconfig.query(receipt_done_query, params, (err, rows) => {
@@ -387,6 +396,7 @@ module.exports = function (app) {
                                     throw err;
                                 }
 
+                                // 숙박객실 없애기
                                 var delete_stay_query = 'DELETE FROM stay WHERE email = ? AND reservation_time = ?';
                                 dbconfig.query(delete_stay_query, params, (err) => {
                                     if (err) {

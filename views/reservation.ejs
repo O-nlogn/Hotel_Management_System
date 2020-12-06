@@ -426,13 +426,16 @@
                             <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
                         </div>
                         <div>
-                            <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
+                            <button id="reserved"class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
                         </div>
                         <div>
-                            <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
+                            <button id="waiting"class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
                         </div>
                         <div>
-                            <button id="reserved "class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
+                            <button id="reserved"class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
+                        </div>
+                        <div>
+                            <button id="past" class="btn" onclick="clicked_function('체크아웃');click_effect(5);"> 체크아웃</button>
                         </div>
                       </div>
                     </div>
@@ -569,6 +572,7 @@
         var password = $("#reservation_pw").val();
 
         if (cur_status === '취소') alert('이미 취소된 예약입니다.');
+        else if (cur_status === '체크아웃') alert('이미 체크아웃된 예약입니다.');
         else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
         else if (cur_status === '입실완료') alert('이미 체크인 처리된 예약입니다.');
         else{
