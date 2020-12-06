@@ -454,7 +454,7 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
-                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
                                                 </td>
                                             </tr>
                                     <% } %>
@@ -494,7 +494,7 @@
                             
                                         <div class="modal-footer">
                                             <div class="form-group">
-                                                <button class="btn btn-default" id="modify_reservation" class="close modify_reservation" data-dismiss="modal">완료</button>
+                                                <button class="btn btn-default" id="modify_reservation" class="close" data-dismiss="modal">완료</button>
                                             </div>
                                         </div>
                                     </div>
@@ -541,37 +541,43 @@
         });
     });
 
-    function change_modal_data(email, reservation_time, checkout){
+    function change_modal_data(email, reservation_time, checkout, reservation_status){
         $("#checkout_time_replace").text(checkout);
         $("#modify_reservation").on("click", function(){
-            change_reservation_status(email,reservation_time);
+            change_reservation_status(email,reservation_time,reservation_status);
         });
     }
 
     // 예약 변경 
-    function change_reservation_status(email, reservation_time){
+    function change_reservation_status(email, reservation_time, cur_status){
         var status = $("#status_change_to option:selected").val();
         var password = $("#reservation_pw").val();
 
-        $.ajax({
-            type: 'POST',
-            url: "/change_reservation",
-            data: {email:email, reservation_time:reservation_time, pw:password, status:status},
-            success: function (data) {
-                if (data.result === 'not match pw'){
-                    alert('비밀번호가 일치하지 않습니다.');
+        if (cur_status === '취소') alert('이미 취소된 예약입니다.');
+        else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
+        else if (cur_status === '입실완료' && status === 'check-in') alert('이미 체크인 처리된 예약입니다.');
+        else{
+            $.ajax({
+                type: 'POST',
+                url: "/change_reservation",
+                data: {email:email, reservation_time:reservation_time, pw:password, status:status},
+                success: function (data) {
+                    if (data.result === 'not match pw'){
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                    else if (status === 'check-in'){
+                        $.ajax({
+                            type: 'POST',
+                            url: "/checkin",
+                            data: { email: email, time: reservation_time},
+                            success: function (data) {
+                            }
+                        });
+                    }
                 }
-                else if(status === 'check-in'){
-                    $.ajax({
-                        type: 'POST',
-                        url: "/checkin",
-                        data: { email: email, time: reservation_time},
-                        success: function (data) {
-                        }
-                    });
-                }
-            }
-        });
+            });
+        }
+        location.reload(true);
     }
 </script>
 </html>
