@@ -63,7 +63,7 @@
 			$('#floor12').click(function () {
 				$('.table').animate({ scrollTop: 4420 }, 300);
 			});
-			
+
 			$('.request_popup .close').click(function(){
 				$('.request_popup').hide();
 				$('.dim').hide();
@@ -101,11 +101,11 @@
 			</div>
 
 			<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
-			<div class = 'table' style="width: 620px;">
+			<div class = 'table' style="width: 654px;">
 			</div>
 
 			<%- include('./request'); %>
-		</div>	
+		</div>
 	</div>
 
 	<div class="request_popup requestItem" style="
@@ -116,25 +116,27 @@
 	border-bottom: solid 2px rgb(0, 0, 0);
     border-right: solid 2px rgb(0, 0, 0);
     border-left: solid 2px rgb(0, 0, 0)">
-		<p class='title'>
+		<p class='title'>		</p><br>
 			<button type="button" class="close" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
-			<div id="request_popup_time" class="request_box"></div>
-			<div id="request_popup_room" class="request_type" class="request_box tag"></div>
-			<div id="request_popup_type" class="request_type" class="request_box tag"></div>
-		</p><br>
+			<div id="request_popup_time" class="request_box"></div><br>
+				<div id="request_popup_room" class="request_type tag" style="float:right;display:inline;"></div>
+				<div id="request_popup_type"  class="request_type tag" style="float:right;display:inline;"></div>
+
+
+
+
 		<p class="content">
 			<div id="request_popup_details" style="margin-top: 80px; padding: 10px; word-break: break-all; background-color: rgba(245, 222, 179, 0.3); border-radius: 5px;">
-				
+
 		    </div>
-			<div class="btn-group" role="group" style="margin-top: 8px; float:right;">
-				<button class="btn btn-light" id="complete_request" type="button" style="margin-left: 109px; display: inline;">
+			<div class="btn-group" role="group" style="margin-top: 8px;float:right; display: inline;">
+				<button class="btn btn-light" id="delete_request" type="button" >
 					취소
 				</button>
-			</div>
-			<div class="btn-group" role="group" id="delete_request" style="margin-top: 8px; float:right;">
-				<button class="btn btn-light" id="complete_request" type="button" style="margin-left: 109px; display: inline;">
+
+				<button class="btn btn-light" id="complete_request" type="button" >
 					완료
 				</button>
 			</div>
@@ -148,7 +150,7 @@
 					<path
 						d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
 				</svg>
-		
+
 		</div>
 		<h2 id="popup_room"></h2>
 		<div>
