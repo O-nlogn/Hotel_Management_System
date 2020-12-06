@@ -43,6 +43,11 @@
         .mb-4 {
             margin-bottom: 50px;
         }
+
+        #myBtnContainer button{
+            margin: 2px;
+            width: 80px !important;
+        }
     </style>
     <!-- 생년월일 입력 기능 -->
     <script type="text/javascript">
@@ -412,13 +417,23 @@
                         </div>
                     </div>
                     <div class="mb-4">
-                      <div id="myBtnContainer" class="btn-group">
+                      <div id="myBtnContainer" class="btn-group" style="display:inline-table;">
                         <div class="small mb-3">예약상태별 보기</div>
-                        <button id="all" class="btn active" onclick="clicked_function('');click_effect(0);">전체</button>
-                        <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
-                        <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
-                        <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
-                        <button id="reserved "class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
+                        <div>
+                            <button id="all" class="btn" onclick="clicked_function(''); click_effect(0);">전체</button>
+                        </div>
+                        <div>
+                            <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
+                        </div>
+                        <div>
+                            <button id="reserved "class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
+                        </div>
+                        <div>
+                            <button id="waiting "class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
+                        </div>
+                        <div>
+                            <button id="reserved "class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
+                        </div>
                       </div>
                     </div>
                 </div>
