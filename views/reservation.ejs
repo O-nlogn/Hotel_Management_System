@@ -453,7 +453,8 @@
                                     <tr>
                                         <th class="align-middle bt-0">예약자명</th>
                                         <th class="align-middle bt-0">예약상태</th>
-                                        <th class="align-middle bt-0">입실시간</th>
+                                        <th class="align-middle bt-0">체크인</th>
+                                        <th class="align-middle bt-0">체크아웃</th>
                                         <th class="align-middle bt-0">방타입</th>
                                         <th class="align-middle bt-0">상세보기</th>
                                     </tr>
@@ -468,7 +469,12 @@
                                                        style="padding:4px;" class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-info  <%}else if(reservation[i].status === '입실완료'){ %> label-success <%}else if(reservation[i].status === '예약완료'){%> label-warning <%}else if(reservation[i].status === '퇴실예정'){%> label-primary <%}else{%> label-default <%}%>label-pill"><%= reservation[i].status %></span>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <div><%= reservation[i].checkin%></div>
+                                                    <%var date=reservation[i].checkin.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <%var date=reservation[i].checkout.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
                                                 </td>
                                                 <td class="align-middle">
                                                     <div><%= reservation[i].room_type %></div>
