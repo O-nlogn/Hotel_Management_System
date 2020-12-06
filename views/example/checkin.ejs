@@ -8,7 +8,8 @@
                 method: 'POST',
                 data: {
                     email: 'alsrud606@hanyang.ac.kr',
-                    time: '2020-11-22 22:48:12'
+                    time: '2020-11-22 22:48:12',
+                    password : '1234'
                 },
                 success: (data) => {
                     if (data.success) {
@@ -20,6 +21,11 @@
                     }
                     else {
                         console.log(data.error);     // 실패 원인
+                        // NOT_ENOUGH_INFO : 파라미터 부족
+                        // INCORRECT_PASSWORD : 비밀번호 틀림
+                        // ALREADY_CHECKED_IN : 이미 체크인된 예약
+                        // NO_WORKING_USERS : 직원이 없음
+                        // NO_ROOMS : 객실이 없음
                     }
                 }
             })
