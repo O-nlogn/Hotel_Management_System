@@ -194,11 +194,15 @@
 					<path
 						d="M15 16v5l9-10.062-9-9.938v5c-14.069 1.711-19.348 15.107-10.606 16.981-3.804-2.936 3.251-7.441 10.606-6.981z" />
 				</svg>방이동</a>
-			<a href="/checkout" id="checkout" class="btn"><svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"
-					fill-rule="evenodd" clip-rule="evenodd">
-					<path
-						d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
-				</svg>체크아웃</a>
+				<form id = "checkout_request" name="checkout_request" action="/checkout" method="post">
+					<input type="hidden" id="checkout_room" name="checkout_room" value=<%= stayrooms[i].number %>>
+					<a href="#" onclick="document.getElementById('checkout_request').submit();" id="checkout" class="btn">
+						<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
+						clip-rule="evenodd">
+						<path d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
+						</svg>체크아웃
+					</a>
+				</form>
 		</div>
 	</div>
 	<div class="dim"></div>
