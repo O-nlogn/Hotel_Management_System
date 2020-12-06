@@ -555,7 +555,7 @@
 
         if (cur_status === '취소') alert('이미 취소된 예약입니다.');
         else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
-        else if (cur_status === '입실완료' && status === 'check-in') alert('이미 체크인 처리된 예약입니다.');
+        else if (cur_status === '입실완료') alert('이미 체크인 처리된 예약입니다.');
         else{
             $.ajax({
                 type: 'POST',
@@ -571,6 +571,7 @@
                             url: "/checkin",
                             data: { email: email, time: reservation_time},
                             success: function (data) {
+                                location.reload(true);
                             }
                         });
                     }
