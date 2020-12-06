@@ -349,20 +349,22 @@ module.exports = function (app) {
 
 
     app.post('/checkout', (req, res) => {
+        console.log(req.body);
         // request -> done
         // receipt_service -> paid  
-        if (req.body.checkout_room === undefined) {
+        if (req.body.room === undefined) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});
         }
         else {
             var id_query = "SELECT email, reservation_time as time FROM stay WHERE room = ?";
-            dbconfig.query(id_query, [req.body.checkout_room], (err, rows) => {
+            dbconfig.query(id_query, [req.body.room], (err, rows) => {
                 if (err) {
                     throw err;
                 }
 
                 var params = [rows[0].email, rows[0].time];
                 var receipt_query = 'SELECT SUM(price) as sum FROM receipt_service NATURAL JOIN room_service WHERE paid = 0 AND email = ? AND reservation_time = ?';
+               
                 dbconfig.query(receipt_query, params, (err, rows) => {
                     if (err) {
                         throw err;
@@ -370,13 +372,16 @@ module.exports = function (app) {
 
                     var service_charge = rows[0].sum;
                     var request_done_query = 'UPDATE request SET done = 1 WHERE email = ? AND reservation_time = ?';
+
                     dbconfig.query(request_done_query, params, (err, rows) => {
                         if (err) {
                             throw err;
                         }
                         var receipt_done_query = 'UPDATE receipt_service SET paid = 1, done = 1 WHERE email = ? AND reservation_time = ?';
+
                         dbconfig.query(receipt_done_query, params, (err, rows) => {
                             var delete_responsibility_query = 'DELETE FROM responsibility WHERE room = (SELECT room FROM stay WHERE email = ? AND reservation_time = ?)';
+                            
                             dbconfig.query(delete_responsibility_query, params, (err) => {
                                 if (err) {
                                     throw err;
