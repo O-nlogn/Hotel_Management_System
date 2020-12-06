@@ -78,7 +78,7 @@ module.exports = function (app) {
             });
 
             sql = 'SELECT *, breakfast_price+rate+extra as total_price from(select reservation.email, name, reservation_time, status, checkin, checkout, room_type, reservation.personnel,';
-            sql += 'breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
+            sql += 'breakfast, breakfast*7000 AS breakfast_price, rate, CASE WHEN reservation.personnel > room_type.personnel THEN extra ELSE 0 END AS extra from reservation';
             sql += ' JOIN customers ON reservation.email = customers.email JOIN room_type ON room_type.type = reservation.room_type)a ORDER BY checkin';
             var reseravation_list;
 
