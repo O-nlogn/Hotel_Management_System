@@ -323,7 +323,7 @@
 
 
       var list = [[ '기획부', '시설안전부', '식음료부','인사부', '재무부', '프론트'],[ '팀장','과장','대리','사원','부장','사장','이사'],['출근','퇴근'],
-      ['없음','독일어','러시아어','스페인어','아랍어','영어','이탈리아어','일본어','중국어','터키어','포르투칼어','프랑스어','핀란드어','힌디어']];
+      ['한국어','독일어','러시아어','스페인어','아랍어','영어','이탈리아어','일본어','중국어','터키어','포르투칼어','프랑스어','핀란드어','힌디어']];
       function checkbox_check() {
         var checkbox_r=new Array();
         var ch=new Array();
@@ -346,6 +346,7 @@
 
       for (j = 0; j < subt.length; j++) {
         p=0;
+        // console.log(subt[j].innerText);
         for (i = 0; i < 4; i++) {
           for (k=0;k<ch[i].length;k++) {
               if (subt[j].innerText.indexOf(ch[i][k]) > -1){//존재
@@ -354,7 +355,7 @@
               }
           }
         }
-        console.log(p);
+
         if (p == 4) {
           checkbox_r.push(subt[j].id);
         }
@@ -366,8 +367,8 @@
     function show_result() {
       var re=search_result();
       var ch=checkbox_check();
-      console.log(re);
-      console.log(ch);
+      // console.log(re);
+      // console.log(ch);
       var subt=document.getElementsByClassName("subtable");
       for (var i=0;i<subt.length;i++){
       if (ch.includes($(subt[i]).attr('id')) && re.includes($(subt[i]).attr('id'))){
@@ -580,8 +581,7 @@
                                     <a data-toggle="collapse" class="job-list" aria-expanded="true">
                                         <div class="card-header" id="headingtwo">
                                             <button type="button" class="btn btn-default btn-block"
-                                                data-toggle="collapse" data-target="#collapse4" style="border:0;">외국어
-                                                가능직원</button>
+                                                data-toggle="collapse" data-target="#collapse4" style="border:0;">사용가능언어</button>
                                         </div>
                                     </a>
                                     <div id="collapse4" class="collapse show" aria-labelledby="headingfour">
@@ -590,7 +590,7 @@
                                                 <input type="checkbox" id="lang1" name="customRadio3"
                                                     class="custom-control-input" name="language" value="없음"  onclick="show_result();"checked>
                                                 <label class="custom-control-label ml-1 text-muted f-15"
-                                                    for="lang1">없음</label>
+                                                    for="lang1">한국어</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" id="lang2" name="customRadio3"
@@ -732,7 +732,7 @@
                                                     <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
                                                 </div>
                                             </div>
-                                             
+
                                             <div class="form-group">
                                                 <label for="newstaff_div">부서</label>
                                                 <select class="form-control" style="width:40%; margin-right:10px"
@@ -817,7 +817,7 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                      <div id="table0" style="display: grid; grid-template-columns: 400px 400px;">
+                      <div id="table0" style="display: grid; grid-template-columns: 500px 500px;">
                         <% for (var i=0; i < staff.length; i++) { %>
                         <!-- 검색기능을 위해 div에 id 부여 -->
 
@@ -850,9 +850,10 @@
                                             <td><%= staff[i].email %></td>
                                         </tr>
                                         <tr>
-                                            <th>외국어</th>
+                                            <th>사용가능언어</th>
                                             <td>
                                               <% var t=0;%>
+                                              한국어
                                               <% for (var j=0; j < multilingual.length; j++) { %>
 
                                                    <% if (staff[i].id === multilingual[j].id) { %>
@@ -860,11 +861,6 @@
                                                  <% var t=1;%>
                                                  <%=  multilingual[j].language %>
                                                 <% }%>
-
-                                                <% if(multilingual.length-1 === j && t === 0) { %>없음
-
-                                              <%}%>
-
                                             <%}%>
                                             </td>
                                         </tr>
