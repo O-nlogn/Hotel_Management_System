@@ -262,27 +262,32 @@ module.exports = function (app) {
                 console.log(err);
             }
             else {
-                email = rows[0].email;
-                reservation_time = rows[0].reservation_time;
-
-                if (type === '요청사항') {
-                    var content = req.body.request_details;
-
-                    sql = 'INSERT INTO request VALUES(DEFAULT,?,0,?,?)';
-                    params = [content, email, reservation_time];
+                if(rows.length == 0){
+                    res.send({success:'no such room'});
                 }
-                else {
-                    var service = req.body.service;
-                    sql = 'INSERT INTO receipt_service VALUES(?,DEFAULT,0,0,?,?,?)';
-                    params = [service, email, reservation_time, cnt];
-                }
+                else{
+                    email = rows[0].email;
+                    reservation_time = rows[0].reservation_time;
 
-                dbconfig.query(sql, params, function (err2, rows2, fields2) {
-                    if (err2) {
-                        console.log(err2);
+                    if (type === '요청사항') {
+                        var content = req.body.request_details;
+
+                        sql = 'INSERT INTO request VALUES(DEFAULT,?,0,?,?)';
+                        params = [content, email, reservation_time];
                     }
-                });
-                res.send();
+                    else {
+                        var service = req.body.service;
+                        sql = 'INSERT INTO receipt_service VALUES(?,DEFAULT,0,0,?,?,?)';
+                        params = [service, email, reservation_time, cnt];
+                    }
+
+                    dbconfig.query(sql, params, function (err2, rows2, fields2) {
+                        if (err2) {
+                            console.log(err2);
+                        }
+                    });
+                    res.send({success:'true'});
+                }
             }
         });
     });
@@ -294,7 +299,7 @@ module.exports = function (app) {
 
         var sql, params;
         if (type === 'room details'){
-            sql = 'SELECT * from(SELECT stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
+            sql = 'SELECT * from(SELECT customers.name, stay.room, users.name as staff_name, nationality, stay.personnel, CASE WHEN should_paid IS NULL THEN 0 ELSE should_paid END AS should_paid, cardkey, cleaning, checkin, checkout,';
             sql += 'exists(select * from (select reservation_time, email from receipt_service where done=0 union select reservation_time, email from request where done=0)k where k.reservation_time = stay.reservation_time and k.email = stay.email) AS request from stay';
             sql += ' JOIN responsibility ON stay.room = responsibility.room';
             sql += ' JOIN users ON stay.room = responsibility.room and users.id = responsibility.id';
@@ -371,7 +376,7 @@ module.exports = function (app) {
                     }
 
                     // 예약 상태 업데이트
-                    var sql = 'UPDATE reservation SET status="체크아웃" where email=? and reservation_time=?';
+                    var sql = 'UPDATE reservation SET status="퇴실완료" where email=? and reservation_time=?';
                     dbconfig.query(sql, params, (err2, rows2) => {
                         if (err2) {
                             throw err2;
@@ -414,6 +419,7 @@ module.exports = function (app) {
     });
 
     app.post('/checkin', (req, res) => {
+        console.log(req.body);
         var params = [req.body.email, req.body.time];
         if (params.indexOf(undefined) != -1) {
             res.send({success: false, error: 'NOT_ENOUGH_INFO'});

@@ -435,7 +435,10 @@
                             <button id="reserved"class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
                         </div>
                         <div>
-                            <button id="past" class="btn" onclick="clicked_function('체크아웃');click_effect(5);"> 체크아웃</button>
+                            <button id="past" class="btn" onclick="clicked_function('퇴실완료');click_effect(5);"> 퇴실완료</button>
+                        </div>
+                        <div>
+                            <button id="noti" class="btn" onclick="clicked_function('퇴실예정');click_effect(6);"> 퇴실예정</button>
                         </div>
                       </div>
                     </div>
@@ -450,7 +453,8 @@
                                     <tr>
                                         <th class="align-middle bt-0">예약자명</th>
                                         <th class="align-middle bt-0">예약상태</th>
-                                        <th class="align-middle bt-0">입실시간</th>
+                                        <th class="align-middle bt-0">체크인</th>
+                                        <th class="align-middle bt-0">체크아웃</th>
                                         <th class="align-middle bt-0">방타입</th>
                                         <th class="align-middle bt-0">상세보기</th>
                                     </tr>
@@ -462,19 +466,29 @@
                                                     <div><%= reservation[i].name %></div>
                                                 </td>
                                                 <td><span
-                                                       style="padding:4px;" class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-info  <% }else if(reservation[i].status === '입실완료'){ %> label-success <%}else if(reservation[i].status === '예약완료'){%> label-warning <%}else{%> label-default <%}%>label-pill"><%= reservation[i].status %></span>
+                                                       style="padding:4px;" class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-info  <%}else if(reservation[i].status === '입실완료'){ %> label-success <%}else if(reservation[i].status === '예약완료'){%> label-warning <%}else if(reservation[i].status === '퇴실예정'){%> label-primary <%}else{%> label-default <%}%>label-pill"><%= reservation[i].status %></span>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <div><%= reservation[i].checkin%></div>
+                                                    <%var date=reservation[i].checkin.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <%var date=reservation[i].checkout.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
                                                 </td>
                                                 <td class="align-middle">
                                                     <div><%= reservation[i].room_type %></div>
                                                 </td>
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
-                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
                                                 </td>
                                             </tr>
+                                            <script language="javascript">
+                                                var obj = new Object();
+                                                obj.breakfast = (reservation[i].breakfast_price)/7000;
+
+                                            </script>
                                     <% } %>
                                 </tbody>
                             </table>
@@ -491,6 +505,22 @@
                                                 <div class="flexdiv">
                                                     <label class="flexdiv" style="width: 200px;">퇴실시간<label>
                                                     <div id="checkout_time_replace"style="display:inline-block; width:400px; margin-left:20px"></div>
+                                                </div>
+                                                <div class="flexdiv">
+                                                    <label class="flexdiv" style="width: 200px;">조식 예약 인원<label>
+                                                    <div id="breakfast_num" style="display:inline-block; width:400px; margin-left:20px"></div>
+                                                </div>
+                                                <div class="flexdiv">
+                                                    <label class="flexdiv" style="width: 200px;">투숙 인원<label>
+                                                    <div id = "personnel_num" style="display:inline-block; width:400px; margin-left:20px"></div>
+                                                </div>
+                                                <div class="flexdiv">
+                                                    <label class="flexdiv" style="width: 200px;">예약자 이메일<label>
+                                                    <div id = "reservation_email" style="display:inline-block; width:400px; margin-left:20px"></div>
+                                                </div>
+                                                <div class="flexdiv">
+                                                    <label class="flexdiv" style="width: 200px;">전체 가격<label>
+                                                    <div id = "total_price"style="display:inline-block; width:400px; margin-left:20px"></div>
                                                 </div>
                             
                                                 <div class="flexdiv" id="do">
@@ -559,8 +589,12 @@
         });
     });
 
-    function change_modal_data(email, reservation_time, checkout, reservation_status){
+    function change_modal_data(email, reservation_time, checkout, reservation_status, breakfast, personnel, total_price){
         $("#checkout_time_replace").text(checkout);
+        $("#breakfast_num").text(breakfast);
+        $("#personnel_num").text(personnel);
+        $("#reservation_email").text(email);
+        $("#total_price").text(total_price);
         $("#modify_reservation").on("click", function(){
             change_reservation_status(email,reservation_time,reservation_status);
         });
@@ -572,9 +606,9 @@
         var password = $("#reservation_pw").val();
 
         if (cur_status === '취소') alert('이미 취소된 예약입니다.');
-        else if (cur_status === '체크아웃') alert('이미 체크아웃된 예약입니다.');
+        else if (cur_status === '퇴실완료') alert('이미 체크아웃된 예약입니다.');
         else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
-        else if (cur_status === '입실완료') alert('이미 체크인 처리된 예약입니다.');
+        else if (cur_status === '입실완료' || cur_status === '퇴실예정') alert('이미 체크인 처리된 예약입니다.');
         else{
             $.ajax({
                 type: 'POST',
@@ -594,6 +628,7 @@
                             }
                         });
                     }
+                    else location.reload(true);
                 }
             });
         }
