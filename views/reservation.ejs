@@ -260,6 +260,7 @@
         .flexdiv {
             display: flex;
         }
+        
 
         #do label{
             margin-top: 5px;
@@ -277,6 +278,12 @@
 
         #body222 th{
             background-color: rgba(176, 224, 230, 0.7);
+        }
+
+        @media (max-width: 1000px) {
+            .byrow {
+                display: inline-block;
+            }
         }
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
@@ -428,26 +435,26 @@
                     </div>
                     <div class="mb-4">
                       <div id="myBtnContainer" class="btn-group" style="display:inline-table;">
-                        <div class="small mb-3" style=" font-size: 24px; margin-bottom: 10px;">예약상태별 보기</div>
-                        <div>
+                        <div class="small mb-3" style=" font-size: 24px; margin-bottom: 10px;" class="flexdiv">예약상태별 보기</div>
+                        <div class="byrow">
                             <button id="all" class="btn" onclick="clicked_function(''); click_effect(0);">전체</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="reserved"class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="waiting"class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="reserved"class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="past" class="btn" onclick="clicked_function('퇴실완료');click_effect(5);"> 퇴실완료</button>
                         </div>
-                        <div>
+                        <div class="byrow">
                             <button id="noti" class="btn" onclick="clicked_function('퇴실예정');click_effect(6);"> 퇴실예정</button>
                         </div>
                       </div>
