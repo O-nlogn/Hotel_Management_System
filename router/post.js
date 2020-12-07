@@ -46,7 +46,7 @@ var storage = multer.diskStorage({
                     var language_query = `INSERT INTO multilingual VALUES ("${new_user_id}", "${languages[1]}")`;
 
                     for (var i = 2; i < languages.length; i++) {
-                        language_query += `, ("${new_user_id}", "${languages}")`;
+                        language_query += `, ("${new_user_id}", "${languages[i]}")`;
                     }
 
                     dbconfig.query(language_query, (err3, rows3) => {
