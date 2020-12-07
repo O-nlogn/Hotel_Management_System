@@ -32,7 +32,11 @@ module.exports = function (app) {
     /* 메뉴 관련 */
     app.get('/notice', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('notice', { username: req.cookies.username });
+            var sql = 'SELECT * FROM notice natural join(SELECT id as author_id, name as author FROM users)a ORDER BY id DESC';
+            dbconfig.query(sql, function(err,rows){
+                if (err) throw err;
+                else res.render('notice', { list:rows, username: req.cookies.username });
+            });
         }
         else res.redirect('/login');
     });
@@ -213,7 +217,17 @@ module.exports = function (app) {
     /* 메인페이지, 내정보, 비밀번호 수정 관련*/
     app.get('/main', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('main', { username: req.cookies.username });
+
+            var sql = 'select a.d_res, CASE WHEN cnt is NULL THEN 0 ELSE cnt END AS cnt from(';
+            sql += 'select date(subdate(now(),INTERVAL row_number() over(order by reservation_time)-1 DAY)) as d_res from reservation)a ';
+            sql += 'LEFT JOIN(SELECT date(reservation_time) as d_res, count(*) as cnt FROM reservation GROUP BY date(reservation_time) ORDER BY d_res)b ON a.d_res = b.d_res';
+            sql += ' WHERE date(a.d_res)>=date(subdate(now(),INTERVAL 6 DAY)) ORDER BY a.d_res';
+            
+            dbconfig.query(sql,function(err,rows){
+                if (err) throw err;
+                res.render('main', { date_cnt:rows, username: req.cookies.username });
+            });
+
         }
         else res.redirect('/login');
     });
@@ -278,7 +292,7 @@ module.exports = function (app) {
         else res.redirect('/login');
     });
 
-    // app.get('/test', (req, res) => {
-    //     res.render('example/checkout');
-    // });
+    app.get('/test', (req, res) => {
+        res.render('example/checkout');
+    });
 }

@@ -324,7 +324,7 @@
     </script>
 </head>
 
-<body>
+<body onload = "clicked_function('입실예정');click_effect(3);">
     <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!--  nav바는 흰색, 밑 배경은 다른 색으로 까는것도 좋을 것 같음..  -->
@@ -498,7 +498,7 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
-                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light" style="color: white; font-weight: bolder; font-size: 16px;">+</button>
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].room_type%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkin%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light" style="color: white; font-weight: bolder; font-size: 16px;">+</button>
                                                 </td>
                                             </tr>
                                             <script language="javascript">
@@ -522,16 +522,21 @@
                                                 <table style="margin: auto;">
                                                     <tbody id="body222">
                                                         <tr>
-                                                            <!-- 고객 이름 보기 : 구현 필요 -->
-                                                            <th>퇴실시간</th>
+                                                            <th>예약자 이메일</th>
                                                             <td>
-                                                                <span id="checkout_time_replace"></span>
+                                                                <span id="reservation_email"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>조식 예약 인원</th>
+                                                            <th>숙박 날짜</th>
                                                             <td>
-                                                                <span id="breakfast_num"></span>
+                                                                <span id="time_replace"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>방 타입</th>
+                                                            <td>
+                                                                <span id="room_type_replace"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -541,9 +546,9 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>예약자 이메일</th>
+                                                            <th>조식 예약 인원</th>
                                                             <td>
-                                                                <span id="reservation_email"></span>
+                                                                <span id="breakfast_num"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -609,12 +614,14 @@
         });
     });
 
-    function change_modal_data(email, reservation_time, checkout, reservation_status, breakfast, personnel, total_price){
-        $("#checkout_time_replace").text(checkout);
-        $("#breakfast_num").text(breakfast);
-        $("#personnel_num").text(personnel);
+    function change_modal_data(email, room_type, reservation_time, checkin, checkout, reservation_status, breakfast, personnel, total_price){
+        var date = checkin.split(' ')[0] + " / " + checkout.split(' ')[0];
+        $("#time_replace").text(date);
+        $("#room_type_replace").text(room_type);
+        $("#breakfast_num").text(breakfast + "명");
+        $("#personnel_num").text(personnel + "명");
         $("#reservation_email").text(email);
-        $("#total_price").text(total_price);
+        $("#total_price").text(total_price + "원");
         $("#modify_reservation").on("click", function(){
             change_reservation_status(email,reservation_time,reservation_status);
         });
@@ -625,10 +632,22 @@
         var status = $("#status_change_to option:selected").val();
         var password = $("#reservation_pw").val();
 
-        if (cur_status === '취소') alert('이미 취소된 예약입니다.');
-        else if (cur_status === '퇴실완료') alert('이미 체크아웃된 예약입니다.');
-        else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
-        else if (cur_status === '입실완료' || cur_status === '퇴실예정') alert('이미 체크인 처리된 예약입니다.');
+        if (cur_status === '취소') {
+            alert('이미 취소된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '퇴실완료') {
+            alert('이미 체크아웃된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '예약완료' && status === 'check-in') {
+           alert('체크인 가능 기간이 아닙니다.');
+           location.reload(true);
+        }
+        else if (cur_status === '입실완료' || cur_status === '퇴실예정') {
+            alert('이미 체크인 처리된 예약입니다.');
+            location.reload(true);
+        }
         else{
             $.ajax({
                 type: 'POST',
@@ -642,9 +661,16 @@
                         $.ajax({
                             type: 'POST',
                             url: "/checkin",
-                            data: { email: email, time: reservation_time},
+                            data: { email: email, time: reservation_time },
                             success: function (data) {
-                                location.reload(true);
+                                if (data.success) {
+                                    alert('담당 직원 : '+data.user_name+'\n객실 : '+data.room_num);
+                                    location.reload(true);
+                                }
+                                else {
+                                    alert(data.error);
+                                    location.reload(true);
+                                }
                             }
                         });
                     }
@@ -652,7 +678,6 @@
                 }
             });
         }
-        location.reload(true);
     }
 </script>
 </html>
