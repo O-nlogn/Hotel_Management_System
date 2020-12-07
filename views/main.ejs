@@ -88,10 +88,10 @@
             var myChart = new Chart(ctx, {
                 type: 'bar', 
                 data: { 
-                    labels: ['2020/12/02', '2020/12/03', '2020/12/04', '2020/12/05', '2020/12/06', '2020/12/07', '2020/12/08'], 
+                    labels: ['<%=date_cnt[0].d_res%>','<%=date_cnt[1].d_res %>', '<%=date_cnt[2].d_res %>', '<%=date_cnt[3].d_res %>', '<%=date_cnt[4].d_res %>', '<%=date_cnt[5].d_res %>', '<%=date_cnt[6].d_res %>'],
                     datasets: [{ 
                         label: '최근 일주일 예약현황', 
-                        data: [220, 295, 310, 245, 259, 304,300], 
+                        data: ['<%=date_cnt[0].cnt%>', '<%=date_cnt[1].cnt%>', '<%=date_cnt[2].cnt%>', '<%=date_cnt[3].cnt%>', '<%=date_cnt[4].cnt%>', '<%=date_cnt[5].cnt%>', '<%=date_cnt[6].cnt%>'], 
                         backgroundColor: [ 
                             'rgba(255, 80, 132, 0.3)', 
                             'rgba(255, 159, 64, 0.3)' ,
@@ -120,8 +120,8 @@
                         yAxes: [{
                             ticks: { 
                                 beginAtZero: true,
-                                stepSize:50,
-                                max: 500
+                                stepSize:10,
+                                max: 50
                                 } 
                             }] 
                         } 
