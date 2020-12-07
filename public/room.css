@@ -84,7 +84,6 @@ body {
 }
 .type1, .type1 tr, .type1 th, .type1 td {
     border: solid 1px black;
-    /* border-radius: 20px !important; */
     padding: 5px 10px 5px 10px;
 }
 
@@ -98,6 +97,9 @@ body {
     text-align: right;
 }
 
+.type1 tr {
+    height: 50px !important;
+}
 
 h2 {
     margin-top: 0;
@@ -115,6 +117,8 @@ h2 {
     margin-left: 30px;
     border: solid 1px black;
     border-radius: 3px;
+    margin-top: 50px;
+    overflow-x: hidden;
 }
 
 .table div {
@@ -179,10 +183,13 @@ h2 {
 
 .floor {
     margin-left: 420px;
+    margin-top: 50px;
 }
 
 .floor .button {
-    width: 35px;
+    width: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .floor button {
@@ -259,7 +266,7 @@ h2 {
         grid-template-columns: repeat(4, 130px);
         grid-template-rows: repeat(20, 130px);
         margin-left: 10px;
-        width: 520px;
+        width: 532px !important;
         height: 520px;
     }
     #status {
