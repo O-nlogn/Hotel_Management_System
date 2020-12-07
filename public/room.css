@@ -84,7 +84,6 @@ body {
 }
 .type1, .type1 tr, .type1 th, .type1 td {
     border: solid 1px black;
-    /* border-radius: 20px !important; */
     padding: 5px 10px 5px 10px;
 }
 
@@ -98,6 +97,9 @@ body {
     text-align: right;
 }
 
+.type1 tr {
+    height: 50px !important;
+}
 
 h2 {
     margin-top: 0;
