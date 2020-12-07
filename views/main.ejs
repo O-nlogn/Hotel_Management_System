@@ -14,7 +14,7 @@
             .container {
                 /* margin: 80px 0px 0px 300px; */
                 /* display: flex; */
-                padding-bottom: 100px;
+                padding-bottom: 50px;
             }
 
             .profile {
@@ -74,62 +74,64 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
     </head>
     <body>
-        <%- include('./nav'); %>
+        <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
         <div style="height: max-content; background-color: #f8f8f8;">
             <img src="hotel.jpg" style="border-radius: 10px; opacity: 95%; z-index: 0;" width="100%; margin-top: 200px;">
-            <div class="container">
-                <canvas id="myChart" width="400" height="220"></canvas>
-                <!-- 차트 --> 
-        <script>
-            var ctx = document.getElementById('myChart'); 
-            var myChart = new Chart(ctx, {
-                type: 'bar', 
-                data: { 
-                    labels: ['2020/12/02', '2020/12/03', '2020/12/04', '2020/12/05', '2020/12/06', '2020/12/07', '2020/12/08'], 
-                    datasets: [{ 
-                        label: '최근 일주일 예약현황', 
-                        data: [220, 295, 310, 245, 259, 304,300], 
-                        backgroundColor: [ 
-                            'rgba(255, 80, 132, 0.3)', 
-                            'rgba(255, 159, 64, 0.3)' ,
-                            'rgba(255, 206, 86, 0.3)', 
-                            'rgba(75, 192, 192, 0.3)', 
-                            'rgba(54, 162, 245, 0.3)', 
-                            'rgba(153, 102, 255, 0.3)', 
-                            
-                            'rgba(213, 97, 213, 0.3)' ,
-                        ], 
-                        borderColor: [ 
-                            'rgba(255, 80, 132, 1)', 
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 206, 86, 1)', 
-                            'rgba(75, 192, 192, 1)', 
-                            'rgba(54, 162, 245, 1)', 
-                            'rgba(153, 102, 255, 1)', 
-                            
-                            'rgba(213, 97, 213, 1)' ,
-                        ], 
-                        borderWidth: 1 
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: { 
-                                beginAtZero: true,
-                                stepSize:50,
-                                max: 500
-                                } 
-                            }] 
-                        } 
-                    } 
-                }); 
-        </script>
+            <div class="container" style="display: flex;">
+                
 
-                <h2>
-                    <p>우리집 같은 편안함</p>
+                <h2 style="margin-left: 45%;">
+                    <p style="width: max-content;">우리집 같은 편안함</p>
                     <strong>O(nlogn)</strong>
                 </h2>
+                <canvas id="myChart" width="320" height="240" style="margin-top: 100px; margin-left: 250px;"></canvas>
+                <!-- 차트 --> 
+                <script>
+                    var ctx = document.getElementById('myChart'); 
+                    var myChart = new Chart(ctx, {
+                        type: 'bar', 
+                        data: { 
+                            labels: ['2020/12/02', '2020/12/03', '2020/12/04', '2020/12/05', '2020/12/06', '2020/12/07', '2020/12/08'], 
+                            datasets: [{ 
+                                label: '최근 일주일 예약현황', 
+                                data: [220, 295, 310, 245, 259, 304,300], 
+                                backgroundColor: [ 
+                                    'rgba(255, 80, 132, 0.3)', 
+                                    'rgba(255, 159, 64, 0.3)' ,
+                                    'rgba(255, 206, 86, 0.3)', 
+                                    'rgba(75, 192, 192, 0.3)', 
+                                    'rgba(54, 162, 245, 0.3)', 
+                                    'rgba(153, 102, 255, 0.3)', 
+                                    
+                                    'rgba(213, 97, 213, 0.3)' ,
+                                ], 
+                                borderColor: [ 
+                                    'rgba(255, 80, 132, 1)', 
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 206, 86, 1)', 
+                                    'rgba(75, 192, 192, 1)', 
+                                    'rgba(54, 162, 245, 1)', 
+                                    'rgba(153, 102, 255, 1)', 
+                                    
+                                    'rgba(213, 97, 213, 1)' ,
+                                ], 
+                                borderWidth: 1 
+                            }]
+                        },
+                        options: {
+                            responsive: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: { 
+                                        beginAtZero: true,
+                                        stepSize:50,
+                                        max: 500
+                                        } 
+                                    }] 
+                                } 
+                            } 
+                        }); 
+                </script>
             </div>
         </div>
         

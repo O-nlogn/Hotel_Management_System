@@ -10,12 +10,13 @@
     border-right: solid 1px rgb(161, 161, 161);
     border-left: solid 1px rgb(207, 207, 207)">
         <p class='title'>
+          <div class="request_box"><%= r.request_time %></div>
           <button type="button" class="close" aria-label="Close" onclick="modify_request('<%=r.email%>','<%=r.reservation_time%>','<%=r.request_type%>','<%=r.request_time%>','<%=r.details%>','delete')" >
               <span aria-hidden="true">&times;</span>
           </button>
-        <div class="request_box"><%= r.request_time %></div>
-        <div id="request_type" class="request_box tag"><%= r.request_type%></div>
-        <div id="request_type" class="request_box tag"><%= r.room %></div>
+          
+          <div id="request_type" class="request_box tag"><%= r.request_type%></div>
+          <div id="request_type" class="request_box tag"><%= r.room %></div>
         </p><br>
         <p class="content">
         <div class="dropdown">
@@ -31,7 +32,7 @@
             </div>
             <div class="btn-group" role="group">
               <button class="btn btn-light" type="button"  onclick="modify_request('<%=r.email%>','<%=r.reservation_time%>','<%=r.request_type%>','<%=r.request_time%>','<%=r.details%>','done')"
-                style="margin-left: 109px; display: inline;">
+                style="margin-left: 127px; display: inline;">
                   완료
                </button>
 

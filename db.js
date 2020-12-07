@@ -6,7 +6,7 @@ const config = sql.createConnection({
     user: "root", // your username
     password: "1234", // your password
     database: "hotel_system",
-    dateString: "date"
+    dateStrings: "date"
 });
 
 module.exports = config;
