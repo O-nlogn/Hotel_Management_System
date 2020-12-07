@@ -32,7 +32,11 @@ module.exports = function (app) {
     /* 메뉴 관련 */
     app.get('/notice', function (req, res) {
         if (req.cookies.is_logged_in === 'true') {
-            res.render('notice', { username: req.cookies.username });
+            var sql = 'SELECT * FROM notice natural join(SELECT id as author_id, name as author FROM users)a ORDER BY id DESC';
+            dbconfig.query(sql, function(err,rows){
+                if (err) throw err;
+                else res.render('notice', { list:rows, username: req.cookies.username });
+            });
         }
         else res.redirect('/login');
     });

@@ -25,29 +25,17 @@
                         <th>조회수</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>3</td>
-                        <td>안녕하세요</td>
-                        <td>권유리</td>
-                        <td>2020.11.15</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>안녕하세요????</td>
-                        <td>권유리</td>
-                        <td>2020.11.15</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>안녕!!</td>
-                        <td>권유리</td>
-                        <td>2020.11.15</td>
-                        <td>100</td>
-                    </tr>
-                </tbody>
+                <%for (var i=0; i<list.length; i++){%>
+                    <tbody>
+                        <tr>
+                            <td><%=list[i].id%></td>
+                            <td><%=list[i].title%></td>
+                            <td><%=list[i].author%></td>
+                            <td><%=list[i].update_date.split(' ')[0]%></td>
+                            <td><%=list[i].view_cnt%></td>
+                        </tr>
+                    </tbody>
+                <%}%>
             </table>
             <hr/>
             <a class="btn btn-default pull-right">작성</a>
