@@ -192,6 +192,10 @@ h2 {
     padding-bottom: 5px;
 }
 
+.floor button:hover {
+    background-color: powderblue;
+}
+
 .floor button {
     border-radius: 3px;
     background-color: rgba(176, 224, 230, 0.3);

@@ -109,8 +109,8 @@ a:hover {
 #area1 {
     height: max-content;
     font-size: 13px;
-    position: fixed;
-    right: 10px !important;
+    position: absolute;
+    right: 50px !important;
 }
 
 #bar {
