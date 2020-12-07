@@ -63,8 +63,11 @@
                             $("#popup_staff").text(data.content[0].staff_name);
                             $("#popup_personnel").text(String(data.content[0].personnel) + "명");
                             $("#popup_should_paid").text(String(data.content[0].should_paid) + "원");
-                            $("#popup_checkin").text(data.content[0].checkin);
-                            $("#popup_checkout").text(data.content[0].checkout);
+
+                            var date = data.content[0].checkin.split(' ')[0].split('-');
+                            $("#popup_checkin").text(date[0]+"년 " + date[1]+"월 " + date[2]+"일");
+                            date = data.content[0].checkout.split(' ')[0].split('-');
+                            $("#popup_checkout").text(date[0] + "년 " + date[1] + "월 " + date[2] + "일");
 
                             $(".popup").show();
                             $(".dim").show();
