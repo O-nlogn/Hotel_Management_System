@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="font.css">
     <meta charset='UTF-8'>
     <title>
         직원관리
@@ -24,11 +25,6 @@
     <script src="js/doro.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-
-        * {
-            font-family: 'Nanum Gothic', sans-serif;
-        }
 
         body {
             overflow-x: hidden;
@@ -182,11 +178,6 @@
             padding-left: 100px;
         }
 
-        .container {
-            margin-left: 100px;
-            padding-top: 20px;
-        }
-
         #add_staff {
             background-color: rgba(176, 224, 230, 0.2) !important;
             color: black;
@@ -210,6 +201,7 @@
         .form-group label {
             width: 110px;
             margin-right: 5px;
+            margin-top: 5px;
         }
 
         #newstaff_name,
@@ -270,14 +262,30 @@
         }
 
         .container {
-            margin-left: 380px;
+            margin-left: 200px;
+            padding-top: 0px;
         }
 
+        .left-sidebar {
+            margin-top: 40px;
+        }
         #road {
             width: 230px;
         }
         #detail {
             width: 230px;
+        }
+
+        #staff_table2 th {
+            width: 170px;
+        }
+
+        #staff_table2 td {
+            width: 280px;
+        }
+
+        #genderform label {
+            width: max-content;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css"
@@ -683,13 +691,13 @@
 
                 <!-- form으로 checkbox를 통해 받은 정보를 통해 백에서 staff 정보를 보내주면 아래에서 출력 -->
 
-                <div class="col-lg-9" style="margin-top: 50px; margin-left: -60px;">
+                <div class="col-lg-9" style="margin-top: 30px; margin-left: -60px;">
                     <!-- 직원 검색창 -->
                     <button type="button" class="btn btn-pink btn-lg" data-toggle="modal" data-target="#myModal"
                         id="add_staff">직원 추가하기</button>
                     <div>
                         <!-- 직원추가 버튼 : 디자인시 바꿔주세용 -->
-                        <div class="modal fade" id="myModal" role="dialog" style="top: 10px;">
+                        <div class="modal fade" id="myModal" role="dialog" style="top: -10px;">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <form name="staffForm" action="/add_user" method="post" enctype='multipart/form-data'>
@@ -701,32 +709,36 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
-                                            <div class="form-group">
-                                                <label form="newstaff_name">이름</label>
-                                                <input name="name" type="text" id="newstaff_name"
-                                                    class="form-control">
+                                            <div style="display: flex;">
+                                                <div class="form-group">
+                                                    <label form="newstaff_name">이름</label>
+                                                    <input name="name" type="text" id="newstaff_name"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group" style="margin-left: 20px;" id="genderform">
+                                                    <label form="newstaff_gender" style="margin-left: 50px; margin-right: 20px;">성별</label>
+                                                    <label><input type="radio" name="gender" value="남" id="man">남</label>
+                                                    <label><input type="radio" name="gender" value="여" id="man">여</label>
+                                                </div>
+
                                             </div>
-                                            <div class="form-group">
-                                                <label form="newstaff_gender">성별</label>
-                                                <label><input type="radio" name="gender" value="남" id="man">남</label>
-                                                <label><input type="radio" name="gender" value="여" id="man">여</label>
-                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label style="width: 150px !important;">생년월일</label>
                                                 <input name="birth" placeholder="" type="date"
-                                                    id="newstaff_birth" class="form-control">
+                                                    id="newstaff_birth" class="form-control" style="width: 160px; margin-left: -40px;">
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_pay" style="width: 150px !important;">봉급(만원)</label>
                                                 <input name="salary" type="number"  min="2000" id="newstaff_pay"
-                                                    class="form-control">
+                                                    class="form-control" style="width: 100px; margin-left: -40px;">
                                             </div>
                                             <div class="form-group">
                                                 <label form="newstaff_name">주소</label>
                                                 <div style="display: flex;">
                                                     <div>
                                                       <input type="text" id="road" name="addressRoad" class="form-control" placeholder="도로명 주소" readonly/>
-                                                      <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" readonly/>
+                                                      <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" readonly style="width: 150px !important;"/>
                                                     </div>
                                                     <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
                                                     <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
@@ -765,7 +777,7 @@
                                             <div class="form-group">
                                                 <label>이메일</label><br>
                                                 <input name="email" placeholder="" type="email"
-                                                    id="newstaff_phonenum" class="form-control">
+                                                    id="newstaff_phonenum" class="form-control" style="width: 250px !important;">
                                             </div>
                                             <div class="form-group">
                                                 <label>계좌번호</label><br>
@@ -831,7 +843,7 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                      <div id="table0" style="display: grid; grid-template-columns: 450px 450px;">
+                      <div id="table0" style="display: grid; grid-template-columns: 580px 580px;">
                         <% for (var i=0; i < staff.length; i++) { %>
                         <!-- 검색기능을 위해 div에 id 부여 -->
 
@@ -841,7 +853,7 @@
                                 <table id="staff_table2">
                                     <tbody>
                                         <tr>
-                                           <td rowspan="5"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 135px; height: 180px;"></td>
+                                           <td rowspan="5" style="width: 135px; height: 180px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 159px; height: 212px;"></td>
                                             <th>이름</th>
                                             <td><%= staff[i].name%>
                                               <% if (staff[i].on_work === 1 ) {%>
@@ -861,11 +873,11 @@
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td><%= staff[i].email %></td>
+                                            <td style="margin: 0; padding: 0;"><%=staff[i].email%></td>
                                         </tr>
                                         <tr>
                                             <th>사용가능언어</th>
-                                            <td>
+                                            <td style="word-break: keep-all; height: 80px;">
                                               <% var t=0;%>
                                               <% for (var j=0; j < multilingual.length; j++) { %>
 

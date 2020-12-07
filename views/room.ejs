@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>객실관리</title>
+	<link rel="stylesheet" type="text/css" href="font.css">
 	<link rel="stylesheet" type="text/css" href="room.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
@@ -207,7 +208,7 @@
 			url: '/reload_table',
 			success: (data) => {
 				$('.table').html(data);
-				setTimeout('get_table_data()', 1000);
+				setTimeout('get_table_data()', 100000);
 			}
 		});
 	}
