@@ -262,7 +262,7 @@
         }
 
         .container {
-            margin-left: 200px;
+            margin-left: 150px;
             padding-top: 0px;
         }
 
@@ -276,14 +276,14 @@
             width: 230px;
         }
 
-        #staff_table2 th {
-            width: 170px;
-        }
 
         #staff_table2 td {
-            width: 280px;
+            width: 320px;
         }
 
+        #staff_table2 th {
+            width: 130px;
+        }
         #genderform label {
             width: max-content;
         }
@@ -829,7 +829,7 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                      <div id="table0" style="display: grid; grid-template-columns: 580px 580px;">
+                      <div id="table0" style="display: grid; grid-template-columns: 630px 630px;">
                         <% for (var i=0; i < staff.length; i++) { %>
                         <!-- 검색기능을 위해 div에 id 부여 -->
 
@@ -839,7 +839,7 @@
                                 <table id="staff_table2">
                                     <tbody>
                                         <tr>
-                                           <td rowspan="5" style="width: 135px; height: 180px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 180px; height: 240px;"></td>
+                                           <td rowspan="5" style="width: 190px; height: 250px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 180px; height: 240px;"></td>
                                             <th>이름</th>
                                             <td><%= staff[i].name%>
                                               <% if (staff[i].on_work === 1 ) {%>
@@ -859,7 +859,7 @@
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td style="margin: 0; padding: 0;"><%=staff[i].email%></td>
+                                            <td style="margin: 0; padding: 0;">mush_ve_nom_@naver.com</td>
                                         </tr>
                                         <tr>
                                             <th>사용가능언어</th>

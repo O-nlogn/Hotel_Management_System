@@ -4,7 +4,7 @@ var sql = require('mysql');
 const config = sql.createConnection({
     host: "localhost",
     user: "root", // your username
-    password: "HW8418635@", // your password
+    password: "1234", // your password
     database: "hotel_system",
     dateStrings: "date"
 });
