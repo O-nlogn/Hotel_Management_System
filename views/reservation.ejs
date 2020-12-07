@@ -605,10 +605,22 @@
         var status = $("#status_change_to option:selected").val();
         var password = $("#reservation_pw").val();
 
-        if (cur_status === '취소') alert('이미 취소된 예약입니다.');
-        else if (cur_status === '퇴실완료') alert('이미 체크아웃된 예약입니다.');
-        else if (cur_status === '예약완료' && status === 'check-in') alert('체크인 가능 기간이 아닙니다.');
-        else if (cur_status === '입실완료' || cur_status === '퇴실예정') alert('이미 체크인 처리된 예약입니다.');
+        if (cur_status === '취소') {
+            alert('이미 취소된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '퇴실완료') {
+            alert('이미 체크아웃된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '예약완료' && status === 'check-in') {
+           alert('체크인 가능 기간이 아닙니다.');
+           location.reload(true);
+        }
+        else if (cur_status === '입실완료' || cur_status === '퇴실예정') {
+            alert('이미 체크인 처리된 예약입니다.');
+            location.reload(true);
+        }
         else{
             $.ajax({
                 type: 'POST',
@@ -622,8 +634,9 @@
                         $.ajax({
                             type: 'POST',
                             url: "/checkin",
-                            data: { email: email, time: reservation_time},
+                            data: { email: email, time: reservation_time },
                             success: function (data) {
+                                alert('담당 직원 : '+data.user_name+'\n객실 : '+data.room_num);
                                 location.reload(true);
                             }
                         });
@@ -632,7 +645,6 @@
                 }
             });
         }
-        location.reload(true);
     }
 </script>
 </html>
