@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
 *{
     font-family: 'Nanum Gothic', sans-serif;
 }
@@ -39,8 +40,8 @@
 }
 
 #request {
-    margin: 40px 0 0 100px;
-    border: dotted 2.5px black;
+    margin:25px 0 0 100px;
+    border: solid 2.5px rgb(99, 99, 99);
     padding: 30px;
     border-radius: 30px;
     height: max-content;
