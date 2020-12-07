@@ -318,6 +318,11 @@
                 return;
             }
 
+            if (breakfast > people) {
+                alert("조식 예약 인원이 투숙 인원보다 많습니다.");
+                return;
+            }
+
             reservationForm.submit();
             $("#myModal").hide();
         }
