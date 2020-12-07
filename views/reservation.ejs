@@ -495,7 +495,7 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <!-- 상세보기 버튼 -->
-                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].room_type%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkin%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light"><i class="fa-fw fa fa-plus" style="color: white"></i></button>
                                                 </td>
                                             </tr>
                                             <script language="javascript">
@@ -519,16 +519,21 @@
                                                 <table style="margin: auto;">
                                                     <tbody id="body222">
                                                         <tr>
-                                                            <!-- 고객 이름 보기 : 구현 필요 -->
-                                                            <th>퇴실시간</th>
+                                                            <th>예약자 이메일</th>
                                                             <td>
-                                                                <span id="checkout_time_replace"></span>
+                                                                <span id="reservation_email"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>조식 예약 인원</th>
+                                                            <th>숙박 날짜</th>
                                                             <td>
-                                                                <span id="breakfast_num"></span>
+                                                                <span id="time_replace"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>방 타입</th>
+                                                            <td>
+                                                                <span id="room_type_replace"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -538,9 +543,9 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>예약자 이메일</th>
+                                                            <th>조식 예약 인원</th>
                                                             <td>
-                                                                <span id="reservation_email"></span>
+                                                                <span id="breakfast_num"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -606,12 +611,14 @@
         });
     });
 
-    function change_modal_data(email, reservation_time, checkout, reservation_status, breakfast, personnel, total_price){
-        $("#checkout_time_replace").text(checkout);
-        $("#breakfast_num").text(breakfast);
-        $("#personnel_num").text(personnel);
+    function change_modal_data(email, room_type, reservation_time, checkin, checkout, reservation_status, breakfast, personnel, total_price){
+        var date = checkin.split(' ')[0] + " / " + checkout.split(' ')[0];
+        $("#time_replace").text(date);
+        $("#room_type_replace").text(room_type);
+        $("#breakfast_num").text(breakfast + "명");
+        $("#personnel_num").text(personnel + "명");
         $("#reservation_email").text(email);
-        $("#total_price").text(total_price);
+        $("#total_price").text(total_price + "원");
         $("#modify_reservation").on("click", function(){
             change_reservation_status(email,reservation_time,reservation_status);
         });
