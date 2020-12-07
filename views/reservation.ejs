@@ -268,6 +268,20 @@
         #do label{
             margin-top: 5px;
         }
+        #res_details td {
+            text-align: right;
+            padding-left: 20px;
+            width: 230px;
+        }
+        
+        #res_details tr, #res_details td, #res_details th {
+            height: 35px !important;
+            border-radius: 0;
+        }
+
+        #body222 th{
+            background-color: rgba(176, 224, 230, 0.7);
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="cardfooter.css">
     <!-- 예약팝업 form 입력값 검증 -->
@@ -492,57 +506,78 @@
                                     <% } %>
                                 </tbody>
                             </table>
-                            <div class="modal fade" id="myModal2" role="dialog" style="top: 200px;">
+                            <div class="modal fade" id="myModal2" role="dialog" style="top: 200px; left: 230px;">
                                 <div class="modal-dialog">
                                 <!-- Modal content-->
-                                    <div class="modal-content">
+                                    <div class="modal-content" style="width: max-content;">
                                         <div class="modal-header">
                                             <h2 class="modal-title">예약 상세페이지</h2>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button><br>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <div class="flexdiv">
-                                                    <label class="flexdiv" style="width: 200px;">퇴실시간<label>
-                                                    <div id="checkout_time_replace"style="display:inline-block; width:400px; margin-left:20px"></div>
-                                                </div>
-                                                <div class="flexdiv">
-                                                    <label class="flexdiv" style="width: 200px;">조식 예약 인원<label>
-                                                    <div id="breakfast_num" style="display:inline-block; width:400px; margin-left:20px"></div>
-                                                </div>
-                                                <div class="flexdiv">
-                                                    <label class="flexdiv" style="width: 200px;">투숙 인원<label>
-                                                    <div id = "personnel_num" style="display:inline-block; width:400px; margin-left:20px"></div>
-                                                </div>
-                                                <div class="flexdiv">
-                                                    <label class="flexdiv" style="width: 200px;">예약자 이메일<label>
-                                                    <div id = "reservation_email" style="display:inline-block; width:400px; margin-left:20px"></div>
-                                                </div>
-                                                <div class="flexdiv">
-                                                    <label class="flexdiv" style="width: 200px;">전체 가격<label>
-                                                    <div id = "total_price"style="display:inline-block; width:400px; margin-left:20px"></div>
-                                                </div>
+                                        <div class="modal-body" style="margin: 20px !important;">
+                                            <div id="res_details">
+                                                <table style="margin: auto;">
+                                                    <tbody id="body222">
+                                                        <tr>
+                                                            <!-- 고객 이름 보기 : 구현 필요 -->
+                                                            <th>퇴실시간</th>
+                                                            <td>
+                                                                <span id="checkout_time_replace"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>조식 예약 인원</th>
+                                                            <td>
+                                                                <span id="breakfast_num"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>투숙 인원</th>
+                                                            <td>
+                                                                <span id="personnel_num"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>예약자 이메일</th>
+                                                            <td>
+                                                                <span id="reservation_email"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>전체 가격</th>
+                                                            <td>
+                                                                <span id = "total_price"></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+
+                                                
                             
-                                                <div class="flexdiv" id="do">
-                                                    <div class="flexdiv">
-                                                        <label for="inout" style="width: 50px; margin-right: 5px;">처리</label>
-                                                        <select name="status_change_to" id="status_change_to" style="margin-right: 50px;">
-                                                            <option id="inout" value="check-in">체크인</option>
-                                                            <option value="cancel_reservation">예약취소</option>
-                                                        </select>
+                                                <div id="do" style="border-top: dotted 3px rgb(196, 196, 196); padding-top: 25px; margin-top: 20px;">
+                                                    <div class="flexdiv" style="width: max-content; margin: auto;">
+                                                        <div class="flexdiv" style="margin-right: 50px;">
+                                                            <select name="status_change_to" id="status_change_to">
+                                                                <option id="inout" value="check-in">체크인</option>
+                                                                <option value="cancel_reservation">예약취소</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="flexdiv">
+                                                            <label form="reservation_pw" style="width: 130px; margin-right: -40px !important;">예약 비밀번호</label>
+                                                            <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;"
+                                                                class="form-control">
+                                                        </div>
+
                                                     </div>
-                                                    <div class="flexdiv">
-                                                        <label form="reservation_pw" style="width: 130px; margin-right: -15px !important;">예약 비밀번호</label>
-                                                        <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;"
-                                                            class="form-control">
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
                             
                                         <div class="modal-footer">
                                             <div class="form-group">
-                                                <button class="btn btn-default" id="modify_reservation" class="close" data-dismiss="modal">완료</button>
+                                                <button class="btn btn-default" id="modify_reservation" class="close" data-dismiss="modal" style="background-color: rgba(176, 224, 230, 0.7);" id="btn33">완료</button>
                                             </div>
                                         </div>
                                     </div>
