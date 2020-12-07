@@ -321,7 +321,7 @@
     </script>
 </head>
 
-<body>
+<body onload = "clicked_function('입실예정');click_effect(3);">
     <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!--  nav바는 흰색, 밑 배경은 다른 색으로 까는것도 좋을 것 같음..  -->
@@ -653,8 +653,14 @@
                             url: "/checkin",
                             data: { email: email, time: reservation_time },
                             success: function (data) {
-                                alert('담당 직원 : '+data.user_name+'\n객실 : '+data.room_num);
-                                location.reload(true);
+                                if (data.success) {
+                                    alert('담당 직원 : '+data.user_name+'\n객실 : '+data.room_num);
+                                    location.reload(true);
+                                }
+                                else {
+                                    alert(data.error);
+                                    location.reload(true);
+                                }
                             }
                         });
                     }
