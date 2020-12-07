@@ -262,7 +262,7 @@
         }
 
         .container {
-            margin-left: 200px;
+            margin-left: 150px;
             padding-top: 0px;
         }
 
@@ -281,7 +281,7 @@
         }
 
         #staff_table2 td {
-            width: 280px;
+            width: 340px;
         }
 
         #genderform label {
@@ -829,7 +829,7 @@
                         <!-- 직원 추가 팝업 끝 -->
                     </div>
                     <div class="row">
-                      <div id="table0" style="display: grid; grid-template-columns: 580px 580px;">
+                      <div id="table0" style="display: grid; grid-template-columns: 600px 600px;">
                         <% for (var i=0; i < staff.length; i++) { %>
                         <!-- 검색기능을 위해 div에 id 부여 -->
 
@@ -839,7 +839,7 @@
                                 <table id="staff_table2">
                                     <tbody>
                                         <tr>
-                                           <td rowspan="5" style="width: 135px; height: 180px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 180px; height: 240px;"></td>
+                                           <td rowspan="5" style="width: 190px; height: 250px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 180px; height: 240px;"></td>
                                             <th>이름</th>
                                             <td><%= staff[i].name%>
                                               <% if (staff[i].on_work === 1 ) {%>
