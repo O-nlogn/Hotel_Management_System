@@ -7,7 +7,7 @@
             O(nlogn) 호텔 관리 정보 시스템
         </title>
         <meta charset='UTF-8'>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <style>
 
@@ -32,7 +32,7 @@
                 width: 600px;
                 height: 150px;
             }
-            
+
             a {
                 text-decoration: none;
                 color: black;
@@ -70,71 +70,77 @@
         </style>
         <!-- 부트스트랩 -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body>
         <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
         <div style="height: max-content; background-color: #f8f8f8;">
             <img src="hotel.jpg" style="border-radius: 10px; opacity: 95%; z-index: 0;" width="100%; margin-top: 200px;">
             <div class="container" style="display: flex;">
-                
+
 
                 <h2 style="margin-left: 45%;">
                     <p style="width: max-content;">우리집 같은 편안함</p>
                     <strong>O(nlogn)</strong>
                 </h2>
-                <canvas id="myChart" width="320" height="240" style="margin-top: 100px; margin-left: 250px;"></canvas>
-                <!-- 차트 --> 
+              </div>
+              <div id="do" style="border-top: dotted 3px rgb(234, 236, 238); padding-top: 25px; margin-top: 20px;">
+            <div class="" style="display:inline;">
+                <canvas id="myChart" width="520" height="390" style="margin-top: 0px; margin-left: 200px;float:left;"></canvas>
+                <img src="vision.png" width="700" height="250"alt="My Image" style="margin-left:170px;margin-top:50px;float:left;">
+            </div>
+
+                <!-- 차트 -->
                 <script>
-                    var ctx = document.getElementById('myChart'); 
+                    var ctx = document.getElementById('myChart');
                     var myChart = new Chart(ctx, {
-                        type: 'bar', 
-                        data: { 
+                        type: 'bar',
+                        data: {
                             labels: ['<%=date_cnt[0].d_res%>','<%=date_cnt[1].d_res %>', '<%=date_cnt[2].d_res %>', '<%=date_cnt[3].d_res %>', '<%=date_cnt[4].d_res %>', '<%=date_cnt[5].d_res %>', '<%=date_cnt[6].d_res %>'],
-                            datasets: [{ 
-                                label: '최근 일주일 예약현황', 
-                                data: ['<%=date_cnt[0].cnt%>', '<%=date_cnt[1].cnt%>', '<%=date_cnt[2].cnt%>', '<%=date_cnt[3].cnt%>', '<%=date_cnt[4].cnt%>', '<%=date_cnt[5].cnt%>', '<%=date_cnt[6].cnt%>'], 
-                                backgroundColor: [ 
-                                    'rgba(255, 80, 132, 0.3)', 
+                            datasets: [{
+                                label: '최근 일주일 예약현황',
+                                data: ['<%=date_cnt[0].cnt%>', '<%=date_cnt[1].cnt%>', '<%=date_cnt[2].cnt%>', '<%=date_cnt[3].cnt%>', '<%=date_cnt[4].cnt%>', '<%=date_cnt[5].cnt%>', '<%=date_cnt[6].cnt%>'],
+                                backgroundColor: [
+                                    'rgba(255, 80, 132, 0.3)',
                                     'rgba(255, 159, 64, 0.3)' ,
-                                    'rgba(255, 206, 86, 0.3)', 
-                                    'rgba(75, 192, 192, 0.3)', 
-                                    'rgba(54, 162, 245, 0.3)', 
-                                    'rgba(153, 102, 255, 0.3)', 
-                                    
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(75, 192, 192, 0.3)',
+                                    'rgba(54, 162, 245, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+
                                     'rgba(213, 97, 213, 0.3)' ,
-                                ], 
-                                borderColor: [ 
-                                    'rgba(255, 80, 132, 1)', 
+                                ],
+                                borderColor: [
+                                    'rgba(255, 80, 132, 1)',
                                     'rgba(255, 159, 64, 1)',
-                                    'rgba(255, 206, 86, 1)', 
-                                    'rgba(75, 192, 192, 1)', 
-                                    'rgba(54, 162, 245, 1)', 
-                                    'rgba(153, 102, 255, 1)', 
-                                    
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(54, 162, 245, 1)',
+                                    'rgba(153, 102, 255, 1)',
+
                                     'rgba(213, 97, 213, 1)' ,
-                                ], 
-                                borderWidth: 1 
+                                ],
+                                borderWidth: 1
                             }]
                         },
                         options: {
                             responsive: false,
                             scales: {
                                 yAxes: [{
-                                    ticks: { 
+                                    ticks: {
                                         beginAtZero: true,
                                         stepSize:10,
                                         max: 50
-                                        } 
-                                    }] 
-                                } 
-                            } 
-                        }); 
+                                        }
+                                    }]
+                                }
+                            }
+                        });
                 </script>
             </div>
         </div>
-        
-        
+
+
     </body>
 </html>
