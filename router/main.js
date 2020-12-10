@@ -128,8 +128,8 @@ module.exports = function (app) {
 
 
     app.get('/request_list', function (req, res) {
-        var sql = 'select room, email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0';
-        sql += ' union select room, email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0';
+        var sql = 'select * from(select room, email, reservation_time, "요청사항" as request_type, request_time, details, 0 as cnt from request natural join stay where done=0';
+        sql += ' union select room, email, reservation_time, "룸서비스" as request_type, request_time, service as details, cnt from receipt_service natural join stay where done=0)a order by request_time';
         dbconfig.query(sql, function (err, rows, fields) {
             if (err) {
                 console.log(err);

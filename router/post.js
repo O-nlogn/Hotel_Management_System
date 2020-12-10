@@ -139,7 +139,7 @@ module.exports = function (app) {
                                 res.writeHead(200);
                                 res.end();
                             }
-                            else res.render('main', { username: req.cookies.username });
+                            else res.redirect('/main');
                         });
                     }
                 }
