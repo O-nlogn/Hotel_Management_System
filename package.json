@@ -1,0 +1,30 @@
+{
+  "name": "Hotel_Management_System",
+  "version": "1.0.0",
+  "description": "## Member * 2019037129 소프트웨어학부 신민경 * 2019083436 소프트웨어학부 권유리 * 2017013390 응용수학학과 김성연 * 2019036844 소프트웨어학부 하현우 * 2019052851 소프트웨어학부 박준성 ___ <br>",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-nlogn/Hotel_Management_System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-nlogn/Hotel_Management_System/issues"
+  },
+  "homepage": "https://github.com/O-nlogn/Hotel_Management_System#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "sequelize": "^6.3.5"
+  }
+}

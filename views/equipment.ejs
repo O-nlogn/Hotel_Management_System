@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="font.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비품관리</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="cardfooter.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        .avatar--md .avatar__content img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #deliver {
+            background-color: powderblue;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px;
+        }
+
+        #deliver:hover {
+            background-color: rgb(79, 158, 168);
+        }
+
+        #list {
+            text-align: center !important;
+        }
+
+        #list th {
+            text-align: center !important;
+        }
+
+        select {
+            width: 130px;
+            padding: .8em .5em;
+            border: 1px solid #999;
+            font-family: inherit;
+            background: url('arrow.jpg') no-repeat 95% 50%;
+            border-radius: 0px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* select::-ms-expand {
+            display: none;
+        } */
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#keyword").keyup(function () {
+                //var k = $(this).val();
+                show_result();
+            })
+        })
+        $(document).ready(function () {
+            $("#keyword").keyup(function () {
+                show_result();
+            })
+        })
+        function show_result() {
+            var t;
+            var search_content = $("#keyword").val().toLowerCase();
+            var subt = document.getElementById("ttbody").getElementsByTagName("tr");
+            for (var i = 0; i < subt.length; i++) {
+                t = subt[i].getElementsByTagName("td")[0].innerText || subt[i].getElementsByTagName("td")[0].innerHTML;
+                if (subt[i].innerText.indexOf(search_content) > -1) {
+                    $(subt[i]).show();
+                } else {
+                    $(subt[i]).hide();
+                }
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
+    <div style="background-color: #f8f8f8; height: max-content; padding-bottom: 10px;">
+        <div class="container" style="padding-top: 70px;">
+            <div class="row" style="width: 1000px; margin: 0;">
+                <div class="col-lg-9" style="margin: 0; width: 1100px;">
+                    <!-- 검색창 -->
+                    <div class="input-group" style="display: flex; margin-bottom: 5px; display: inline-block; float: right;">
+                        <input placeholder="비품명으로 검색" type="text" class="form-control" style="width: 300px;"
+                            id="keyword">
+                        <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                    </div>
+                    <!-- 필터링 선택 부분 -->
+                    <div class="col-md-6 col-lg-3 my-3" style="padding: 0; margin-bottom: 40px; display: inline-block;">
+                        <div class="select-container">
+                            <select class="custom-select">
+                                <option selected="">전체 비품</option>
+                                <option value="1">주문 필요 비품</option>
+                                <option value="2">주문 중인 비품</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 Card_custom-card--border_5wJKy card">
+                        <div class="table-responsive-xl">
+                            <table class="mb-0 table table-hover" id="list">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 24px">비품명</th>
+                                        <th style="font-size: 24px">사진</th>
+                                        <th style="font-size: 24px">잔여량</th>
+                                        <th style="font-size: 24px">주문여부</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ttbody">
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">휴지</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="tissue.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">394개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=559&tb=&count=&category=3r08&pg=1') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">스킨</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="skin.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">400개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=301&tb=&count=&category=2r04&pg=1') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">로션</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="lotion.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">334개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=300&tb=&count=&category=2r04&pg=1#') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">샴푸</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="shampoo.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">482개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=611&tb=&count=&category=3r01&pg=1') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">헤어 컨디셔너</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="treatment.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">502개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=612&tb=&count=&category=3r01&pg=1#') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">바디워시</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="bodywash.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">463개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=613&tb=&count=&category=3r01&pg=1') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">면도기</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="razor.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">945개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=370&tb=&count=&category=3r10&pg=1#') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">비누</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="soap.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">945개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=610&tb=&count=&category=3r02&pg=1#') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">칫솔</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="toothbrush.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">935개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=533&tb=&count=&category=4r01&pg=1') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">치약</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="toothpaste.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">295개</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div><button id="deliver"
+                                                    onclick="window.open('http://b1000.kr/view.php?num=610&tb=&count=&category=3r02&pg=1#') ">주문하기</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">드라이기</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="dryer.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">94개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=580&tb=&count=&category=1r04&pg=1') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">커피포트</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="port.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">94개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=547&tb=&count=&category=1r01&pg=1#') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">빗</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="comb.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">24개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=547&tb=&count=&category=1r01&pg=1#') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">일회용 객실화</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="shoes.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">924개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=528&tb=&count=&category=1r02&pg=1#') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <div style="font-size: 20px">옷걸이</div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div class="avatar avatar--md avatar-image__image">
+                                                    <div class="avatar__content"><img src="hanger.png"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div style="font-size: 16px">434개</span></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="avatar-image avatar-image--loaded">
+                                                <div><button id="deliver"
+                                                        onclick="window.open('http://b1000.kr/view.php?num=109&tb=&count=&category=1r06&pg=1#') ">주문하기</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

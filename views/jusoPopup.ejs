@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <title>Insert title here</title>
+	<%
+	const {
+		inputYn,
+		roadFullAddr,
+		roadAddrPart1,
+		roadAddrPart2,
+		engAddr,
+		jibunAddr,
+		zipNo,
+		addrDetail,
+		admCd,
+		rnMgtSn,
+		bdMgtSn,
+		detBdNmList,
+		bdNm,
+		bdKdcd,
+		sggNm,
+		emdNm,
+		rn,
+		udrtYn,
+		buldMnnm,
+		buldSlno,
+		mtYn,
+		lnbrMnnm,
+		lnbrSlno,
+		emdNo,
+		siNm,
+		liNm,
+	} = locals;
+	%>
+  </head>
+  <script language="javascript">
+    function init() {
+      var url = location.href;
+      var confmKey = 'devU01TX0FVVEgyMDIwMTEyODIwMTUwMDExMDQ3NDk=';
+      var resultType = '4';
+      var inputYn = '<%=inputYn%>';
+      if (inputYn != 'Y') {
+          $('#confmKey').val(confmKey);
+          $('#returnUrl').val(url);
+          $('#resultType').val(resultType);
+          $('#form').attr('action', 'http://www.juso.go.kr/addrlink/addrLinkUrl.do');
+          $('#form').submit();
+      } 
+      else {
+        opener.jusoCallBack(
+          '<%=roadFullAddr%>',
+          '<%=roadAddrPart1%>',
+          '<%=addrDetail%>',
+          '<%=roadAddrPart2%>',
+          '<%=engAddr%>',
+          '<%=jibunAddr%>',
+          '<%=zipNo%>',
+          '<%=admCd%>',
+          '<%=rnMgtSn%>',
+          '<%=bdMgtSn%>',
+          '<%=detBdNmList%>',
+          '<%=bdNm%>',
+          '<%=bdKdcd%>',
+          '<%=siNm%>',
+          '<%=sggNm%>',
+          '<%=emdNm%>',
+          '<%=liNm%>',
+          '<%=rn%>',
+          '<%=udrtYn%>',
+          '<%=buldMnnm%>',
+          '<%=buldSlno%>',
+          '<%=mtYn%>',
+          '<%=lnbrMnnm%>',
+          '<%=lnbrSlno%>',
+          '<%=emdNo%>'
+        );
+        window.close();
+      }
+    }
+  </script>
+  <body onload="init();">
+    <form id="form" name="form" method="post">
+      <input type="hidden" id="confmKey" name="confmKey" value="" />
+      <input type="hidden" id="returnUrl" name="returnUrl" value="" />
+      <input type="hidden" id="resultType" name="resultType" value="" />
+    </form>
+  </body>
+</html>

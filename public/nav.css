@@ -1,0 +1,129 @@
+@charset "utf-8";
+#menu {
+    height: 30px;
+    width: 900px;
+    /* (NROW*WEIGHT) */
+    margin-left: 170px;
+    /* margin: auto auto 30px; */
+}
+
+
+@media(max-width: 1350px) {
+    .menuItem, .submenuItem {
+        font-size: 14px !important;
+        width: 100px !important;
+    }
+}
+
+@media(max-width: 1000px) {
+    .menuItem, .submenuItem {
+        font-size: 14px !important;
+        width: 80px !important;
+    }
+
+    #menu {
+        margin-left: 60px;
+    }
+}
+
+@media(max-width: 900px) {
+    .menuItem, .submenuItem {
+        width: 60px !important;
+    }
+}
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#menu ul li {
+    line-height: 30px;
+    /* HEIGHT */
+    vertical-align: middle;
+    text-align: center;
+    /* display: inline-block; */
+    float: left;
+    position: relative;
+}
+.menuItem, .submenuItem {
+    text-decoration: none;
+    display: inline-block;
+    width: 150px;
+    /* 기본 넓이를 150px로 설정 */
+    font-size: 18px;
+    font-weight: bold;
+}
+.menuItem {
+    color: black;
+}
+.menuItem:hover .menuItem {
+    color: powderblue;
+    border-bottom: solid 3px powderblue;
+}
+.submenuItem {
+    color: black;
+    margin-top: -1px;
+    background-color: white;
+}
+
+.submenuItem:hover {
+    text-decoration: none;
+}
+
+.submenu {
+    position: absolute;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    z-index: 1;
+    /* 부모보다 커지면 숨어 */
+    transition: height 0.2s;
+}
+.menuItem:hover .submenu {
+    height: 120px;
+    /* (MAX_CONTENT_NUM)*HEIGHT */
+}
+.submenuItem:hover {
+    color: powderblue;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+
+#logout, #username {
+    color: black;
+}
+
+#logout:hover, #username:hover {
+    font-weight: normal;
+    cursor: pointer;
+    color: rgb(72, 159, 194);
+}
+
+#area1 {
+    height: max-content;
+    font-size: 13px;
+    position: absolute;
+    right: 50px !important;
+}
+
+#bar {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#logoarea {
+    margin-left: 200px;
+}
+
+@media(max-width: 1500px) {
+    #logoarea {
+        margin-left: 50px;
+    }
+}

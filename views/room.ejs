@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>객실관리</title>
+	<link rel="stylesheet" type="text/css" href="font.css">
+	<link rel="stylesheet" type="text/css" href="room.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+
+	<!--특이사항 입력을 위한 부분 : 입력한대로 화면 출력 및 저장-->
+	<script>
+		window.onload = function () {
+			document.getElementById("btn22").onclick = processText;
+		}
+		function processText() {
+			var txtBox = document.getElementById("inputbox");
+			var lines = txtBox.value.split("\n");
+			var resultString = `<ul class="resultString">`;
+			for (var i = 0; i < lines.length; i++) {
+				resultString += '<li>' + lines[i] + '</li>';
+			}
+			resultString += '</ul>';
+			var blk = document.getElementById("result");
+			blk.innerHTML = resultString;
+		}
+	</script>
+
+	<!-- 층별보기 -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+			$('#floor3').click(function () {
+				// var offset = $('#301').offset(); //선택한 태그의 위치를 반환
+				// console.log(offset);
+				$('.table').animate({ scrollTop: 0 }, 300);
+			});
+			$('#floor4').click(function () {
+				$('.table').animate({ scrollTop: 480 }, 300);
+			});
+			$('#floor5').click(function () {
+				$('.table').animate({ scrollTop: 960 }, 300);
+			});
+			$('#floor6').click(function () {
+				$('.table').animate({ scrollTop: 1440 }, 300);
+			});
+			$('#floor7').click(function () {
+				$('.table').animate({ scrollTop: 1920 }, 300);
+			});
+			$('#floor8').click(function () {
+				$('.table').animate({ scrollTop: 2400 }, 300);
+			});
+			$('#floor9').click(function () {
+				$('.table').animate({ scrollTop: 2880 }, 300);
+			});
+			$('#floor10').click(function () {
+				$('.table').animate({ scrollTop: 3368 }, 300);
+			});
+			$('#floor11').click(function () {
+				$('.table').animate({ scrollTop: 3868 }, 300);
+			});
+			$('#floor12').click(function () {
+				$('.table').animate({ scrollTop: 4420 }, 300);
+			});
+
+			$('.request_popup .close').click(function(){
+				$('.request_popup').hide();
+				$('.dim').hide();
+			});
+        });
+    </script>
+</head>
+
+<body>
+	<div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
+	<div style="height: max-content; padding-bottom: 10px; background-color: #f8f8f8;">
+		<div class="body">
+			<!-- 층별보기 -->
+			<div class = "floor">
+				<button id="floor3" style="font-weight: bold"><div class="button">3층</div></button>
+				<div id=""></div>
+				<button id="floor4" style="font-weight: bold"><div class="button">4층</div></button>
+				<div id=""></div>
+				<button id="floor5" style="font-weight: bold"><div class="button">5층</div></button>
+				<div id=""></div>
+				<button id="floor6" style="font-weight: bold"><div class="button">6층</div></button>
+				<div id=""></div>
+				<button id="floor7" style="font-weight: bold"><div class="button">7층</div></button>
+				<div id=""></div>
+				<button id="floor8" style="font-weight: bold"><div class="button">8층</div></button>
+				<div id=""></div>
+				<button id="floor9" style="font-weight: bold"><div class="button">9층</div></button>
+				<div id=""></div>
+				<button id="floor10" style="font-weight: bold"><div class="button">10층</div></button>
+				<div id=""></div>
+				<button id="floor11" style="font-weight: bold"><div class="button">11층</div></button>
+				<div id=""></div>
+				<button id="floor12" style="font-weight: bold"><div class="button">12층</div></button>
+				<div id=""></div>
+			</div>
+
+			<!--- 실시간 반영을 위한 부분(팝업, 객실 테이블)-->
+			<div class = 'table' style="width: 654px;">
+			</div>
+
+			<%- include('./request'); %>
+		</div>
+	</div>
+
+	<div class="request_popup requestItem" style="
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+	border-top: solid 2px rgb(0, 0, 0);
+	border-bottom: solid 2px rgb(0, 0, 0);
+    border-right: solid 2px rgb(0, 0, 0);
+    border-left: solid 2px rgb(0, 0, 0)">
+		<p class='title'>		</p><br>
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div id="request_popup_time" class="request_box"></div><br>
+				<div id="request_popup_room" class="request_type tag" style="float:right;display:inline;"></div>
+				<div id="request_popup_type"  class="request_type tag" style="float:right;display:inline;"></div>
+
+
+
+
+		<p class="content">
+			<div id="request_popup_details" style="margin-top: 80px; padding: 10px; word-break: break-all; background-color: rgba(245, 222, 179, 0.3); border-radius: 5px;">
+
+		    </div>
+			<div class="btn-group" role="group" style="margin-top: 8px;float:right; display: inline;">
+				<button class="btn btn-light" id="delete_request" type="button" >
+					취소
+				</button>
+
+				<button class="btn btn-light" id="complete_request" type="button" >
+					완료
+				</button>
+			</div>
+		</p>
+	</div>
+
+	<div class="popup">
+		<div style="text-align: right;">
+			<svg class="close" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
+					clip-rule="evenodd">
+					<path
+						d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+				</svg>
+
+		</div>
+		<h2 id="popup_room"></h2>
+		<div>
+			<table class="type1">
+				<tbody>
+					<tr>
+						<!-- 고객 이름 보기 : 구현 필요 -->
+						<th>고객명</th>
+						<td id="popup_name"></td>
+					</tr>
+					<tr>
+						<th>미결제 금액</th>
+						<td id="popup_should_paid"> 원</td>
+					</tr>
+					<tr>
+						<th>담당 직원</th>
+						<td id="popup_staff"></td>
+					</tr>
+					<tr>
+						<th>입실 시간</th>
+						<td id="popup_checkin"></td>
+					</tr>
+					<tr>
+						<th>퇴실 예정 시간</th>
+						<td id="popup_checkout"></td>
+					</tr>
+					<!-- <tr>
+						<th>특이 사항</th>
+						<td>
+							<textarea id="inputbox" cols="43" rows="6"></textarea>
+							<div><button id="save" class="commit" style="border: none; margin-bottom: 2px;">저장</button>
+							</div>
+							<div id="result"></div>
+							<div><button id="btn22">수정</button></div>
+						</td>
+					</tr> -->
+					<tr>
+						<th><label for="txt6">투숙 인원</label></th>
+						<td id="popup_personnel"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	<div class="dim"></div>
+</body>
+
+<!-- 새로고침을 위한 코드 -->
+<script>
+	function get_table_data() {
+		$.ajax({
+			type: 'GET',
+			url: '/reload_table',
+			success: (data) => {
+				$('.table').html(data);
+				setTimeout('get_table_data()', 1000);
+			}
+		});
+	}
+	get_table_data();
+</script>
+
+</html>

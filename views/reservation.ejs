@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="font.css">
+    <meta charset='UTF-8'>
+    <title>
+        예약관리
+    </title>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
+
+    <style>
+
+        table,
+        th,
+        td {
+            border: 1px solid #bcbcbc;
+            border-radius: 5px;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .avatar--md .avatar__content img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .mb-4 {
+            margin-bottom: 50px;
+        }
+
+        #myBtnContainer button{
+            margin: 2px;
+            width: 80px !important;
+        }
+    </style>
+    <!-- 생년월일 입력 기능 -->
+    <script type="text/javascript">
+        $(function () {
+            $("#reservation_birth").datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true,
+                minDate: '-100y',
+                maxDate: '0',
+                yearRange: "1910:2030",
+                dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+            });
+        });
+    </script>
+    <!-- 예약추가 달력기능 -->
+    <script type="text/javascript">
+        // 체크인 달력
+        $(function () {
+            $("#date1").datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true,
+                minDate: '0d',
+                yearRange: "1910:2030",
+                dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                 onClose: function (selectedDate) {
+                    var date = selectedDate.split('-');
+                    selectedDate = new Date(date[0], date[1]-1, date[2]);
+                    selectedDate.setDate(selectedDate.getDate()+1);
+
+                    $("#date2").datepicker("option", "minDate", selectedDate);
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function (checkin) {
+            $("#date2").datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true,
+                minDate: '0d',
+                yearRange: "1910:2030",
+                dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                onClose: function (selectedDate) {
+                    var date = selectedDate.split('-');
+                    selectedDate = new Date(date[0], date[1]-1, date[2]);
+                    selectedDate.setDate(selectedDate.getDate()-1);
+
+                    $("#date1").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+        });
+    </script>
+   
+
+    <!-- 필터링 & 검색 기능 -->
+    <script>
+    $(document).ready(function () {
+        $("#keyword").keyup(function () {
+            show_result();
+        })
+    })
+    var clicked_id="";
+
+    function show_result() {
+      var t;
+      var search_content= $("#keyword").val().toLowerCase();
+      var subt=document.getElementById("ttbody").getElementsByTagName("tr");
+      for (var i=0;i<subt.length;i++){
+        t=subt[i].getElementsByTagName("td")[1].innerText||subt[i].getElementsByTagName("td")[1].innerHTML;
+      if (subt[i].innerText.indexOf(search_content) >-1 && t.indexOf(clicked_id) >-1){
+          $(subt[i]).show();
+      }else {
+          $(subt[i]).hide();
+      }
+    }
+  }
+
+  function clicked_function(input){
+    clicked_id=input;
+    show_result();
+  }
+
+       // 버튼 클릭시 active효과
+       function click_effect(number) {
+         var btns=document.getElementById("myBtnContainer").getElementsByTagName("button");
+         for(var i=0;i<btns.length;i++) {
+           $(btns[i]).removeClass('active');
+           if (i === number) {
+             $(btns[i]).addClass('active');
+           }
+         }
+       }
+
+       $('#reservation_pw').keypress(function (e) {
+         if (e.which == 13) {
+           $('form#form1').submit();
+           return false;
+         }
+       });
+    </script>
+
+    <style>
+        #add_res {
+            background-color: rgba(176, 224, 230, 0.2);
+            color: black;
+            font-weight: bold;
+            border: solid 2px powderblue;
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+            outline: none !important;
+        }
+
+        #add_res:hover {
+            background-color: rgba(176, 224, 230, 0.7);
+            color: white;
+            transition-duration: 0.2s;
+        }
+
+        #add_res,
+        .mb-3 {
+            margin-left: 30px;
+        }
+
+        #tooltipAddNew {
+            background-color: powderblue;
+            border-radius: 50px;
+            border: none;
+        }
+
+        #tooltipAddNew:hover {
+            background-color: rgb(120, 172, 179);
+            transition-duration: 0.2s;
+        }
+
+        .small.mb-3 {
+            margin-left: 0;
+        }
+
+        .form_group {
+            display: flex;
+        }
+
+        #reservation_name {
+            width: 110px;
+        }
+
+        #email_id {
+            width: 110px;
+        }
+
+        #selectEmail {
+            width: 130px;
+        }
+
+        #res_people,
+        #res_breakfast {
+            width: 34px;
+        }
+
+        #res_pw {
+            width: 150px;
+        }
+
+        #reservation_nation {
+            width: 130px;
+        }
+
+        #reservation_birth {
+            width: 110px;
+        }
+
+        #reservation_name,
+        #email_id,
+        #selectEmail,
+        #res_people,
+        #date1,
+        #date2,
+        #res_pw,
+        #res_breakfast,
+        #reservation_nation,
+        #reservation_birth {
+            display: inline-block;
+        }
+
+        #date1,
+        #date2 {
+            width: 110px;
+        }
+
+        #res_commit {
+            background-color: powderblue;
+            border: none;
+            color: white;
+            margin-left: 500px;
+        }
+
+        #res_commit:hover {
+            background-color: rgb(120, 172, 179);
+            transition-duration: 0.2s;
+        }
+
+        .form-group label {
+            width: 90px;
+            margin-right: 1px;
+        }
+
+        .flexdiv {
+            display: flex;
+        }
+        
+
+        #do label{
+            margin-top: 5px;
+        }
+        #res_details td {
+            text-align: right;
+            padding-left: 20px;
+            width: 230px;
+        }
+        
+        #res_details tr, #res_details td, #res_details th {
+            height: 35px !important;
+            border-radius: 0;
+        }
+
+        #body222 th{
+            background-color: rgba(176, 224, 230, 0.7);
+        }
+
+        @media (max-width: 1000px) {
+            .byrow {
+                display: inline-block;
+            }
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="cardfooter.css">
+    <!-- 예약팝업 form 입력값 검증 -->
+    <script>
+        function verify(){
+            var reservationForm = document.reservationForm;
+
+            var name = reservationForm.reservation_name.value;
+            var birth = reservationForm.reservation_birth.value;
+            var email = reservationForm.email_id.value;
+
+            var checkin_date = reservationForm.checkin_date.value;
+            var checkout_date = reservationForm.reservation_birth.value;
+            var roomtype = reservationForm.reservation_type.value;
+            var breakfast = reservationForm.reservation_breakfast.value;
+            var pw = reservationForm.reservation_pw.value;
+            var people = document.getElementById("res_people").value;
+
+            if(!name || !birth || !email || !checkin_date || !checkout_date || !breakfast || !pw){
+                alert("모든 정보를 입력해주세요.");
+                return;
+            }
+
+            var capacity;
+            if(roomtype === 'Family') capacity = 5;
+            else if(roomtype === 'Single') capacity = 1;
+            else capacity = 3;
+
+            if(capacity<people){
+                alert("객실 수용인원을 초과하였습니다.");
+                return;
+            }
+
+            if (breakfast > people) {
+                alert("조식 예약 인원이 투숙 인원보다 많습니다.");
+                return;
+            }
+
+            reservationForm.submit();
+            $("#myModal").hide();
+        }
+    </script>
+</head>
+
+<body onload = "clicked_function('입실예정');click_effect(3);">
+    <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--  nav바는 흰색, 밑 배경은 다른 색으로 까는것도 좋을 것 같음..  -->
+    <div style="background-color: #f8f8f8; height: max-content; padding-bottom: 10px;">
+        <div class="container" style="padding-top: 70px;">
+            <div class="row">
+                <!-- 예약추가 버튼 : 디자인시 바꿔주세용 -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <form name="reservationForm" action="/add_reservation" method="post">
+                            <div class="modal-content" style="top: 100px;">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">예약추가</h2>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button> <br>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label form="reservation_name">예약자명</label>
+                                        <input name="reservation_name" type="text" id="reservation_name"
+                                            class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label form="reservation_birth">생년월일</label>
+                                        <input type="text" name="reservation_birth" id="reservation_birth" size="12"
+                                            class="form-control" readonly placeholder="연도-월-일" style="background-color: white;"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- 디자인 시 이메일 앞부분, 뒷부분 한줄 배치 부탁드려요 -->
+                                        <label for="email_id">예약자 이메일</label>
+                                        <input type="text" name="email_id" id="email_id" class="form-control"> @
+                                        <input type="text" name="email_option" id="email_option" class="form-control" disabled value="naver.com" style="width:7vw; display: inline-block;">
+                                        <select class="form-control" name="email_select" id="selectEmail" style="width:7vw; display: inline-block;">
+                                            <option value="1">직접입력</option>
+                                            <option value="naver.com" selected>naver.com</option>
+                                            <option value="hanmail.net">hanmail.net</option>
+                                            <option value="hotmail.com">hotmail.com</option>
+                                            <option value="nate.com">nate.com</option>
+                                            <option value="yahoo.co.kr">yahoo.co.kr</option>
+                                            <option value="empas.com">empas.com</option>
+                                            <option value="dreamwiz.com">dreamwiz.com</option>
+                                            <option value="freechal.com">freechal.com</option>
+                                            <option value="lycos.co.kr">lycos.co.kr</option>
+                                            <option value="korea.com">korea.com</option>
+                                            <option value="gmail.com">gmail.com</option>
+                                            <option value="hanmir.com">hanmir.com</option>
+                                            <option value="paran.com">paran.com</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reservation_nation">예약자 국적</label>
+                                        <select class="form-control" name="reservation_nation" id="reservation_nation">
+                                            <% for (var i=0; i<nations.length; i++){ %>
+                                            <option value="<%=nations[i].name%>"><%=nations[i].name%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="res_people">투숙인원</label>
+                                        <input name="reservation_people" id="res_people" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>입실 예정일</label>
+                                        <!-- 달력기능 -->
+                                        <input type="text" placeholder="연도-월-일" name="checkin_date" id="date1" size="12" class="form-control" style="background-color: white;" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>퇴실 예정일</label>
+                                        <!-- 달력기능 -->
+                                        <input type="text" placeholder="연도-월-일" name="checkout_date" id="date2" size="12" class="form-control" style="background-color: white;" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reservation">방타입</label>
+                                        <!-- 인원 재설정 필요 -->
+                                        <label><input type="radio" name="reservation_type" value="Single" checked>싱글룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Twin">트윈룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Double">더블룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Triple">트리플룸</label>
+                                        <label><input type="radio" name="reservation_type" value="Family">패밀리룸</label><br>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="room">조식 예약 인원</label>
+                                        <input name="reservation_breakfast" type="text" class="form-control"
+                                            id="res_breakfast">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="room">예약 비밀번호</label>
+                                        <input name="reservation_pw" type="password" class="form-control" id="res_pw">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <input type="button" onclick="verify()" value="추가" class="btn btn-default" id="res_commit">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- 예약추가 팝업 끝 -->
+                <div class="col-lg-3">
+                    <div class="mb-4">
+                        <div class="small mb-3" style=" font-size: 24px; margin-bottom: 10px;" >검색</div>
+                        <div class="input-group" style="display: flex;">
+                            <input placeholder="예약자명으로 검색" type="text" class="form-control" id="keyword">
+                            <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                      <div id="myBtnContainer" class="btn-group" style="display:inline-table;">
+                        <div class="small mb-3" style=" font-size: 24px; margin-bottom: 10px;" class="flexdiv">예약상태별 보기</div>
+                        <div class="byrow">
+                            <button id="all" class="btn" onclick="clicked_function(''); click_effect(0);">전체</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="canceled" class="btn" onclick="clicked_function('취소');click_effect(1);"> 취소</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="reserved"class="btn" onclick="clicked_function('예약완료');click_effect(2);"> 예약완료</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="waiting"class="btn" onclick="clicked_function('입실예정');click_effect(3);"> 입실예정</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="reserved"class="btn" onclick="clicked_function('입실완료');click_effect(4);"> 입실완료</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="past" class="btn" onclick="clicked_function('퇴실완료');click_effect(5);"> 퇴실완료</button>
+                        </div>
+                        <div class="byrow">
+                            <button id="noti" class="btn" onclick="clicked_function('퇴실예정');click_effect(6);"> 퇴실예정</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="add_res">예약 추가하기</button>
+                <div class="col-lg-9" style="padding: 0;">
+                    <div class="mb-3 Card_custom-card--border_5wJKy card">
+                        <div class="table-responsive-xl">
+                            <!-- 테이블 아이디 바꾸지 말아주세요 -->
+                            <table id = "reservation_table"class="mb-0 table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle bt-0">예약자명</th>
+                                        <th class="align-middle bt-0">예약상태</th>
+                                        <th class="align-middle bt-0">체크인</th>
+                                        <th class="align-middle bt-0">체크아웃</th>
+                                        <th class="align-middle bt-0">방타입</th>
+                                        <th class="align-middle bt-0">상세보기</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ttbody">
+                                    <% for (var i = 0; i < reservation.length; i++) { %>
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <div><%= reservation[i].name %></div>
+                                                </td>
+                                                <td><span
+                                                       style="padding:4px;" class="label <% if (reservation[i].status === '취소') {%> label-danger <% } else if(reservation[i].status === '입실예정'){%> label-info  <%}else if(reservation[i].status === '입실완료'){ %> label-success <%}else if(reservation[i].status === '예약완료'){%> label-warning <%}else if(reservation[i].status === '퇴실예정'){%> label-primary <%}else{%> label-default <%}%>label-pill"><%= reservation[i].status %></span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <%var date=reservation[i].checkin.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <%var date=reservation[i].checkout.split(' ')[0].split('-'); %>
+                                                    <div><%=date[0]+"." + date[1]+"." + date[2]%></div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div><%= reservation[i].room_type %></div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <!-- 상세보기 버튼 -->
+                                                    <button type="button" id="tooltipAddNew" onclick="change_modal_data('<%=reservation[i].email%>', '<%=reservation[i].room_type%>', '<%=reservation[i].reservation_time%>', '<%=reservation[i].checkin%>', '<%=reservation[i].checkout%>', '<%=reservation[i].status%>','<%= reservation[i].breakfast%>','<%= reservation[i].personnel%>','<%= reservation[i].total_price%>')" data-toggle="modal" data-target="#myModal2" class="align-self-center btn btn-light" style="color: white; font-weight: bolder; font-size: 16px;">+</button>
+                                                </td>
+                                            </tr>
+                                            <script language="javascript">
+                                                var obj = new Object();
+                                                obj.breakfast = (reservation[i].breakfast_price)/7000;
+
+                                            </script>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            <div class="modal fade" id="myModal2" role="dialog" style="top: 200px; left: 230px;">
+                                <div class="modal-dialog">
+                                <!-- Modal content-->
+                                    <div class="modal-content" style="width: max-content;">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title">예약 상세페이지</h2>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button><br>
+                                        </div>
+                                        <div class="modal-body" style="margin: 20px !important;">
+                                            <div id="res_details">
+                                                <table style="margin: auto;">
+                                                    <tbody id="body222">
+                                                        <tr>
+                                                            <th>예약자 이메일</th>
+                                                            <td>
+                                                                <span id="reservation_email"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>숙박 날짜</th>
+                                                            <td>
+                                                                <span id="time_replace"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>방 타입</th>
+                                                            <td>
+                                                                <span id="room_type_replace"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>투숙 인원</th>
+                                                            <td>
+                                                                <span id="personnel_num"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>조식 예약 인원</th>
+                                                            <td>
+                                                                <span id="breakfast_num"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>총 금액</th>
+                                                            <td>
+                                                                <span id="total_price"></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+
+                                                
+                            
+                                                <div id="do" style="border-top: dotted 3px rgb(196, 196, 196); padding-top: 25px; margin-top: 20px;">
+                                                    <div class="flexdiv" style="width: max-content; margin: auto;">
+                                                        <div class="flexdiv" style="margin-right: 50px;">
+                                                            <select name="status_change_to" id="status_change_to">
+                                                                <option id="inout" value="check-in">체크인</option>
+                                                                <option value="cancel_reservation">예약취소</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="flexdiv">
+                                                            <label form="reservation_pw" style="width: 130px; margin-right: -40px !important;">예약 비밀번호</label>
+                                                            <input type="password" name="reservation_pw" id="reservation_pw" style="width: 100px !important;"
+                                                                class="form-control">
+                                                        </div>
+
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <button class="btn btn-default" id="modify_reservation" class="close" data-dismiss="modal" style="background-color: rgba(176, 224, 230, 0.7);" id="btn33">완료</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<!-- 이메일폼 -->
+<script type="text/javascript">
+    //이메일 입력방식 선택
+    $('#selectEmail').change(function () {
+        $("#selectEmail option:selected").each(function () {
+            if ($(this).val() == '1') { //직접입력일 경우
+                $("#email_option").val(''); //값 초기화
+                $("#email_option").attr("disabled", false); //활성화
+            } else { //직접입력이 아닐경우
+                $("#email_option").val($(this).text()); //선택값 입력
+                $("#email_option").attr("disabled", true); //비활성화
+            }
+        });
+    });
+
+    function change_modal_data(email, room_type, reservation_time, checkin, checkout, reservation_status, breakfast, personnel, total_price){
+        var date = checkin.split(' ')[0] + " / " + checkout.split(' ')[0];
+        $("#time_replace").text(date);
+        $("#room_type_replace").text(room_type);
+        $("#breakfast_num").text(breakfast + "명");
+        $("#personnel_num").text(personnel + "명");
+        $("#reservation_email").text(email);
+        $("#total_price").text(total_price + "원");
+        $("#modify_reservation").on("click", function(){
+            change_reservation_status(email,reservation_time,reservation_status);
+        });
+    }
+
+    // 예약 변경 
+    function change_reservation_status(email, reservation_time, cur_status){
+        var status = $("#status_change_to option:selected").val();
+        var password = $("#reservation_pw").val();
+
+        if (cur_status === '취소') {
+            alert('이미 취소된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '퇴실완료') {
+            alert('이미 체크아웃된 예약입니다.');
+            location.reload(true);
+        }
+        else if (cur_status === '예약완료' && status === 'check-in') {
+           alert('체크인 가능 기간이 아닙니다.');
+           location.reload(true);
+        }
+        else if (cur_status === '입실완료' || cur_status === '퇴실예정') {
+            alert('이미 체크인 처리된 예약입니다.');
+            location.reload(true);
+        }
+        else{
+            $.ajax({
+                type: 'POST',
+                url: "/change_reservation",
+                data: {email:email, reservation_time:reservation_time, pw:password, status:status},
+                success: function (data) {
+                    if (data.result === 'not match pw'){
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                    else if (status === 'check-in'){
+                        $.ajax({
+                            type: 'POST',
+                            url: "/checkin",
+                            data: { email: email, time: reservation_time },
+                            success: function (data) {
+                                if (data.success) {
+                                    alert('담당 직원 : '+data.user_name+'\n객실 : '+data.room_num);
+                                    location.reload(true);
+                                }
+                                else {
+                                    alert(data.error);
+                                    location.reload(true);
+                                }
+                            }
+                        });
+                    }
+                    else location.reload(true);
+                }
+            });
+        }
+    }
+</script>
+</html>

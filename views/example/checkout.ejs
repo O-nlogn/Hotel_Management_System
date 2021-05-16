@@ -1,0 +1,24 @@
+<html>
+    <button onclick="dosth();">dosth</button>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        function dosth() {
+            $.ajax({
+                url: '/checkout',
+                method: 'POST',
+                data: {
+                    room : '301'
+                },
+                success: (data) => {
+                    if (data.success) {
+                        console.log(data.charge);           // 룸서비스 비용
+                    } 
+                    else {
+                        console.log(data.error);            // 실패 원인
+                        // NOT_ENOUGH_INFO : 파라미터 부족
+                    }
+                }
+            })
+        }
+    </script>
+</html>

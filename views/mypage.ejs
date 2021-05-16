@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="font.css">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/doro.js"></script>
+    <!-- 도로명주소 API 기능 활용을 위한 커스텀 javascript -->
+
+    <style>
+        #profile {
+            width: max-content;
+            margin: 0;
+        }
+
+        #info tr {
+            height: 30px;
+        }
+
+        #box1 {
+            /* margin-top: 100px; */
+            margin: auto;
+            border: solid 1px black;
+            width: max-content;
+            padding: 20px;
+            border-radius: 10px;
+            /* position: absolute; */
+            top: 250px;
+        }
+
+        #info {
+            margin-left: 20px;
+        }
+
+
+
+        .btn {
+            background-color: powderblue;
+            border: none;
+            /* color: white; */
+            border-radius: 5px;
+            padding: 3px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            background-color: rgba(176, 224, 230, 0.7);
+        }
+
+        #box1 > .btn {
+            margin-left: 535px;
+            padding: 10px;
+        }
+
+
+        #box1 > .btn:hover {
+            background-color: rgb(77, 98, 100);
+            color: white;
+        }
+
+        #info th {
+            padding-right: 20px !important;
+            height: 30px;
+        }
+
+        #save {
+            margin-top: 30px;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+    </style>
+    <title>내 정보</title>
+</head>
+<body>
+    <%- include('./nav'); %>
+    <div style="height: max-content; padding:100px; background-color: #f8f8f8;">
+        <form action="/update_address" method="post">
+        <div id="box1">
+            <div style="display: flex;" id="profile">
+                <img width=210 height=280 src="user_img/user<%=info[0].id%>.jpg">
+                <div id="info">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <td><%=info[0].name%></td>
+                            </tr>
+
+                            <tr>
+                                <th>사번</th>
+                                <td><%=info[0].id%></td>
+                            </tr>
+
+                            <tr>
+                                <th>비밀번호</th>
+                                <td>
+                                    <input value="********" disabled>
+                                    <input type="button" onclick="moveto('../changepw')" value="변경" class="btn">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>부서</th>
+                                <td><%=info[0].department%></td>
+                            </tr>
+
+                            <tr>
+                                <th>직급</th>
+                                <td><%=info[0].job_title%></td>
+                            </tr>
+
+                            <tr>
+                                <th>다중 언어</th>
+                                <td> <%for(var i=0; i<multilingual.length; i++){%> &nbsp;&nbsp;<%=multilingual[i].language%> <%}%></td>
+                            </tr>
+
+                            <tr>
+                                <th>연락처</th>
+                                <td><%=info[0].phone_number%></td>
+                            </tr>
+
+                            <tr>
+                                <th>주소</th>
+                                  <td class="text-primary" rowspan="2">
+                                      <div style="display: flex;">
+                                          <div style="color: grey; width: max-content; padding-right: 10px;">
+                                            <div>
+                                              <input type="text" id="road" name="addressRoad" class="form-control" placeholder="<%=info[0].addressRoad%>" readonly style="width: 220px;"/><br>
+                                              <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="<%=info[0].addressDetail%>" style="width: 110px;" readonly/>
+                                            </div>
+                                          </div>
+                                          <input type="button" class="btn" value="변경" onclick="goPopup();">
+                                          <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                      </div>
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button type="submit" value="Submit" class="btn" id="save" >저장</button>
+        </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    function moveto(url){
+        location.href = url;
+    }
+</script>
+</html>

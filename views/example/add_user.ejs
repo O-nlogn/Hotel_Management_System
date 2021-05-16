@@ -1,0 +1,35 @@
+<html>
+    <button onclick="dosth();">dosth</button>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        function dosth() {
+            $.ajax({
+                url: '/add_user',
+                method: 'POST',
+                data: {
+                    name: 'PJS', 
+                    gender: 'male',
+                    department: '기획부', 
+                    phone_number: '01022683936', 
+                    email: 'hell-o-world@naver.com',
+                    birth: '2000-11-22',
+                    salary: '10000', 
+                    job_title: '사원', 
+                    bank: '국민', 
+                    account: '1122', 
+                    addressRoad: '경기도 안산시 상록구 한양대학로 55', 
+                    addressDetail: '제4공학관 408-1',
+                    multilingual: ['영어', '일본어']
+                },
+                success: (data) => {
+                    if (data.success) {
+                        console.log(data.user_id);   // 새로운 직원의 아이디
+                    }
+                    else {
+                        console.log(data.error);     // 실패 원인
+                    }
+                }
+            })
+        }
+    </script>
+</html>

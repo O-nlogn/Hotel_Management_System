@@ -1,0 +1,310 @@
+@charset "utf-8";
+
+.btn {
+    margin: 5px;
+}
+body {
+    /* padding: 50px; */
+    box-sizing: border-box;
+}
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 100;
+    padding: 52px 60px 60px;
+    width: 600px;
+    height: 550px;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.request_popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+}
+.requestItem {
+    width: 350px;
+    margin: 5px;
+}
+.request_box {
+  float:left;
+}
+.request_type {
+    border: dotted 3px rgba(176, 224, 230, 0.1);
+    background-color: rgba(176, 224, 230, 0.3);
+    border-radius: 10px;
+    padding: 4px;
+    margin-left: 5%;
+    margin-top: 10%;
+    float:right;
+}
+#requestItem .title {
+    font-weight: bold;
+}
+.dim {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+}
+/* .type1 {
+    border: solid 1px black !important;
+    border-radius: 5px !important;
+    width: 450px;
+}
+
+
+.type1 td{
+    border: solid 1px black;
+    border-radius: 3px;
+    text-align: right;
+    padding-right: 5px;
+} */
+
+
+.type1 {
+    margin-top: 40px;
+    margin-left: 20px;
+}
+.type1, .type1 tr, .type1 th, .type1 td {
+    border: solid 1px black;
+    padding: 5px 10px 5px 10px;
+}
+
+.type1 th {
+    text-align: center;
+    background-color: rgba(176, 224, 230, 0.66);
+}
+
+.type1 td {
+    width: 300px;
+    text-align: right;
+}
+
+.type1 tr {
+    height: 50px !important;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+
+.table {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 160px);
+    grid-template-rows: repeat(20, 160px);
+    width: max-content;
+    width: 640px;
+    height: 640px;
+    margin-left: 30px;
+    border: solid 1px black;
+    border-radius: 3px;
+    margin-top: 50px;
+    overflow-x: hidden;
+}
+
+.table div {
+    border: solid 1px black;
+    margin: 0.1px;
+}
+
+.body {
+    display: flex;
+    width: max-content;
+}
+
+
+
+.status_icon{
+    fill: rgb(207, 207, 207);
+}
+
+.using .icon_plus:hover {
+    cursor: pointer;
+    fill: black;
+}
+
+#trashcan.fill {
+    fill: rgb(95, 95, 95);
+}
+
+#key.fill {
+    fill: rgb(221, 188, 0);
+}
+
+#docs.fill {
+    fill: brown;
+}
+
+.table div {
+    padding: 2px;
+}
+
+.icon_checkout {
+    fill: rgb(175, 175, 175);
+    cursor: default;
+}
+
+.using .icon_checkout:hover {
+    fill: black;
+    cursor: pointer;
+}
+
+.commit, #inputbox{
+    display: none;
+}
+
+.resultString {
+    text-align: left;
+    padding-left: 20px;
+}
+
+#modify {
+    display: none;
+}
+
+.floor {
+    margin-left: 420px;
+    margin-top: 50px;
+}
+
+.floor .button {
+    width: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.floor button:hover {
+    background-color: powderblue;
+}
+
+.floor button {
+    border-radius: 3px;
+    background-color: rgba(176, 224, 230, 0.3);
+    border: solid 1px rgba(176, 224, 230, 0.4);
+    margin: 1px;
+    color: rgb(102, 102, 102);
+}
+
+.floor button:focus {
+    background-color: rgba(176, 224, 230, 0.7);
+    outline: none;
+}
+
+
+
+#btn22 {
+    background-color: powderblue !important;
+    border: none;
+    color: white;
+    margin-left: -50px;
+    border-radius: 5px;
+}
+
+#btn22:hover {
+    background-color: rgb(120, 172, 179) !important;
+    transition-duration: 0.2s;
+}
+
+
+.table::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table::-webkit-scrollbar-track {
+    background-color: rgb(230, 230, 230);
+    width: 10px;
+    border-radius: 5px;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: rgba(176, 224, 230, 0.7);
+    border-radius: 5px;
+}
+
+#status {
+    margin-top: 14px;
+}
+
+#status svg {
+    width: 25px;
+    height: 25px;
+}
+
+.icon_plus {
+    margin-left: 38px;
+    fill: rgb(175, 175, 175);
+}
+
+#clientdiv, #voiddiv {
+    height: 77px !important;
+    width: 120px;
+    padding: 2px;
+    border: none;
+}
+
+#voiddiv {
+    height: 130px;
+    margin-bottom: 28px;
+}
+@media(max-width: 1500px) {
+    .table {
+        grid-template-columns: repeat(4, 130px);
+        grid-template-rows: repeat(20, 130px);
+        margin-left: 10px;
+        width: 532px !important;
+        height: 520px;
+    }
+    #status {
+        margin-top: 0px;
+    }
+    
+    #status svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .icon_plus {
+        margin-left: 22px;
+        fill: rgb(175, 175, 175);
+    }
+
+    .floor {
+        margin-left: 20px !important;
+    }
+
+    #nation {
+        width: 22px;
+    }
+
+    #client {
+        width: 50px;
+        height: 50px;
+    }
+
+    #nationdiv {
+        margin-top: 10px !important;
+    }
+
+    #clientdiv {
+        height: 65px !important;
+    }
+
+    #voiddiv {
+        margin-bottom: 2px;
+    }
+}

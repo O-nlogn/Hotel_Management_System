@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="font.css">
+    <meta charset='UTF-8'>
+    <title>
+        직원관리
+    </title>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="cardfooter.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script> -->
+    <script src="js/doro.js"></script>
+
+    <style>
+
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #bcbcbc;
+            border-radius: 5px;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .employers-list-bg {
+            padding: 180px 0px 80px 0px;
+            background-image: url("../images/employers-list-bg.jpg");
+            background-size: cover;
+            position: relative;
+            background-position: center center;
+        }
+
+        .employers-list-img img {
+            max-width: 80px;
+            -webkit-box-shadow: 0 0 5px 0px #d7d7d7;
+            box-shadow: 0 0 5px 0px #d7d7d7;
+        }
+
+        .employers-icons li {
+            margin: 0px !important;
+        }
+
+        .employers-details-bg {
+            padding: 180px 0px 80px 0px;
+            background-image: url("../images/employers-details-bg.jpg");
+            background-size: cover;
+            position: relative;
+            background-position: center center;
+        }
+
+        .employers-details {
+            border-top: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .employers-share-job li a {
+            height: 40px;
+            width: 40px;
+            color: #777777;
+            text-align: center;
+            font-size: 19px;
+            display: inline-block;
+            line-height: 38px;
+            border-radius: 4px;
+            border: 1px solid #dddddd;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+            margin: 6px 0;
+            transition: all 0.5s;
+        }
+
+        .employers-share-job li a:hover {
+            background-color: #ff4f6c;
+            color: #ffffff;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+            border-color: #ff4f6c;
+            -webkit-transform: translateY(-3px);
+            transform: translateY(-3px);
+            -webkit-box-shadow: 0 3px 20px -8px #000000;
+            box-shadow: 0 3px 20px -8px #000000;
+        }
+
+        @media (min-width: 200px) and (max-width: 768px) {
+            .m-14 {
+                margin: 14px 0px;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .employers-details-time h6 {
+                text-align: center !important;
+            }
+
+            .employers-details-item-border {
+                margin-bottom: 1rem !important;
+                margin-top: 1rem !important;
+            }
+        }
+
+        .list-grid-item {
+            border: 1px solid #ececec;
+            border-radius: 6px;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .list-grid-item:hover {
+            -webkit-box-shadow: 0 0 20px 0px rgba(47, 47, 47, 0.09);
+            box-shadow: 0 0 20px 0px rgba(47, 47, 47, 0.09);
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+            border-color: transparent;
+        }
+
+        .left-sidebar .card-body {
+            border-bottom: 1px solid #ececec;
+        }
+
+        .custom-control {
+            margin: 11px 20px;
+        }
+
+        .card-header {
+            background-color: transparent;
+            margin-bottom: 0 !important;
+        }
+
+        .pagination.job-pagination .page-link {
+            border-radius: 50% !important;
+            margin: 0 4px;
+            height: 46px;
+            width: 45px;
+            line-height: 29px;
+            text-align: center;
+            color: #777777;
+        }
+
+        .page-item.active .page-link {
+            background-color: #ff4f6c;
+            border-color: #ff4f6c;
+            color: #ffffff !important;
+        }
+
+        .f-14 {
+            font-size: 14px;
+        }
+
+        button,
+        button:visited,
+        button:active {
+            border: none !important;
+            outline: none !important;
+            text-align: left !important;
+            background-color: transparent !important;
+        }
+
+        .col-lg-9 {
+            padding-left: 100px;
+        }
+
+        #add_staff {
+            background-color: rgba(176, 224, 230, 0.2) !important;
+            color: black;
+            font-weight: bold;
+            border: solid 2px powderblue !important;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        #add_staff:hover {
+            background-color: rgba(176, 224, 230, 0.7) !important;
+            color: white !important;
+            transition-duration: 0.2s;
+        }
+
+        .form-group {
+            display: flex;
+        }
+
+        .form-group label {
+            width: 110px;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        #newstaff_name,
+        #newstaff_position {
+            width: 110px !important;
+        }
+
+        #newstaff_phonenum {
+            width: 150px !important;
+        }
+
+        #newstaff_div {
+            width: 125px !important;
+        }
+
+        #newstaff_position {
+            width: 80px !important;
+        }
+
+        #newstaff_account_bank {
+            width: 140px !important;
+        }
+
+        #newstaff_account_num {
+            width: 160px;
+        }
+
+        #newstaff_name,
+        #newstaff_photo,
+        #newstaff_div,
+        #newstaff_account_bank,
+        #newstaff_position,
+        #newstaff_phonenum,
+        #newstaff_account_num {
+            display: inline-block;
+        }
+
+        #checkboxes label {
+            width: max-content;
+        }
+
+        #newstaff_photo {
+            width: max-content;
+        }
+
+        #btn22 {
+            background-color: powderblue !important;
+            color: white;
+            margin-left: -50px;
+            border-radius: 5px;
+            border: none !important;
+            outline: none !important;
+        }
+
+        #btn22:hover {
+            background-color: rgb(120, 172, 179) !important;
+            transition-duration: 0.2s;
+        }
+
+        .container {
+            margin-left: 150px;
+            padding-top: 0px;
+        }
+
+        .left-sidebar {
+            margin-top: 40px;
+        }
+        #road {
+            width: 230px;
+        }
+        #detail {
+            width: 230px;
+        }
+
+
+        #staff_table2 td {
+            width: 320px;
+        }
+
+        #staff_table2 th {
+            width: 130px;
+        }
+        #genderform label {
+            width: max-content;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css"
+        rel="stylesheet">
+    <!-- 직원검색기능 -->
+        <!-- <script>
+        $(document).ready(function() {
+            $("#keyword").keyup(function() {
+                var k = $(this).val();
+                var i = $('staff_table').children(table);
+                $("i > staff_table2 > tbody > tr").hide();
+                var temp = $("i> #staff_table2 > tbody > tr > td:nth-child(5n+1):contains('" + k + "')");
+
+                $(temp).parent().show();
+            })
+        })
+    </script> -->
+
+    <script>
+    $(document).ready(function() {
+        $("#keyword").keyup(function() {
+            //var k = $(this).val();
+          show_result();
+        })
+    })
+    // // 이거는 체크박스필터랑 검색이랑 따로놈..
+    // $(document).ready(function(){
+    //   $("#search_staff").click(
+    //     show_result();
+    //
+    //   });
+
+    function search_result() {
+      var search_r=new Array();
+      var value = $("#keyword").val().toLowerCase();
+      $("#table0 span").filter(function() {
+        if($(this).text().toLowerCase().indexOf(value) > -1 ){
+          search_r.push($(this).attr('id'));
+        }
+      });
+      return search_r;
+    }
+
+
+      var list = [[ '기획부', '시설안전부', '식음료부','인사부', '재무부', '프론트'],[ '팀장','과장','대리','사원','부장','사장','이사'],['출근','퇴근'],
+      ['한국어','독일어','러시아어','스페인어','아랍어','영어','이탈리아어','일본어','중국어','터키어','포르투칼어','프랑스어','핀란드어','힌디어']];
+      function checkbox_check() {
+        var checkbox_r=new Array();
+        var ch=new Array();
+        var cat,checkboxes,check,l,table,subt,i,j,k,p;
+        for ( i = 0; i < 4; i++ ) {
+        cat = document.getElementById("input"+i);//분류별로 가져옴
+        // console.log(cat);
+        checkboxes=cat.getElementsByTagName("input");//카테고리별 input들
+        l=list[i];
+        check=new Array();
+        for (j = 0;j < checkboxes.length;j++){
+          if(checkboxes[j].checked) {
+            check.push(l[j]);
+          }
+        }
+        ch.push(check);
+       }
+      table = document.getElementById("table0");
+      subt=table.getElementsByClassName("subtable");
+
+      for (j = 0; j < subt.length; j++) {
+        p=0;
+        // console.log(subt[j].innerText);
+        for (i = 0; i < 4; i++) {
+          for (k=0;k<ch[i].length;k++) {
+              if (subt[j].innerText.indexOf(ch[i][k]) > -1){//존재
+                p=p+1;
+                break;
+              }
+          }
+        }
+
+        if (p == 4) {
+          checkbox_r.push(subt[j].id);
+        }
+      }
+      return checkbox_r;
+    }
+
+
+    function show_result() {
+      var re=search_result();
+      var ch=checkbox_check();
+      // console.log(re);
+      // console.log(ch);
+      var subt=document.getElementsByClassName("subtable");
+      for (var i=0;i<subt.length;i++){
+      if (ch.includes($(subt[i]).attr('id')) && re.includes($(subt[i]).attr('id'))){
+          $(subt[i]).show();
+      }else {
+          $(subt[i]).hide();
+      }
+    }
+  }
+
+      </script>
+
+    <!-- 사진 업로드 기능 -->
+    <script>
+        const browseBtn = document.querySelector('.browse-btn');
+        const realInput = document.querySelector('#real-input');
+        browseBtn.addEventListener('click', () => {
+            realInput.click();
+        });
+    </script>
+    <!-- 직원추가 팝업 입력값 검증, 언어(외국어) 부분은 체크 안되어있어도 제출 가능하게 함-->
+    <script>
+        function staff(){
+            var staffForm = document.staffForm;
+            var name = staffForm.name.value;
+            var phonenum = staffForm.phone_number.value;
+            var account = staffForm.account.value;
+            var photo = staffForm.newstaff_photo.value;
+            var gender = staffForm.gender.value;
+            var pay = staffForm.salary.value;
+
+            if(!name || !phonenum || !account || !photo || !gender || !pay){
+                alert("모든 정보를 입력해주세요.");
+            }else{
+                staffForm.submit();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div style="margin-left: 8.4px; margin-top: 8px;"><%- include('./nav'); %></div>
+    <div style="background-color: #f8f8f8; height: max-content; padding-bottom: 20px;">
+        <div class="container">
+            <!-- for문 직원 개수 만큼 돌려서.. 여기에 출력 해야 함.. -->
+            <div class="row">
+
+                <div class="col-lg-3">
+                        <!-- 백부분 코드 필요 -->
+                        <div class="left-sidebar">
+
+                            <div class="mb-4">
+                                <div class="input-group" style="display: flex;">
+                                    <input placeholder="직원명으로 검색" type="text" class="form-control" id="keyword" onKeypress="javascript:if(event.keyCode==13) {show_result();}" >
+                                    <button id="search_staff" onclick="show_result()"><img src="search.png" width=37></button>
+                                </div>
+                            </div>
+                            <div class="accordion" id="accordionExample">
+                                <div class="card mt-4" id="input0">
+                                    <a data-toggle="collapse" class="job-list" aria-expanded="true">
+                                        <div class="card-header" id="headingtwo">
+                                            <button type="button" class="btn btn-default btn-block"
+                                                data-toggle="collapse" data-target="#collapse1" style="border:0;">부서별
+                                                보기</button>
+                                        </div>
+                                    </a>
+                                    <div id="collapse1" class="collapse show">
+                                        <div class="card-body p-0">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio1" name="department" value="기획부"
+                                                    class="custom-control-input"  onclick="show_result();" checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio1">기획부</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio2" name="department" value="시설안전부"
+                                                    class="custom-control-input"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio2">시설안전부</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio3" name="department" value="식음료부"
+                                                    class="custom-control-input"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio3">식음료부</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio4" name="department" value="인사부"
+                                                    class="custom-control-input"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio4">인사부</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio5" name="department" value="재무부"
+                                                    class="custom-control-input"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio5">재무부</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio6" name="department" value="프론트"
+                                                    class="custom-control-input"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio6">프론트</label>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- 전체보기도 만들어서 체크박스로 바꾸자.... + 저번에 했던 층별보기도 체크박스로 구현하자 -->
+
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+
+
+
+
+                                <!-- collapse one end -->
+                                <div class="card mt-4" id="input1">
+                                    <a data-toggle="collapse" class="job-list" aria-expanded="true">
+                                        <div class="card-header" id="headingtwo">
+                                            <button type="button" class="btn btn-default btn-block"
+                                                data-toggle="collapse" data-target="#collapse2" style="border:0;">직급별
+                                                보기</button>
+                                        </div>
+                                    </a>
+
+
+
+
+                                    <div id="collapse2" class="collapse show" aria-labelledby="headingtwo">
+                                        <div class="card-body p-0">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"
+                                                    name="position" value="팀장" onclick="show_result();" checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck1">팀장</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                                    name="position" value="과장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck2">과장</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck3"
+                                                    name="position" value="대리"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck3">대리</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck4"
+                                                    name="position" value="사원"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck4">사원</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck5"
+                                                    name="position" value="부장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck5">부장</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6"
+                                                    name="position" value="부장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck6">사장</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck7"
+                                                    name="position" value="부장"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customCheck7">이사</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- collapse one end -->
+                                <div class="card mt-4" id="input2">
+                                    <a data-toggle="collapse" class="job-list" aria-expanded="true">
+                                        <div class="card-header" id="headingtwo">
+                                            <button type="button" class="btn btn-default btn-block"
+                                                data-toggle="collapse" data-target="#collapse3" style="border:0;">출퇴근
+                                                직원보기</button>
+                                        </div>
+                                    </a>
+                                    <div id="collapse3" class="collapse show" aria-labelledby="headingthree">
+                                        <div class="card-body p-0">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio7" name="customRadio1"
+                                                    class="custom-control-input" name="staff_status" value="출근"  onclick="show_result();" checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio7">출근</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="customRadio8" name="customRadio1"
+                                                    class="custom-control-input" name="staff_status" value="퇴근"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="customRadio8">퇴근</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-4" id="input3">
+                                    <a data-toggle="collapse" class="job-list" aria-expanded="true">
+                                        <div class="card-header" id="headingtwo">
+                                            <button type="button" class="btn btn-default btn-block"
+                                                data-toggle="collapse" data-target="#collapse4" style="border:0;">사용가능언어</button>
+                                        </div>
+                                    </a>
+                                    <div id="collapse4" class="collapse show" aria-labelledby="headingfour">
+                                        <div class="card-body p-0">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="lang1" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="없음"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="lang1">한국어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="lang2" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="독일어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="lang2">독일어</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="lang3" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="러시아어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15"
+                                                    for="lang3">러시아어</label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang4" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang4">스페인어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang5" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang5">아랍어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang7" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang7">영어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang8" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang8">이탈리아어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang9" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang9">일본어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang10" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang10">중국어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang11" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang11">터키어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang12" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang12">포르투칼어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang13" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang13">프랑스어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang14" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang14">핀란드어</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox checkbox-info">
+                                                <input type="checkbox" id="lang15" name="customRadio3"
+                                                    class="custom-control-input" name="language" value="스페인어"  onclick="show_result();"checked>
+                                                <label class="custom-control-label ml-1 text-muted f-15 "
+                                                    for="lang15">힌디어</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- collapse one end -->
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- form으로 checkbox를 통해 받은 정보를 통해 백에서 staff 정보를 보내주면 아래에서 출력 -->
+
+                <div class="col-lg-9" style="margin-top: 30px; margin-left: -60px;">
+                    <!-- 직원 검색창 -->
+                    <button type="button" class="btn btn-pink btn-lg" data-toggle="modal" data-target="#myModal"
+                        id="add_staff">직원 추가하기</button>
+                    <div>
+                        <!-- 직원추가 버튼 : 디자인시 바꿔주세용 -->
+                        <div class="modal fade" id="myModal" role="dialog" style="top: -10px;">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <form name="staffForm" action="/add_user" method="post" enctype='multipart/form-data'>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title">직원 등록</h2>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <br>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- 디자인 시 inputbox크기 조정 부탁드려요 -->
+                                            <div style="display: flex;">
+                                                <div class="form-group">
+                                                    <label form="newstaff_name">이름</label>
+                                                    <input name="name" type="text" id="newstaff_name"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group" style="margin-left: 20px;" id="genderform">
+                                                    <label form="newstaff_gender" style="margin-left: 50px; margin-right: 20px;">성별</label>
+                                                    <label><input type="radio" name="gender" value="남" id="man">남</label>
+                                                    <label><input type="radio" name="gender" value="여" id="man">여</label>
+                                                </div>
+
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label style="width: 150px !important;">생년월일</label>
+                                                <input name="birth" placeholder="" type="date"
+                                                    id="newstaff_birth" class="form-control" style="width: 180px; margin-left: -40px;">
+                                            </div>
+                                            <div class="form-group">
+                                                <label form="newstaff_pay" style="width: 150px !important;">봉급(만원)</label>
+                                                <input name="salary" type="number"  min="2000" id="newstaff_pay"
+                                                    class="form-control" style="width: 100px; margin-left: -40px;">
+                                            </div>
+                                            <div class="form-group">
+                                                <label form="newstaff_name">주소</label>
+                                                <div style="display: flex;">
+                                                    <div>
+                                                      <input type="text" id="road" name="addressRoad" class="form-control" placeholder="도로명 주소" readonly/>
+                                                      <input type="text" id="detail" name="addressDetail" class="form-control" placeholder="상세 주소" readonly style="width: 150px !important;"/>
+                                                    </div>
+                                                    <!-- road는 도로명 주소를, detail은 세부 주소를 담습니다. -->
+                                                    <input type='button' onclick="goPopup();" id="btn22" value='변경' style="margin-left: 75px;">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="newstaff_div">부서</label>
+                                                <select class="form-control" style="width:40%; margin-right:10px"
+                                                    name="department" id="newstaff_div">
+                                                    <option value="기획부" selected>기획부</option>
+                                                    <option value="시설안전부">시설안전부</option>
+                                                    <option value="식음료부">식음료부</option>
+                                                    <option value="인사부">인사부</option>
+                                                    <option value="재무부">재무부</option>
+                                                    <option value="프론트">프론트</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newstaff_position">직급</label>
+                                                <select class="form-control" style="width:40%; margin-right:10px"
+                                                    name="job_title" id="newstaff_position">
+                                                    <option value="사장">사장</option>
+                                                    <option value="부장">부장</option>
+                                                    <option value="팀장">팀장</option>
+                                                    <option value="과장">과장</option>
+                                                    <option value="대리">대리</option>
+                                                    <option value="사원" selected>사원</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>연락처</label><br>
+                                                <input name="phone_number" placeholder="하이픈(-) 포함" type="tel"
+                                                    id="newstaff_phonenum" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>이메일</label><br>
+                                                <input name="email" placeholder="" type="email"
+                                                    id="newstaff_phonenum" class="form-control" style="width: 250px !important;">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>계좌번호</label><br>
+                                                <select class="form-control" style="width:40%; margin-right:10px"
+                                                    name="bank" id="newstaff_account_bank">
+                                                    <% for(var i=0; i<bank.length; i++){ %>
+                                                        <option value=<%=bank[i].name%> ><%=bank[i].name%></option>
+                                                    <%}%>
+                                                </select>
+                                                <input name="account" placeholder="하이픈(-) 제외" type="text"
+                                                    id="newstaff_account_num" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="reservation">사용가능 언어</label><br>
+                                                <div id="checkboxes">
+                                                    <input type="hidden" name="multilingual" value="" checked>
+                                                    <input type="hidden" name="multilingual" value="한국어" checked>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="영어">영어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="일본어">일본어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="중국어">중국어</label>
+                                                    <div style="display: block"></div>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="독일어">독일어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="러시아어">러시아어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="스페인어">스페인어</label>
+                                                    <div style="display: block"></div>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="아랍어">아랍어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="이탈리아어">이탈리아어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="터키어">터키어</label>
+                                                    <div style="display: block"></div>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="포르투칼어">포르투칼어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="프랑스어">프랑스어</label>
+                                                    <label><input type="checkbox" name="multilingual"
+                                                            value="힌디어">힌디어</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newstaff_photo">사진</label>
+                                                <input type="file" name="newstaff_photo" id="newstaff_photo" class="newstaff_photo" accept="img/jpg">
+                                                <!-- 버튼 디자인 부탁드려요-->
+                                                <!-- <button class="browse-btn" id="btn22">업로드</botton> -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- <button type="submit" class="btn btn-default" id="btn22">등록</button>
+                                            button ->input 태그로 변경 -->
+                                            <input type="button" onclick="staff();myfunction();" value="등록" class="btn btn-default" id="btn22" data-dismiss="modal">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- 직원 추가 팝업 끝 -->
+                    </div>
+                    <div class="row">
+                      <div id="table0" style="display: grid; grid-template-columns: 630px 630px;">
+                        <% for (var i=0; i < staff.length; i++) { %>
+                        <!-- 검색기능을 위해 div에 id 부여 -->
+
+                             <span class="subtable" id=<%="t"+i%>>
+                                 <div style="display: inline-block; margin: 20px;">
+                                <!-- 검색기능을 위해 table 에 id 부여 -->
+                                <table id="staff_table2">
+                                    <tbody>
+                                        <tr>
+                                           <td rowspan="5" style="width: 190px; height: 250px;"><img src='user_img/<%="user"+staff[i].id+".jpg"%>' alt="직원 사진" style="width: 180px; height: 240px;"></td>
+                                            <th>이름</th>
+                                            <td><%= staff[i].name%>
+                                              <% if (staff[i].on_work === 1 ) {%>
+                                              <span class="badge badge-primary">출근</span>
+                                              <% } else {%>
+                                              <span class="badge badge-secondary">퇴근</span>
+                                                <% }%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>부서</th>
+                                            <td><%= staff[i].department %>(<%=staff[i].job_title%>)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>전화번호</th>
+                                            <td><%= staff[i].phone_number %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>이메일</th>
+                                            <td style="margin: 0; padding: 0;"><%= staff[i].email %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용가능언어</th>
+                                            <td style="word-break: keep-all; height: 112px;">
+                                              <% var t=0;%>
+                                              <% for (var j=0; j < multilingual.length; j++) { %>
+
+                                                   <% if (staff[i].id === multilingual[j].id) { %>
+
+                                                 <% var t=1;%>
+                                                 <%=  multilingual[j].language %>
+                                                <% }%>
+                                            <%}%>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                              </span>
+                                <% } %>
+                            </div>
+                    </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

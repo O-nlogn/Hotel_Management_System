@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="request.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+      	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        
+    
+      <!-- modal popup(bootstrap)-->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<style>
+		.req_label {
+			width: 60px;
+			margin-right: 5px;
+			margin-top: -0.5px; 
+		}
+
+		.form-group {
+			display: flex;
+		}
+
+		#req_time {
+			width: 100px !important;
+		}
+
+		.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+			margin-left: 0;
+		}
+
+		#add_request label{
+			width: 60px !important;
+		}
+	</style>
+    </head>
+
+    <body>
+      <!-- realtime request -->
+  	<div id="request">
+  			<div class="list">
+  				<!--실시간 처리-->
+  			</div>
+  			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><strong>+</strong></button>
+  	</div>
+  <!-- 실시간 요청사항 추가 팝업 (modal popup) : 부트스트랩 사용-->
+  		<div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog" style="top: 150px; left: -50px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+  					<h4 class="modal-title">요청사항 추가</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button> <br>
+
+		  </div>
+			<form method="post" id="add_request">
+          		<div class="modal-body">
+  					<!-- 백부분 코드 필요 (데이터 받아서 processing_status(??)를 false로 해서 디비에 저장해 주면 될듯 )-->
+						<div style="display: flex; border-bottom: dotted 3px rgb(236, 236, 236); padding-bottom: 20px; margin-bottom: 20px;">
+
+	
+							<div class="form-group" style="display: flex;">
+								<label for="room" class="req_label">방 번호</label>
+								<input name="room" type="text" class="form-control" style="width: 55px;">
+							</div>
+						    <div style="margin-left: 150px; display: flex;">
+								<label style="margin-right: 5px; margin-top: -0.5px;">종류</label>
+								<div>
+									<div class="radio-inline">
+										<label for="sort1"><input id="a" name="request_type" type="radio" value="요청사항" onclick="setDisplay()" checked>요청사항</label>
+									</div>
+									<div class="radio-inline">
+										<label for="sort2"><input id="b" name="request_type" type="radio" value="룸서비스" onclick="setDisplay()">룸서비스</label>
+									</div>
+								</div>
+						    </div>
+						</div>
+  					
+                
+				<div id="select_menu" class="form-group" style="display: none">
+					<div>
+						<div style="display: flex;">
+
+							<label for="room_service" class="req_label2">메뉴</label>
+							<select class="form-control" name="service">
+								<% for(var i=0; i<room_service.length; i++){ %>
+									<option value="<%=room_service[i].service%>"><%=room_service[i].service%></option>
+								<%}%>
+							</select>
+						</div>
+						<div style="display: flex; margin-top: 5px;">
+							<label for="count" class="req_label2" style="margin-right: 2px;">개수</label>
+							<input name="cnt" type="number" min="1" class="form-control" value=1 style="width: 55px;">
+						</div>
+						
+						
+					</div>
+					
+
+				</div>
+
+				<div id="request_content" class="form-group" style="display: block;">
+					<label for="request_details">요청사항</label>
+					<textarea name="request_details" class="form-control" style="height: 200px;"></textarea>
+				</div>
+
+				<!--라디오 버튼 선택 값에 따라 div 다르게 보이도록-->
+				<script>
+					function setDisplay(){
+						if ($('input:radio[id=a]').is(':checked')) {
+							$('#request_content').show();
+							$('#select_menu').hide();
+						} else {
+							$('#request_content').hide();
+							$('#select_menu').show();
+						}
+					}
+				</script>
+		  	</div>
+
+			<div class="modal-footer">
+					<input type="button" class="btn btn-default" style="background-color: powderblue; border: none; color: white;" value="저장" onclick="post_event()" data-dismiss="modal">
+			</div>
+		</form>
+        </div>
+
+      </div>
+    </div>
+	</body>
+	
+	<script>
+		function get_list_data() {
+			$.ajax({
+				type: 'GET',
+				url: '/request_list',
+				success: (data) => {
+					$('.list').html(data);
+					setTimeout('get_list_data()', 500);
+				}
+			});
+		}
+		get_list_data();
+
+		function post_event(){
+			$.ajax({
+				type: 'POST',
+				url: "/new_request",
+				data: $('#add_request').serialize(),
+				success: function (response) {
+					if(response.success === 'no such room') alert('방 번호를 다시 확인해주세요.');
+				}
+			});
+		}
+	</script>
+</html>
