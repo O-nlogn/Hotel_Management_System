@@ -9,6 +9,59 @@
 ___
 <br>
 
+## Introduction
+### **메인페이지**   
+호텔 소개 및 사진이 있고 일주일 동안의 예약 현황을 그래프로 보여준다.
+<p align="center"><img src="./info_img/main.JPG" width="70%" heigh="70%"></p><br>
+
+### **객실관리**  
+객실별 고객 정보와 요청사항을 **실시간으로** 보여준다. 고객의 국적과 객실 청소 상태, 요청사항 여부를 아이콘으로 보여주며, 문 아이콘을 클릭하면 체크아웃을 할 수 있다. 양피지 아이콘 클릭시 최신 요청사항을 볼 수 있고 쓰레기통을 클릭하면 청소 상태를 바꿀 수 있다. +아이콘은 고객의 이름 및 조식 등의 예약 정보, 결제금액과 주의사항 등을 확인할 수 있다.  
+
+왼쪽 파란색의 버튼을 클릭하여 원하는 층으로 이동이 가능하며 가장 오른쪽 테이블의 +아이콘을 클릭하면 룸서비스 및 요청사항을 추가할 수 있다. 가장 오래된 요청 순으로 정렬되며 완료 버튼을 누르면 테이블에서 삭제된다. 룸서비스 금액은 객실별 결제금액에 추가된다.
+
+새로고침 없이 모든 정보가 업데이트 되기 때문에 여러 직원이 동시에 수정하는 것이 가능하다. 예를 들어 한 직원이 312호 객실을 체크아웃하면 객실관리 페이지를 보고 있던 다른 직원의 화면에서 312호의 사람 아이콘이 실시간으로 사라진다. 
+<p align="center"><img src="./info_img/객실관리.JPG" width="80%" heigh="80%"></p><br>
+<p align="center"><img src="./info_img/request.JPG" width="70%" heigh="70%"></p><br>
+
+
+### **예약관리**  
+예약추가, 예약취소, 체크인을 관리하는 페이지다. 왼쪽 카테고리를 클릭하여 상태별로 예약을 관리할 수 있다. 체크인시에 객실관리 페이지에 실시간으로 반영이된다.
+<p align="center"><img src="./info_img/reservation.JPG" width="80%" heigh="80%"></p><br>
+<p align="center"><img src="./info_img/checkin.png" width="70%" heigh="70%"></p><br>
+
+
+### **직원관리**
+직원을 추가하고 정보를 확인할 수 있다. 각 직원의 출퇴근 상태, 가능 외국어를 확인할 수 있다. 객실에 직원을 배정할 때 직원의 출퇴근 상태, 사용 가능 외국어에 따라 적합한 객실에 우선적으로 배정한다.
+<p align="center"><img src="./info_img/employee.JPG" width="80%" heigh="80%"></p><br>
+<p align="center"><img src="./info_img/register.JPG" width="70%" heigh="70%"></p><br>
+
+
+
+<br><br>
+
+## Install
+1. 파일을 다운 받는다.
+```bash
+git clone git@github.com:O-nlogn/Hotel_Management_System.git
+```
+2. mysql에 데이터베이스를 만들고 hotel_system.sql을 복원한다.
+```bash
+mysql -u [계정이름] -p [만든 DB 이름] < [hotel_system.sql의 위치]
+```
+3. db.js 파일을 만들고 db-template.js의 내용을 수정하여 저장한다.
+4. server.js 파일을 실행한다.
+``` bash
+   node server.js
+```
+
+<br><br>
+
+## Guest로 로그인하기
+아이디: 1111111111 / 비밀번호: 1234 입력
+<p align="center"><img src="./info_img/login.JPG" width="50%" heigh="50%"></p>
+
+
+<br><br>
 
 ## 📢 커밋메시지 컨벤션
 커밋메시지는 제목/본문/(issue number)로 구성한다.
